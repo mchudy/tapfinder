@@ -56,11 +56,11 @@ public class MainActivity extends BaseActivity {
 
     private void selectDrawerItem(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.item1:
-                Timber.d("Selected item1");
+            case R.id.map_item:
+                changeFragment(new MapFragment());
                 break;
             case R.id.item2:
-                Timber.d("Selected item2");
+                Timber.d("Selected item1");
                 break;
             case R.id.item3:
                 Timber.d("Selected item3");

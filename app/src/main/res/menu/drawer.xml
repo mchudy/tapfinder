@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/item1"
-            android:title="Item 1" />
+            android:id="@+id/map_item"
+            android:title="@string/map" />
         <item
             android:id="@+id/item2"
             android:title="Item 2" />
