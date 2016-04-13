@@ -10,9 +10,6 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-<<<<<<< HEAD
-</FrameLayout>
-=======
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/search_button"
@@ -26,4 +23,3 @@
         app:fabSize="normal" />
 
 </android.support.design.widget.CoordinatorLayout>
->>>>>>> ac3f8b4ef632679fe6ebe3c552f3630873e41f26

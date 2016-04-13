@@ -9,11 +9,7 @@
     <string name="nearby">Nearby</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
-<<<<<<< HEAD
-    <string name="map">Map</string>
     <string name="login">Login</string>
     <string name="my_vicinity">My Vicinity</string>
     <string name="my_profile">My Profile</string>
-=======
->>>>>>> ac3f8b4ef632679fe6ebe3c552f3630873e41f26
 </resources>
