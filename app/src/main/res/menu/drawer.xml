@@ -6,7 +6,8 @@
             android:title="@string/login" />
         <item
             android:id="@+id/map_item"
-            android:title="@string/map" />
+            android:icon="@drawable/ic_near_me_grey_800_36dp"
+            android:title="@string/nearby" />
         <item
             android:id="@+id/my_vicinity"
             android:title="@string/my_vicinity" />
