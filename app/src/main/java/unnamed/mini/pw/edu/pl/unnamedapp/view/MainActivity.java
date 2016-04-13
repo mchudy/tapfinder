@@ -6,11 +6,11 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import butterknife.Bind;
-import timber.log.Timber;
 import unnamed.mini.pw.edu.pl.unnamedapp.R;
 
 public class MainActivity extends BaseActivity {
@@ -28,13 +28,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(drawerToggle);
-        drawerToggle.syncState();
+        initToolbar();
 
         drawer.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -43,7 +37,26 @@ public class MainActivity extends BaseActivity {
                 return true;
             }
         });
+        View headerView = drawer.getHeaderView(0);
+        LinearLayout drawerHeader = (LinearLayout) headerView.findViewById(R.id.drawer_header);
+        drawerHeader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeFragment(new MyProfileFragment());
+                drawerLayout.closeDrawer(GravityCompat.START);
+            }
+        });
         changeFragment(new MapFragment());
+    }
+
+    private void initToolbar() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(drawerToggle);
+        drawerToggle.syncState();
     }
 
     @Override
@@ -58,10 +71,10 @@ public class MainActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            if(drawerLayout.isDrawerOpen(Gravity.LEFT)) {
-                drawerLayout.closeDrawer(Gravity.LEFT);
+            if(drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                drawerLayout.closeDrawer(GravityCompat.START);
             }else{
-                drawerLayout.openDrawer(Gravity.LEFT);
+                drawerLayout.openDrawer(GravityCompat.START);
             }
         }
         return super.onOptionsItemSelected(item);
@@ -73,16 +86,10 @@ public class MainActivity extends BaseActivity {
                 changeFragment(new MapFragment());
                 break;
             case R.id.login_item:
-                changeFragment(new BaseFragment());
-                Timber.d("Selected login");
+                //changeFragment(new BaseFragment());
                 break;
             case R.id.my_vicinity:
-                changeFragment(new BaseFragment());
-                Timber.d("Selected my_vicinity");
-                break;
-            case R.id.my_profile:
-                changeFragment(new BaseFragment());
-                Timber.d("Selected my_profile");
+                //changeFragment(new BaseFragment());
                 break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
