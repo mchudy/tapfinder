@@ -25,7 +25,7 @@ import unnamed.mini.pw.edu.pl.unnamedapp.R;
 public class MapFragment extends BaseFragment implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener{
+        LocationListener {
 
     private GoogleMap map;
     private GoogleApiClient googleApiClient;

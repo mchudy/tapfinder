@@ -59,11 +59,17 @@ public class MainActivity extends BaseActivity {
             case R.id.map_item:
                 changeFragment(new MapFragment());
                 break;
-            case R.id.item2:
-                Timber.d("Selected item1");
+            case R.id.login_item:
+                changeFragment(new BaseFragment());
+                Timber.d("Selected login");
                 break;
-            case R.id.item3:
-                Timber.d("Selected item3");
+            case R.id.my_vicinity:
+                changeFragment(new BaseFragment());
+                Timber.d("Selected my_vicinity");
+                break;
+            case R.id.my_profile:
+                changeFragment(new BaseFragment());
+                Timber.d("Selected my_profile");
                 break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
