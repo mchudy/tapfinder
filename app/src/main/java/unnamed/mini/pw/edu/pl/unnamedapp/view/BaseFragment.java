@@ -11,6 +11,7 @@ public class BaseFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //TODO: not working, not sure why
         ButterKnife.bind(this, view);
     }
 

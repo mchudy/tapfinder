@@ -138,7 +138,10 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
         if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 Place place = PlaceAutocomplete.getPlace(getActivity(), data);
-                Timber.i("Place: " + place.getName());
+                //TODO
+                PlaceDetailsFragment detailsFragment = new PlaceDetailsFragment();
+                detailsFragment.setPlace(place);
+                ((BaseActivity)getActivity()).changeFragment(detailsFragment);
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 Status status = PlaceAutocomplete.getStatus(getActivity(), data);
                 Timber.e(status.getStatusMessage());

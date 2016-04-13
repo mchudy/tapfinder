@@ -1,6 +1,5 @@
 package unnamed.mini.pw.edu.pl.unnamedapp.view;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -81,13 +80,6 @@ public class MainActivity extends BaseActivity {
                 break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
-    }
-
-    private void changeFragment(Fragment fragment) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment, fragment)
-                .commit();
     }
 
 }
