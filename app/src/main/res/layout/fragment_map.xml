@@ -1,7 +1,8 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="unnamed.mini.pw.edu.pl.unnamedapp.view.MapFragment">
 
     <fragment
@@ -10,4 +11,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-</FrameLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/search_button"
+        app:layout_anchor="@id/map"
+        app:layout_anchorGravity="bottom|right|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        app:borderWidth="0dp"
+        android:src="@android:drawable/ic_menu_search"
+        app:fabSize="normal" />
+
+</android.support.design.widget.CoordinatorLayout>
