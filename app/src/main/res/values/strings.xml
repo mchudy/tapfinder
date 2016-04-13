@@ -12,4 +12,7 @@
     <string name="login">Login</string>
     <string name="my_vicinity">My Vicinity</string>
     <string name="my_profile">My Profile</string>
+    <string name="address">Address</string>
+    <string name="prompt_phoneNumber">Phone</string>
+    <string name="prompt_website">Website</string>
 </resources>
