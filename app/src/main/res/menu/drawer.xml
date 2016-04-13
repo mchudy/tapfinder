@@ -3,7 +3,8 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/map_item"
-            android:title="@string/map" />
+            android:icon="@drawable/ic_near_me_grey_800_36dp"
+            android:title="@string/nearby" />
         <item
             android:id="@+id/item2"
             android:title="Item 2" />
