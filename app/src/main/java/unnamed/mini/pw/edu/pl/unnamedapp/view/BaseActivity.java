@@ -30,7 +30,8 @@ public class BaseActivity extends AppCompatActivity{
     }
 
     public void changeFragmentAndAddToStack(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction()
+        getSupportFragmentManager()
+                .beginTransaction()
                 .replace(R.id.fragment, fragment)
                 .addToBackStack(null)
                 .commit();

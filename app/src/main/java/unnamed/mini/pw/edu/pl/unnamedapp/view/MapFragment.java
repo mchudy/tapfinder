@@ -1,36 +1,25 @@
 package unnamed.mini.pw.edu.pl.unnamedapp.view;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.places.AutocompleteFilter;
-import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.Places;
-import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
-import butterknife.OnClick;
-import timber.log.Timber;
 import unnamed.mini.pw.edu.pl.unnamedapp.R;
 
 @SuppressWarnings("ResourceType")
@@ -39,7 +28,6 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
-    private static final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
     private GoogleMap map;
     private GoogleApiClient googleApiClient;
     private Location userLocation;
@@ -113,42 +101,6 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
     public void onResume() {
         googleApiClient.connect();
         super.onResume();
-    }
-
-    @OnClick(R.id.search_button)
-    public void searchPlaces() {
-        try {
-            AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
-                    .setTypeFilter(AutocompleteFilter.TYPE_FILTER_ESTABLISHMENT)
-                    .build();
-            Intent intent =
-                    new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
-                            .setFilter(typeFilter)
-                            .build(getActivity());
-            startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
-        } catch (GooglePlayServicesRepairableException e) {
-            Timber.e(e.getMessage());
-        } catch (GooglePlayServicesNotAvailableException e) {
-            Timber.e(e.getMessage());
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
-            if (resultCode == Activity.RESULT_OK) {
-                Place place = PlaceAutocomplete.getPlace(getActivity(), data);
-                //TODO
-                PlaceDetailsFragment detailsFragment = new PlaceDetailsFragment();
-                detailsFragment.setPlace(place);
-                ((BaseActivity)getActivity()).changeFragment(detailsFragment);
-            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
-                Status status = PlaceAutocomplete.getStatus(getActivity(), data);
-                Timber.e(status.getStatusMessage());
-            } else if (resultCode == Activity.RESULT_CANCELED) {
-                // The user canceled the operation.
-            }
-        }
     }
 
     private void handleNewLocation(Location location) {
