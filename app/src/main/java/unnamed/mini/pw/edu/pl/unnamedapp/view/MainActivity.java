@@ -3,6 +3,7 @@ package unnamed.mini.pw.edu.pl.unnamedapp.view;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -144,14 +145,23 @@ public class MainActivity extends BaseActivity {
             case R.id.map_item:
                 changeFragment(new MapFragment());
                 break;
-            case R.id.login_item:
-                //changeFragment(new BaseFragment());
+            case R.id.logout_item:
+                logout();
                 break;
             case R.id.my_vicinity:
                 //changeFragment(new BaseFragment());
                 break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
+    }
+
+    private void logout() {
+        PreferenceManager.getDefaultSharedPreferences(this)
+            .edit()
+            .putString("username", null)
+            .commit();
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 
 }
