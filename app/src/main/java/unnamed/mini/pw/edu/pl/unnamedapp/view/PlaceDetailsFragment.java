@@ -58,6 +58,7 @@ public class PlaceDetailsFragment extends Fragment {
         return view;
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

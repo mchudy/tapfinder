@@ -4,6 +4,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,12 +44,15 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
         return inflater.inflate(R.layout.fragment_map, container, false);
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         FragmentManager fragmentManager = getChildFragmentManager();
         SupportMapFragment mapFragment = (SupportMapFragment) fragmentManager.findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.nearby));
 
         if (googleApiClient == null) {
             googleApiClient = new GoogleApiClient.Builder(getContext())
