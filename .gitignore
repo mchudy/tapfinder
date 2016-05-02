@@ -10,3 +10,5 @@ gen/
 .DS_Store
 /build
 /captures
+
+**/api_keys.xml
