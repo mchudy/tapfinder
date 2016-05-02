@@ -83,7 +83,7 @@ public class MainActivity extends BaseActivity {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
-            moveTaskToBack(true);
+            super.onBackPressed();
         }
     }
 

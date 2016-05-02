@@ -67,21 +67,15 @@ public class PlaceDetailsFragment extends Fragment {
         address.setText(place.getAddress());
         website.setText(place.getWebsiteUri().toString());
 
-        phoneImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + place.getPhoneNumber()));
-                dialIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(dialIntent);
-            }
+        phoneImage.setOnClickListener(v -> {
+            Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + place.getPhoneNumber()));
+            dialIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(dialIntent);
         });
 
-        websiteImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, place.getWebsiteUri());
-                startActivity(browserIntent);
-            }
+        websiteImage.setOnClickListener(v -> {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, place.getWebsiteUri());
+            startActivity(browserIntent);
         });
     }
 }

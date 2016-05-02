@@ -23,7 +23,10 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
-    <string name="action_sign_up">Sign up</string>
+    <string name="action_sign_up">New to Pubsovia? Sign up</string>
     <string name="sign_up">Sign up</string>
+    <string name="email">Email</string>
+    <string name="create_account">Create Account</string>
+    <string name="register_header">Join the beer community</string>
 
 </resources>

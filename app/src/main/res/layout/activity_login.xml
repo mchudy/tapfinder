@@ -28,9 +28,7 @@
             android:text="@string/app_name"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#ffffffff"
-            android:textSize="40dp" />
-
-
+            android:textSize="40sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -65,19 +63,12 @@
 
                         <AutoCompleteTextView
                             android:id="@+id/login"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="10dp"
                             android:hint="@string/username"
-                            android:inputType="text"
                             android:maxLines="1"
                             android:singleLine="true"
                             android:fontFamily="sans-serif"
-                            android:imeOptions="actionNext"
-                            android:textColor="#ffffff"
-                            android:textColorHint="#ffffff"
-                            android:foreground="#ffffff"
-                            android:backgroundTint="#ffffff" />
+                            android:inputType="text"
+                            style="@style/LoginEditText" />
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
@@ -90,33 +81,24 @@
 
                         <EditText
                             android:id="@+id/password"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="10dp"
+                            style="@style/LoginEditText"
                             android:hint="@string/prompt_password"
-                            android:fontFamily="sans-serif"
                             android:imeActionLabel="@string/action_sign_in"
                             android:imeOptions="actionUnspecified"
                             android:inputType="textPassword"
                             android:maxLines="1"
-                            android:singleLine="true"
-                            android:textColor="#ffffff"
-                            android:textColorHint="#ffffff"
-                            android:allowUndo="true"
-                            android:backgroundTint="#ffffff" />
+                            android:singleLine="true" />
                     </android.support.design.widget.TextInputLayout>
 
                     <Button
                         android:id="@+id/sign_in_button"
-                        style="?android:textAppearanceSmall"
+                        style="?android:textAppearanceButton"
                         android:layout_width="250dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="60dp"
                         android:background="@color/colorPrimary"
                         android:text="@string/action_sign_in"
                         android:textColor="#ffffffff"
-                        android:fontFamily="sans-serif-light"
-                        android:textStyle="bold"
                         android:layout_gravity="center_horizontal" />
 
                     <TextView android:id="@+id/sign_up_button"
