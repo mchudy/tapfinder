@@ -83,7 +83,7 @@ public class MainActivity extends BaseActivity {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            moveTaskToBack(true);
         }
     }
 
@@ -165,6 +165,7 @@ public class MainActivity extends BaseActivity {
         usernamePreference.delete();
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
+        finish();
     }
 
 }

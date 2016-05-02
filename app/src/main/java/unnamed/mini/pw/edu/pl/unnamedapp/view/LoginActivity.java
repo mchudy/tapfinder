@@ -9,6 +9,7 @@ import android.database.Cursor;
 
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.TextInputLayout;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
@@ -35,6 +36,12 @@ public class LoginActivity extends BaseActivity {
     @Bind(R.id.password)
     EditText passwordView;
 
+    @Bind(R.id.username_layout)
+    TextInputLayout usernameInputLayout;
+
+    @Bind(R.id.password_layout)
+    TextInputLayout passwordLayout;
+
     @Inject
     @UsernamePreference
     Preference<String> usernamePreference;
@@ -59,9 +66,15 @@ public class LoginActivity extends BaseActivity {
         attemptLogin();
     }
 
+    @OnClick(R.id.sign_up_button)
+    public void signUp() {
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
+    }
+
     private void attemptLogin() {
-        usernameView.setError(null);
-        passwordView.setError(null);
+        usernameInputLayout.setError(null);
+        passwordLayout.setError(null);
 
         String email = usernameView.getText().toString();
         String password = passwordView.getText().toString();
@@ -70,13 +83,13 @@ public class LoginActivity extends BaseActivity {
         View focusView = null;
 
         if (TextUtils.isEmpty(password)) {
-            passwordView.setError(getString(R.string.error_field_required));
+            passwordLayout.setError(getString(R.string.error_field_required));
             focusView = passwordView;
             cancel = true;
         }
 
         if (TextUtils.isEmpty(email)) {
-            usernameView.setError(getString(R.string.error_field_required));
+            usernameInputLayout.setError(getString(R.string.error_field_required));
             focusView = usernameView;
             cancel = true;
         }
@@ -92,6 +105,7 @@ public class LoginActivity extends BaseActivity {
     private void startMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
 }
 
