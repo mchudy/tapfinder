@@ -19,6 +19,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import unnamed.mini.pw.edu.pl.unnamedapp.Constants;
 import unnamed.mini.pw.edu.pl.unnamedapp.di.qualifier.AccessTokenPreference;
@@ -65,6 +66,7 @@ public class ApiServiceModule {
     Retrofit provideRetrofit(OkHttpClient client, Gson gson) {
         return new Retrofit.Builder()
                 .baseUrl(Constants.API_BASE_URI)
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
                 .build();
