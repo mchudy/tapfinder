@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import unnamed.mini.pw.edu.pl.unnamedapp.R;
 
 public class MyProfileFragment extends BaseFragment {
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

@@ -1,12 +1,23 @@
 package unnamed.mini.pw.edu.pl.unnamedapp.view;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
 import butterknife.ButterKnife;
+import unnamed.mini.pw.edu.pl.unnamedapp.App;
 import unnamed.mini.pw.edu.pl.unnamedapp.R;
+import unnamed.mini.pw.edu.pl.unnamedapp.di.ActivityComponent;
 
 public class BaseActivity extends AppCompatActivity{
+
+    private ActivityComponent activityComponent;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public void setContentView(int layoutResID) {
@@ -35,5 +46,12 @@ public class BaseActivity extends AppCompatActivity{
                 .replace(R.id.fragment, fragment)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    public ActivityComponent activityComponent() {
+        if (activityComponent == null) {
+            activityComponent = ActivityComponent.Initializer.init(App.component(this));
+        }
+        return activityComponent;
     }
 }

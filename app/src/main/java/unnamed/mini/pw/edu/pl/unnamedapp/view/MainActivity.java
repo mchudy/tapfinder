@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.f2prateek.rx.preferences.Preference;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;
@@ -21,9 +22,13 @@ import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 
+import javax.inject.Inject;
+
 import butterknife.Bind;
 import timber.log.Timber;
+import unnamed.mini.pw.edu.pl.unnamedapp.App;
 import unnamed.mini.pw.edu.pl.unnamedapp.R;
+import unnamed.mini.pw.edu.pl.unnamedapp.di.qualifier.UsernamePreference;
 
 public class MainActivity extends BaseActivity {
 
@@ -37,27 +42,28 @@ public class MainActivity extends BaseActivity {
     @Bind(R.id.drawer)
     NavigationView drawer;
 
+    @Inject
+    @UsernamePreference
+    Preference<String> usernamePreference;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        activityComponent().inject(this);
+
         setContentView(R.layout.activity_main);
         initToolbar();
 
-        drawer.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                selectDrawerItem(item);
-                return true;
-            }
+        drawer.setNavigationItemSelectedListener(item -> {
+            selectDrawerItem(item);
+            return true;
         });
         View headerView = drawer.getHeaderView(0);
         LinearLayout drawerHeader = (LinearLayout) headerView.findViewById(R.id.drawer_header);
-        drawerHeader.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changeFragment(new MyProfileFragment());
-                drawerLayout.closeDrawer(GravityCompat.START);
-            }
+        drawerHeader.setOnClickListener(v -> {
+            changeFragment(new MyProfileFragment());
+            drawerLayout.closeDrawer(GravityCompat.START);
         });
         changeFragment(new MapFragment());
     }
@@ -156,10 +162,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void logout() {
-        PreferenceManager.getDefaultSharedPreferences(this)
-            .edit()
-            .putString("username", null)
-            .commit();
+        usernamePreference.delete();
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }

@@ -14,11 +14,18 @@ import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 
+import com.f2prateek.rx.preferences.Preference;
+
 import org.w3c.dom.Text;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import unnamed.mini.pw.edu.pl.unnamedapp.App;
 import unnamed.mini.pw.edu.pl.unnamedapp.R;
+import unnamed.mini.pw.edu.pl.unnamedapp.di.qualifier.UsernamePreference;
+import unnamed.mini.pw.edu.pl.unnamedapp.service.ApiService;
 
 public class LoginActivity extends BaseActivity {
 
@@ -28,12 +35,20 @@ public class LoginActivity extends BaseActivity {
     @Bind(R.id.password)
     EditText passwordView;
 
+    @Inject
+    @UsernamePreference
+    Preference<String> usernamePreference;
+
+    @Inject
+    ApiService apiService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        activityComponent().inject(this);
+
         setContentView(R.layout.activity_login);
-        String username = PreferenceManager.getDefaultSharedPreferences(this)
-                .getString("username", null);
+        String username = usernamePreference.get();
         if(!TextUtils.isEmpty(username)){
             startMainActivity();
         }
@@ -69,10 +84,7 @@ public class LoginActivity extends BaseActivity {
         if (cancel) {
             focusView.requestFocus();
         } else {
-            PreferenceManager.getDefaultSharedPreferences(this)
-                    .edit()
-                    .putString("username", usernameView.getText().toString())
-                    .commit();
+            usernamePreference.set(usernameView.getText().toString());
             startMainActivity();
         }
     }
