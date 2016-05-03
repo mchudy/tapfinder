@@ -59,7 +59,8 @@
                         android:layout_width="250dp"
                         android:textColorHint="#ffffff"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal">
+                        android:layout_gravity="center_horizontal"
+                        >
 
                         <AutoCompleteTextView
                             android:id="@+id/login"
@@ -68,7 +69,8 @@
                             android:singleLine="true"
                             android:fontFamily="sans-serif"
                             android:inputType="text"
-                            style="@style/LoginEditText" />
+                            style="@style/LoginEditText"
+                            android:foreground="#00ffffff"/>
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
@@ -87,7 +89,8 @@
                             android:imeOptions="actionUnspecified"
                             android:inputType="textPassword"
                             android:maxLines="1"
-                            android:singleLine="true" />
+                            android:singleLine="true"
+                            android:foreground="#00ffffff"/>
                     </android.support.design.widget.TextInputLayout>
 
                     <Button

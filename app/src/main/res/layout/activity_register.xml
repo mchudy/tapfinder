@@ -15,7 +15,8 @@
         android:paddingTop="46dp"
         android:paddingLeft="24dp"
         android:paddingRight="24dp"
-        style="@style/RegisterEditText">
+        style="@style/RegisterEditText"
+        android:foreground="#00ffffff">
 
         <TextView
             android:id="@+id/textView2"
@@ -38,12 +39,14 @@
             android:id="@+id/username_layout"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            style="@style/RegisterEditText">
+            style="@style/RegisterEditText"
+            android:foreground="#00ffffff">
 
             <EditText android:id="@+id/input_username"
-                android:inputType="textCapWords"
-                android:hint="@string/username"
-                style="@style/RegisterEditText" />
+                      android:inputType="textCapWords"
+                      android:hint="@string/username"
+                      style="@style/RegisterEditText"
+                      android:foreground="#00ffffff"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -51,12 +54,14 @@
             android:id="@+id/email_layout"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            style="@style/RegisterEditText">
+            style="@style/RegisterEditText"
+            android:foreground="#00ffffff">
 
             <EditText android:id="@+id/input_email"
-                android:inputType="textEmailAddress"
-                android:hint="@string/email"
-                style="@style/RegisterEditText" />
+                      android:inputType="textEmailAddress"
+                      android:hint="@string/email"
+                      style="@style/RegisterEditText"
+                      android:foreground="#00ffffff"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -64,12 +69,14 @@
             android:id="@+id/password_layout"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            style="@style/RegisterEditText">
+            style="@style/RegisterEditText"
+            android:foreground="#00ffffff">
 
             <EditText android:id="@+id/input_password"
-                android:inputType="textPassword"
-                android:hint="@string/prompt_password"
-                style="@style/RegisterEditText" />
+                      android:inputType="textPassword"
+                      android:hint="@string/prompt_password"
+                      style="@style/RegisterEditText"
+                      android:foreground="#00ffffff"/>
 
         </android.support.design.widget.TextInputLayout>
 

@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import butterknife.ButterKnife;
 import unnamed.mini.pw.edu.pl.unnamedapp.App;
 import unnamed.mini.pw.edu.pl.unnamedapp.R;
-import unnamed.mini.pw.edu.pl.unnamedapp.di.ActivityComponent;
+import unnamed.mini.pw.edu.pl.unnamedapp.di.component.ActivityComponent;
 
 public class BaseActivity extends AppCompatActivity{
 

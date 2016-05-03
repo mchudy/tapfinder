@@ -2,14 +2,7 @@ package unnamed.mini.pw.edu.pl.unnamedapp.view;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.app.Activity;
-import android.app.LoaderManager.LoaderCallbacks;
-
-import android.content.SharedPreferences;
-import android.database.Cursor;
-
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputLayout;
 import android.text.TextUtils;
 import android.view.View;
@@ -19,15 +12,12 @@ import android.widget.Toast;
 
 import com.f2prateek.rx.preferences.Preference;
 
-import org.w3c.dom.Text;
-
 import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-import unnamed.mini.pw.edu.pl.unnamedapp.App;
 import unnamed.mini.pw.edu.pl.unnamedapp.R;
 import unnamed.mini.pw.edu.pl.unnamedapp.di.qualifier.AccessTokenPreference;
 import unnamed.mini.pw.edu.pl.unnamedapp.di.qualifier.UsernamePreference;
@@ -69,14 +59,14 @@ public class LoginActivity extends BaseActivity {
 
         setContentView(R.layout.activity_login);
         String username = usernamePreference.get();
-        if(!TextUtils.isEmpty(username)){
+        if (!TextUtils.isEmpty(username)) {
             startMainActivity();
         }
     }
 
     @OnClick(R.id.sign_in_button)
     public void signIn() {
-        if(validateInput()) {
+        if (validateInput()) {
             progress = new ProgressDialog(this);
             progress.setMessage(getString(R.string.please_wait));
             progress.show();
@@ -99,7 +89,7 @@ public class LoginActivity extends BaseActivity {
 
     private void addToken(AccessTokenModel model) {
         String token = model.getAccessToken();
-        if(!TextUtils.isEmpty(token)) {
+        if (!TextUtils.isEmpty(token)) {
             accessTokenPreference.set(token);
             usernamePreference.set(usernameView.getText().toString());
         } else {

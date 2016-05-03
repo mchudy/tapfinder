@@ -3,7 +3,6 @@ package unnamed.mini.pw.edu.pl.unnamedapp.view;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -26,13 +25,14 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import timber.log.Timber;
-import unnamed.mini.pw.edu.pl.unnamedapp.App;
 import unnamed.mini.pw.edu.pl.unnamedapp.R;
+import unnamed.mini.pw.edu.pl.unnamedapp.di.qualifier.AccessTokenPreference;
 import unnamed.mini.pw.edu.pl.unnamedapp.di.qualifier.UsernamePreference;
 
 public class MainActivity extends BaseActivity {
 
     private static final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
+
     @Bind(R.id.toolbar)
     Toolbar toolbar;
 
@@ -45,6 +45,10 @@ public class MainActivity extends BaseActivity {
     @Inject
     @UsernamePreference
     Preference<String> usernamePreference;
+
+    @Inject
+    @AccessTokenPreference
+    Preference<String> accessTokenPreference;
 
 
     @Override
@@ -163,6 +167,7 @@ public class MainActivity extends BaseActivity {
 
     private void logout() {
         usernamePreference.delete();
+        accessTokenPreference.delete();
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();

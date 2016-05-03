@@ -81,7 +81,7 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
         userLocation = LocationServices.FusedLocationApi.getLastLocation(
                 googleApiClient);
         if (userLocation == null) {
-            LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, (LocationListener) this);
+            LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
         } else {
             handleNewLocation(userLocation);
         }

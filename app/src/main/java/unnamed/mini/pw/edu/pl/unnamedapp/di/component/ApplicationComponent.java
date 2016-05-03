@@ -1,4 +1,4 @@
-package unnamed.mini.pw.edu.pl.unnamedapp.di;
+package unnamed.mini.pw.edu.pl.unnamedapp.di.component;
 
 
 import javax.inject.Singleton;
@@ -7,8 +7,6 @@ import dagger.Component;
 import unnamed.mini.pw.edu.pl.unnamedapp.App;
 import unnamed.mini.pw.edu.pl.unnamedapp.di.module.ApiServiceModule;
 import unnamed.mini.pw.edu.pl.unnamedapp.di.module.PreferencesModule;
-import unnamed.mini.pw.edu.pl.unnamedapp.di.scope.ActivityScope;
-import unnamed.mini.pw.edu.pl.unnamedapp.service.ApiService;
 
 @Singleton
 @Component(modules = {ApiServiceModule.class, PreferencesModule.class})

@@ -1,4 +1,4 @@
-package unnamed.mini.pw.edu.pl.unnamedapp.di;
+package unnamed.mini.pw.edu.pl.unnamedapp.di.component;
 
 import unnamed.mini.pw.edu.pl.unnamedapp.view.LoginActivity;
 import unnamed.mini.pw.edu.pl.unnamedapp.view.MainActivity;

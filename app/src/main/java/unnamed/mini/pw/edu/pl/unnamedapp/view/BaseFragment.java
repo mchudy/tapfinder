@@ -5,8 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 
 import butterknife.ButterKnife;
-import unnamed.mini.pw.edu.pl.unnamedapp.di.ActivityComponent;
-import unnamed.mini.pw.edu.pl.unnamedapp.di.FragmentInjector;
+import unnamed.mini.pw.edu.pl.unnamedapp.di.component.ActivityComponent;
 
 public class BaseFragment extends Fragment {
 

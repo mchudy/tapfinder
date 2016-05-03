@@ -5,7 +5,7 @@ import android.app.Application;
 import android.content.Context;
 
 import timber.log.Timber;
-import unnamed.mini.pw.edu.pl.unnamedapp.di.ApplicationComponent;
+import unnamed.mini.pw.edu.pl.unnamedapp.di.component.ApplicationComponent;
 
 public class App extends Application {
 
