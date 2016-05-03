@@ -32,5 +32,7 @@
     <string name="error_too_short_password">Password must be at least 6 characters long</string>
     <string name="error_invalid_email">Enter a valid email address</string>
     <string name="error_occurred">An error occurred</string>
+    <string name="username_taken">The username is already taken</string>
+    <string name="error_email_in_use">The email is already in use</string>
 
 </resources>

@@ -1,20 +1,19 @@
 package unnamed.mini.pw.edu.pl.unnamedapp.view;
 
 import android.app.ProgressDialog;
-import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
+import android.support.v4.util.Pair;
+import android.text.TextUtils;
 import android.util.Patterns;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import okhttp3.ResponseBody;
+import butterknife.OnFocusChange;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import unnamed.mini.pw.edu.pl.unnamedapp.R;
@@ -59,36 +58,46 @@ public class RegisterActivity extends BaseActivity {
         String email = emailView.getText().toString();
         String password = passwordView.getText().toString();
 
-        if(validateInput(username, email, password)) {
-            //TODO: check email and username availability before
-            progress = new ProgressDialog(this);
-            progress.setMessage(getString(R.string.please_wait));
-            progress.show();
-            UserRegisterDto dto = new UserRegisterDto(username, email, password);
-            apiService.register(dto)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(this::onRegistered, this::onRegisterError,
-                            () -> progress.dismiss());
-        }
+        tryRegister(username, email, password);
     }
 
-    private void onRegisterError(Throwable throwable) {
-        Toast.makeText(this, R.string.error_occurred, Toast.LENGTH_SHORT).show();
-        progress.dismiss();
-    }
-
-    private void onRegistered(ResponseBody responseBody) {
-        finish();
-    }
-
-    private boolean validateInput(String username, String email, String password) {
+    private void tryRegister(String username, String email, String password) {
         boolean valid = true;
 
         usernameLayout.setError(null);
         passwordLayout.setError(null);
         emailLayout.setError(null);
 
+        valid = validateInput(username, email, password, valid);
+
+        if (!valid) {
+            return;
+        }
+
+        apiService.isUsernameAvailable(username)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext(r -> {
+                            if (r.code() == 200) {
+                                usernameLayout.setError(getString(R.string.username_taken));
+                            }
+                        }
+                )
+                .flatMap(r -> apiService.isEmailAvailable(email)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .map(r1 -> Pair.create(r, r1))
+                )
+                .subscribe(r -> {
+                    if (r.second.code() == 200) {
+                        emailLayout.setError(getString(R.string.error_email_in_use));
+                    } else if (r.second.code() == 404 && r.first.code() == 404) {
+                        registerUser(username, email, password);
+                    }
+                });
+    }
+
+    private boolean validateInput(String username, String email, String password, boolean valid) {
         if (username.isEmpty()) {
             usernameLayout.setError(getString(R.string.error_field_required));
             valid = false;
@@ -102,5 +111,53 @@ public class RegisterActivity extends BaseActivity {
             valid = false;
         }
         return valid;
+    }
+
+    private void registerUser(String username, String email, String password) {
+        progress = new ProgressDialog(this);
+        progress.setMessage(getString(R.string.please_wait));
+        progress.show();
+        UserRegisterDto dto = new UserRegisterDto(username, email, password);
+        apiService.register(dto)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(r -> finish(), this::onRegisterError,
+                        () -> progress.dismiss());
+    }
+
+    private void onRegisterError(Throwable throwable) {
+        Toast.makeText(this, R.string.error_occurred, Toast.LENGTH_SHORT).show();
+        progress.dismiss();
+    }
+
+    @OnFocusChange(R.id.input_email)
+    public void onEmailFocusChange(){
+        emailLayout.setError(null);
+
+        String email = emailView.getText().toString();
+        if(TextUtils.isEmpty(email)) return;
+        apiService.isEmailAvailable(email)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(r -> {
+                    if(r.code() == 200)
+                        emailLayout.setError(getString(R.string.error_email_in_use));
+                });
+    }
+
+    @OnFocusChange(R.id.input_username)
+    public void onUsernameFocusChange() {
+        usernameLayout.setError(null);
+
+        String username = usernameView.getText().toString();
+        if(TextUtils.isEmpty(username)) return;
+        apiService.isUsernameAvailable(username)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(r -> {
+                    if(r.code() == 200) {
+                        usernameLayout.setError(getString(R.string.username_taken));
+                    }
+                });
     }
 }
