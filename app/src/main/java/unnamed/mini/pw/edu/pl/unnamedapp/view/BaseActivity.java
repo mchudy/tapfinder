@@ -41,7 +41,7 @@ public class BaseActivity extends AppCompatActivity{
         cleanBackStack();
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment, new BaseFragment())
+                .replace(R.id.fragment, new Fragment())
                 .commit();
         getSupportFragmentManager()
                 .beginTransaction()
@@ -58,7 +58,7 @@ public class BaseActivity extends AppCompatActivity{
                 .commit();
     }
 
-    protected ActivityComponent activityComponent() {
+    public ActivityComponent activityComponent() {
         if (activityComponent == null) {
             activityComponent = ActivityComponent.Initializer.init(App.component(this));
         }

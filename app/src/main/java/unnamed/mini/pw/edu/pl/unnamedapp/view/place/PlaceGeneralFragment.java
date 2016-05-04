@@ -1,7 +1,6 @@
-package unnamed.mini.pw.edu.pl.unnamedapp.view;
+package unnamed.mini.pw.edu.pl.unnamedapp.view.place;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +10,10 @@ import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 import unnamed.mini.pw.edu.pl.unnamedapp.R;
+import unnamed.mini.pw.edu.pl.unnamedapp.view.BaseActivity;
 
-public class PlaceDetailsFragment extends Fragment {
-
-    public static final String PLACE_ID_KEY = "placeId";
+public class PlaceGeneralFragment extends Fragment {
 
     @Bind(R.id.address)
     TextView address;
@@ -33,32 +30,19 @@ public class PlaceDetailsFragment extends Fragment {
     @Bind(R.id.website_image)
     ImageView websiteImage;
 
-    private String placeId;
-
-    public PlaceDetailsFragment() {
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_place_details, container, false);
-        ButterKnife.bind(this, view);
-        return view;
+        return inflater.inflate(R.layout.fragment_place_general, container, false);
     }
 
-    @SuppressWarnings("ConstantConditions")
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Bundle bundle = getArguments();
-        placeId = bundle.getString(PLACE_ID_KEY);
-        Timber.d(placeId);
-//       ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(place.getName());
+        ((BaseActivity) getActivity()).activityComponent().inject(this);
+        ButterKnife.bind(this, view);
+
+        //((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(place.getName());
 //        phoneNumber.setText(place.getPhoneNumber());
 //        address.setText(place.getAddress());
 //        website.setText(place.getWebsiteUri().toString());
@@ -73,5 +57,11 @@ public class PlaceDetailsFragment extends Fragment {
 //            Intent browserIntent = new Intent(Intent.ACTION_VIEW, place.getWebsiteUri());
 //            startActivity(browserIntent);
 //        });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }

@@ -4,7 +4,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +32,7 @@ import unnamed.mini.pw.edu.pl.unnamedapp.R;
 import unnamed.mini.pw.edu.pl.unnamedapp.model.googleplaces.Place;
 import unnamed.mini.pw.edu.pl.unnamedapp.model.googleplaces.PlacesResult;
 import unnamed.mini.pw.edu.pl.unnamedapp.service.GoogleMapsApiService;
+import unnamed.mini.pw.edu.pl.unnamedapp.view.place.PlaceFragment;
 
 @SuppressWarnings("ResourceType")
 public class MapFragment extends BaseFragment implements OnMapReadyCallback,
@@ -68,7 +68,7 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
         mapFragment = (SupportMapFragment) fragmentManager.findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.nearby));
+//        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.nearby));
 
         if (googleApiClient == null) {
             googleApiClient = new GoogleApiClient.Builder(getContext())
@@ -92,9 +92,9 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
         map.setMyLocationEnabled(true);
         map.setOnInfoWindowClickListener(marker -> {
             String placeId = markerPlacesIds.get(marker.getId());
-            PlaceDetailsFragment detailsFragment = new PlaceDetailsFragment();
+            PlaceFragment detailsFragment = new PlaceFragment();
             Bundle bundle = new Bundle();
-            bundle.putString(PlaceDetailsFragment.PLACE_ID_KEY, placeId);
+            bundle.putString(PlaceFragment.PLACE_ID_KEY, placeId);
             detailsFragment.setArguments(bundle);
             ((BaseActivity)getActivity()).changeFragmentAndAddToStack(detailsFragment);
         });
@@ -107,7 +107,9 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
         if (userLocation == null) {
             LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
         } else {
-            handleNewLocation(userLocation);
+            if(isAdded()) {
+                handleNewLocation(userLocation);
+            }
         }
     }
 
@@ -176,5 +178,10 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
                     .remove(mapFragment)
                     .commit();
         }
+    }
+
+    @Override
+    protected int getTitleResId() {
+        return R.string.nearby;
     }
 }

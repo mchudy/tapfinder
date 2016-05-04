@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
@@ -30,15 +28,13 @@ import timber.log.Timber;
 import unnamed.mini.pw.edu.pl.unnamedapp.R;
 import unnamed.mini.pw.edu.pl.unnamedapp.di.qualifier.AccessTokenPreference;
 import unnamed.mini.pw.edu.pl.unnamedapp.di.qualifier.UsernamePreference;
+import unnamed.mini.pw.edu.pl.unnamedapp.view.place.PlaceFragment;
 
 public class MainActivity extends BaseActivity {
 
     private static final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
 
     private TextView currentUsername;
-
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
 
     @Bind(R.id.drawer_layout)
     DrawerLayout drawerLayout;
@@ -54,14 +50,12 @@ public class MainActivity extends BaseActivity {
     @AccessTokenPreference
     Preference<String> accessTokenPreference;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityComponent().inject(this);
 
         setContentView(R.layout.activity_main);
-        initToolbar();
 
         drawer.setNavigationItemSelectedListener(item -> {
             if (!item.isChecked()) {
@@ -82,16 +76,6 @@ public class MainActivity extends BaseActivity {
             drawerLayout.closeDrawer(GravityCompat.START);
         });
         changeFragment(new MapFragment());
-    }
-
-    private void initToolbar() {
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(drawerToggle);
-        drawerToggle.syncState();
     }
 
     @Override
@@ -143,9 +127,9 @@ public class MainActivity extends BaseActivity {
         if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 Place place = PlaceAutocomplete.getPlace(this, data);
-                PlaceDetailsFragment detailsFragment = new PlaceDetailsFragment();
+                PlaceFragment detailsFragment = new PlaceFragment();
                 Bundle bundle = new Bundle();
-                bundle.putString(PlaceDetailsFragment.PLACE_ID_KEY, place.getId());
+                bundle.putString(PlaceFragment.PLACE_ID_KEY, place.getId());
                 detailsFragment.setArguments(bundle);
                 changeFragmentAndAddToStack(detailsFragment);
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
@@ -170,7 +154,7 @@ public class MainActivity extends BaseActivity {
             case R.id.logout_item:
                 logout();
                 break;
-            case R.id.my_vicinity:
+            case R.id.favourites:
                 //changeFragment(new BaseFragment());
                 break;
         }

@@ -34,5 +34,7 @@
     <string name="error_occurred">An error occurred</string>
     <string name="username_taken">The username is already taken</string>
     <string name="error_email_in_use">The email is already in use</string>
+    <string name="favourites">Favourites</string>
+    <string name="place_details">Place details</string>
 
 </resources>

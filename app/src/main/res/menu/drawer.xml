@@ -7,8 +7,8 @@
             android:checked="true"
             android:title="@string/nearby" />
         <item
-            android:id="@+id/my_vicinity"
-            android:title="@string/my_vicinity" />
+            android:id="@+id/favourites"
+            android:title="@string/favourites" />
         <item
             android:id="@+id/logout_item"
             android:title="@string/logout"

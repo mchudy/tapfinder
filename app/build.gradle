@@ -32,28 +32,28 @@ android {
 }
 
 def compile_libs = [
-    fileTree(dir: 'libs', include: ['*.jar']),
-    'com.android.support:appcompat-v7:23.3.0',
-    'com.android.support:design:23.3.0',
-    'com.jakewharton.timber:timber:4.1.2',
-    'com.jakewharton:butterknife:7.0.1',
-    'com.android.support:support-v4:23.3.0',
-    'com.google.android.gms:play-services-maps:8.4.0',
-    'com.google.android.gms:play-services-location:8.4.0',
-    'de.hdodenhof:circleimageview:2.0.0',
-    'com.android.support:cardview-v7:23.3.0',
-    'com.google.dagger:dagger:2.0.2',
+        fileTree(dir: 'libs', include: ['*.jar']),
+        'com.android.support:appcompat-v7:23.3.0',
+        'com.android.support:design:23.3.0',
+        'com.jakewharton.timber:timber:4.1.2',
+        'com.jakewharton:butterknife:7.0.1',
+        'com.android.support:support-v4:23.3.0',
+        'com.google.android.gms:play-services-maps:8.4.0',
+        'com.google.android.gms:play-services-location:8.4.0',
+        'de.hdodenhof:circleimageview:2.0.0',
+        'com.android.support:cardview-v7:23.3.0',
+        'com.google.dagger:dagger:2.0.2',
 
-    'io.reactivex:rxandroid:1.1.0',
-    'io.reactivex:rxjava:1.1.0',
-    'com.f2prateek.rx.preferences:rx-preferences:1.0.1',
+        'io.reactivex:rxandroid:1.1.0',
+        'io.reactivex:rxjava:1.1.0',
+        'com.f2prateek.rx.preferences:rx-preferences:1.0.1',
 
-    'com.squareup.retrofit2:retrofit:2.0.0-beta4',
-    'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4',
-    'com.squareup.retrofit2:converter-gson:2.0.0-beta4',
-    'com.squareup.okhttp3:logging-interceptor:3.2.0',
+        'com.squareup.retrofit2:retrofit:2.0.0-beta4',
+        'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4',
+        'com.squareup.retrofit2:converter-gson:2.0.0-beta4',
+        'com.squareup.okhttp3:logging-interceptor:3.2.0',
 
-    'org.parceler:parceler-api:1.0.4'
+        'org.parceler:parceler-api:1.0.4'
 ]
 
 def provided_libs = [
@@ -70,4 +70,5 @@ dependencies {
     provided provided_libs
     apt apt_libs
     testCompile 'junit:junit:4.12'
+    compile 'com.android.support:support-v4:23.3.0'
 }
