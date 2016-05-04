@@ -3,6 +3,7 @@ package unnamed.mini.pw.edu.pl.unnamedapp.service;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 import rx.Observable;
+import unnamed.mini.pw.edu.pl.unnamedapp.model.googleplaces.PlaceDetailsResult;
 import unnamed.mini.pw.edu.pl.unnamedapp.model.googleplaces.PlacesResult;
 
 public interface GoogleMapsApiService {
@@ -15,4 +16,7 @@ public interface GoogleMapsApiService {
     Observable<PlacesResult> getNearbyPubsNextPage(@Query("pageToken") String pageToken,
                                                    @Query("key") String apiKey);
 
+    @GET("place/details/json")
+    Observable<PlaceDetailsResult> getPlaceDetails(@Query("placeid")String placeId,
+                                                   @Query("key")String apiKey);
 }

@@ -10,20 +10,23 @@ public class PlacePagerAdapter extends FragmentStatePagerAdapter {
     private static final int BEERS_TAB = 1;
     private static final int SPECIAL_OFFERS_TAB = 2;
 
-    public PlacePagerAdapter(FragmentManager fragmentManager) {
+    private String placeId;
+
+    public PlacePagerAdapter(FragmentManager fragmentManager, String placeId) {
         super(fragmentManager);
+        this.placeId = placeId;
     }
 
     @Override
     public Fragment getItem(int position) {
         switch (position) {
             case BEERS_TAB:
-                return new PlaceBeersFragment();
+                return PlaceBeersFragment.newInstance(placeId);
             case SPECIAL_OFFERS_TAB:
-                return new PlaceSpecialOffersFragment();
+                return PlaceSpecialOffersFragment.newInstance(placeId);
             case GENERAL_TAB:
             default:
-                return new PlaceGeneralFragment();
+                return PlaceGeneralFragment.newInstance(placeId);
         }
     }
 

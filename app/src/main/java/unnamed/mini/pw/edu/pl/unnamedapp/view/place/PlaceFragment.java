@@ -2,6 +2,7 @@ package unnamed.mini.pw.edu.pl.unnamedapp.view.place;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -19,22 +20,39 @@ import unnamed.mini.pw.edu.pl.unnamedapp.view.BaseFragment;
 public class PlaceFragment extends BaseFragment {
 
     public static final String PLACE_ID_KEY = "placeId";
+    public static final String PLACE_NAME_KEY = "placeName";
 
     @Bind(R.id.tabs)
     TabLayout tabLayout;
+
+    @Bind(R.id.collapsing_toolbar)
+    CollapsingToolbarLayout collapsingToolbarLayout;
 
     @Bind(R.id.viewpager)
     ViewPager viewPager;
 
     private String placeId;
+    private String placeName;
 
     public PlaceFragment() {
     }
 
+    public static PlaceFragment newInstance(String placeId, String placeName){
+        PlaceFragment fragment = new PlaceFragment();
+        Bundle args = new Bundle();
+        args.putString(PLACE_ID_KEY, placeId);
+        args.putString(PLACE_NAME_KEY, placeName);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         this.setHasOptionsMenu(true);
+        placeId = getArguments().getString(PLACE_ID_KEY);
+        placeName = getArguments().getString(PLACE_NAME_KEY);
     }
 
     @Override
@@ -42,6 +60,10 @@ public class PlaceFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_place, container, false);
         ButterKnife.bind(this, view);
+        PlacePagerAdapter pagerAdapter = new PlacePagerAdapter(getFragmentManager(), placeId);
+        viewPager.setAdapter(pagerAdapter);
+        tabLayout.setupWithViewPager(viewPager);
+        collapsingToolbarLayout.setTitle(placeName);
         return view;
     }
 
@@ -51,9 +73,6 @@ public class PlaceFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         Bundle bundle = getArguments();
         placeId = bundle.getString(PLACE_ID_KEY);
-        PlacePagerAdapter pagerAdapter = new PlacePagerAdapter(getFragmentManager());
-        viewPager.setAdapter(pagerAdapter);
-        tabLayout.setupWithViewPager(viewPager);
     }
 
     @Override

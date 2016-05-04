@@ -12,6 +12,15 @@ import unnamed.mini.pw.edu.pl.unnamedapp.view.BaseActivity;
 
 public class PlaceSpecialOffersFragment extends Fragment {
 
+
+    public static PlaceSpecialOffersFragment newInstance(String placeId){
+        PlaceSpecialOffersFragment fragment = new PlaceSpecialOffersFragment();
+        Bundle args = new Bundle();
+        args.putString("placeId", placeId);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

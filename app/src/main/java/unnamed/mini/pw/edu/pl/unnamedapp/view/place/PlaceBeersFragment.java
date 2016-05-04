@@ -12,6 +12,15 @@ import unnamed.mini.pw.edu.pl.unnamedapp.view.BaseActivity;
 
 public class PlaceBeersFragment extends Fragment {
 
+
+    public static PlaceBeersFragment newInstance(String placeId){
+        PlaceBeersFragment fragment = new PlaceBeersFragment();
+        Bundle args = new Bundle();
+        args.putString("placeId", placeId);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

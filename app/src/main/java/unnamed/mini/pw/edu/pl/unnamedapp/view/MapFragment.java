@@ -28,6 +28,7 @@ import javax.inject.Inject;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import timber.log.Timber;
 import unnamed.mini.pw.edu.pl.unnamedapp.R;
 import unnamed.mini.pw.edu.pl.unnamedapp.model.googleplaces.Place;
 import unnamed.mini.pw.edu.pl.unnamedapp.model.googleplaces.PlacesResult;
@@ -40,7 +41,7 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
-    private HashMap<String, String> markerPlacesIds = new HashMap<>();
+    private HashMap<String, Place> markerPlacesIds = new HashMap<>();
     private GoogleMap map;
     private GoogleApiClient googleApiClient;
     private Location userLocation;
@@ -68,8 +69,6 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
         mapFragment = (SupportMapFragment) fragmentManager.findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-//        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.nearby));
-
         if (googleApiClient == null) {
             googleApiClient = new GoogleApiClient.Builder(getContext())
                     .addConnectionCallbacks(this)
@@ -82,8 +81,8 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
 
         locationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(10 * 1000)
-                .setFastestInterval(5 * 1000);
+                .setInterval(20 * 1000)
+                .setFastestInterval(10 * 1000);
     }
 
     @Override
@@ -91,11 +90,8 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
         map = googleMap;
         map.setMyLocationEnabled(true);
         map.setOnInfoWindowClickListener(marker -> {
-            String placeId = markerPlacesIds.get(marker.getId());
-            PlaceFragment detailsFragment = new PlaceFragment();
-            Bundle bundle = new Bundle();
-            bundle.putString(PlaceFragment.PLACE_ID_KEY, placeId);
-            detailsFragment.setArguments(bundle);
+            Place place = markerPlacesIds.get(marker.getId());
+            PlaceFragment detailsFragment = PlaceFragment.newInstance(place.getPlaceId(), place.getName());
             ((BaseActivity)getActivity()).changeFragmentAndAddToStack(detailsFragment);
         });
     }
@@ -155,7 +151,7 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
                     .position(new LatLng(location.getLat(), location.getLng()))
                     .title(place.getName())
                     .snippet(place.getFormattedAddress()));
-            markerPlacesIds.put(marker.getId(), place.getId());
+            markerPlacesIds.put(marker.getId(), place);
         }
     }
 
