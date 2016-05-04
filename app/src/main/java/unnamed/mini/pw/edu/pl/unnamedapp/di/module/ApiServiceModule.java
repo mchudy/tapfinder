@@ -93,8 +93,12 @@ public class ApiServiceModule {
     @Provides
     @Singleton
     @Named("googlePlacesApi")
-    Retrofit provideGooglePlacesRetrofit() {
+    Retrofit provideGooglePlacesRetrofit(HttpLoggingInterceptor loggingInterceptor) {
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .build();
         return new Retrofit.Builder()
+                .client(client)
                 .baseUrl(Constants.GOOGLE_MAPS_API_URL)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())

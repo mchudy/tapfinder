@@ -20,8 +20,19 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.HashMap;
+
+import javax.inject.Inject;
+
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import unnamed.mini.pw.edu.pl.unnamedapp.R;
+import unnamed.mini.pw.edu.pl.unnamedapp.model.googleplaces.Place;
+import unnamed.mini.pw.edu.pl.unnamedapp.model.googleplaces.PlacesResult;
+import unnamed.mini.pw.edu.pl.unnamedapp.service.GoogleMapsApiService;
 
 @SuppressWarnings("ResourceType")
 public class MapFragment extends BaseFragment implements OnMapReadyCallback,
@@ -29,11 +40,14 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
+    private HashMap<String, String> markerPlacesIds = new HashMap<>();
     private GoogleMap map;
     private GoogleApiClient googleApiClient;
     private Location userLocation;
     private static LocationRequest locationRequest;
 
+    @Inject
+    GoogleMapsApiService googleApiService;
 
     public MapFragment() {
     }
@@ -41,6 +55,7 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        activityComponent().inject(this);
         return inflater.inflate(R.layout.fragment_map, container, false);
     }
 
@@ -74,6 +89,14 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
         map.setMyLocationEnabled(true);
+        map.setOnInfoWindowClickListener(marker -> {
+            String placeId = markerPlacesIds.get(marker.getId());
+            PlaceDetailsFragment detailsFragment = new PlaceDetailsFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString(PlaceDetailsFragment.PLACE_ID_KEY, placeId);
+            detailsFragment.setArguments(bundle);
+            ((BaseActivity)MapFragment.this.getActivity()).changeFragmentAndAddToStack(detailsFragment);
+        });
     }
 
     @Override
@@ -110,6 +133,27 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
     private void handleNewLocation(Location location) {
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(
                 new LatLng(location.getLatitude(), location.getLongitude()), 15));
+        loadPubs(location);
+    }
+
+    private void loadPubs(Location location) {
+        String locationString = location.getLatitude() + "," + location.getLongitude();
+        googleApiService.getNearbyPubs(locationString, getString(R.string.google_places_key))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::showMarkers);
+    }
+
+    private void showMarkers(PlacesResult result) {
+        markerPlacesIds.clear();
+        for(Place place : result) {
+            Place.Location location = place.getGeometry().getLocation();
+            Marker marker = map.addMarker(new MarkerOptions()
+                    .position(new LatLng(location.getLat(), location.getLng()))
+                    .title(place.getName())
+                    .snippet(place.getFormattedAddress()));
+            markerPlacesIds.put(marker.getId(), place.getId());
+        }
     }
 
     @Override

@@ -132,9 +132,10 @@ public class MainActivity extends BaseActivity {
         if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 Place place = PlaceAutocomplete.getPlace(this, data);
-                //TODO
                 PlaceDetailsFragment detailsFragment = new PlaceDetailsFragment();
-                detailsFragment.setPlace(place);
+                Bundle bundle = new Bundle();
+                bundle.putString(PlaceDetailsFragment.PLACE_ID_KEY, place.getId());
+                detailsFragment.setArguments(bundle);
                 changeFragment(detailsFragment);
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 Status status = PlaceAutocomplete.getStatus(this, data);

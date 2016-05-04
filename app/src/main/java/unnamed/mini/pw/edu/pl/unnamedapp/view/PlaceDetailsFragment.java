@@ -1,25 +1,22 @@
 package unnamed.mini.pw.edu.pl.unnamedapp.view;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.location.places.Place;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 import unnamed.mini.pw.edu.pl.unnamedapp.R;
 
 public class PlaceDetailsFragment extends Fragment {
+
+    public static final String PLACE_ID_KEY = "placeId";
 
     @Bind(R.id.address)
     TextView address;
@@ -36,13 +33,9 @@ public class PlaceDetailsFragment extends Fragment {
     @Bind(R.id.website_image)
     ImageView websiteImage;
 
-    private Place place;
+    private String placeId;
 
     public PlaceDetailsFragment() {
-    }
-
-    public void setPlace(Place place){
-        this.place = place;
     }
 
     @Override
@@ -62,20 +55,23 @@ public class PlaceDetailsFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-       ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(place.getName());
-        phoneNumber.setText(place.getPhoneNumber());
-        address.setText(place.getAddress());
-        website.setText(place.getWebsiteUri().toString());
-
-        phoneImage.setOnClickListener(v -> {
-            Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + place.getPhoneNumber()));
-            dialIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(dialIntent);
-        });
-
-        websiteImage.setOnClickListener(v -> {
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, place.getWebsiteUri());
-            startActivity(browserIntent);
-        });
+        Bundle bundle = getArguments();
+        placeId = bundle.getString(PLACE_ID_KEY);
+        Timber.d(placeId);
+//       ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(place.getName());
+//        phoneNumber.setText(place.getPhoneNumber());
+//        address.setText(place.getAddress());
+//        website.setText(place.getWebsiteUri().toString());
+//
+//        phoneImage.setOnClickListener(v -> {
+//            Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + place.getPhoneNumber()));
+//            dialIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            startActivity(dialIntent);
+//        });
+//
+//        websiteImage.setOnClickListener(v -> {
+//            Intent browserIntent = new Intent(Intent.ACTION_VIEW, place.getWebsiteUri());
+//            startActivity(browserIntent);
+//        });
     }
 }

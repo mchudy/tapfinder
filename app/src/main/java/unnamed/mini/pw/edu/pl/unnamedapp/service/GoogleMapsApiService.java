@@ -1,4 +1,18 @@
 package unnamed.mini.pw.edu.pl.unnamedapp.service;
 
+import retrofit2.http.GET;
+import retrofit2.http.Query;
+import rx.Observable;
+import unnamed.mini.pw.edu.pl.unnamedapp.model.googleplaces.PlacesResult;
+
 public interface GoogleMapsApiService {
+
+    @GET("place/nearbysearch/json?keyword=pub&rankby=prominence&radius=5000")
+    Observable<PlacesResult> getNearbyPubs(@Query("location") String location,
+                                           @Query("key") String apiKey);
+
+    @GET("place/nearbysearch/json")
+    Observable<PlacesResult> getNearbyPubsNextPage(@Query("pageToken") String pageToken,
+                                                   @Query("key") String apiKey);
+
 }
