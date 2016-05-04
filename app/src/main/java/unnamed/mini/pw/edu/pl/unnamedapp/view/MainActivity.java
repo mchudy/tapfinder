@@ -10,8 +10,10 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.f2prateek.rx.preferences.Preference;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -32,6 +34,8 @@ import unnamed.mini.pw.edu.pl.unnamedapp.di.qualifier.UsernamePreference;
 public class MainActivity extends BaseActivity {
 
     private static final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
+
+    private TextView currentUsername;
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -60,12 +64,20 @@ public class MainActivity extends BaseActivity {
         initToolbar();
 
         drawer.setNavigationItemSelectedListener(item -> {
-            selectDrawerItem(item);
+            if (!item.isChecked()) {
+                item.setChecked(true);
+                selectDrawerItem(item);
+            }
+            drawerLayout.closeDrawer(GravityCompat.START);
             return true;
         });
         View headerView = drawer.getHeaderView(0);
         LinearLayout drawerHeader = (LinearLayout) headerView.findViewById(R.id.drawer_header);
+        currentUsername = (TextView) drawerHeader.findViewById(R.id.drawer_username);
+        currentUsername.setText(usernamePreference.get());
+
         drawerHeader.setOnClickListener(v -> {
+            uncheckAllMenuItems();
             changeFragment(new MyProfileFragment());
             drawerLayout.closeDrawer(GravityCompat.START);
         });
@@ -97,13 +109,12 @@ public class MainActivity extends BaseActivity {
         return true;
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            if(drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 drawerLayout.closeDrawer(GravityCompat.START);
-            }else{
+            } else {
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         } else if (item.getItemId() == R.id.action_search) {
@@ -136,7 +147,7 @@ public class MainActivity extends BaseActivity {
                 Bundle bundle = new Bundle();
                 bundle.putString(PlaceDetailsFragment.PLACE_ID_KEY, place.getId());
                 detailsFragment.setArguments(bundle);
-                changeFragment(detailsFragment);
+                changeFragmentAndAddToStack(detailsFragment);
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 Status status = PlaceAutocomplete.getStatus(this, data);
                 Timber.e(status.getStatusMessage());
@@ -163,7 +174,6 @@ public class MainActivity extends BaseActivity {
                 //changeFragment(new BaseFragment());
                 break;
         }
-        drawerLayout.closeDrawer(GravityCompat.START);
     }
 
     private void logout() {
@@ -172,6 +182,22 @@ public class MainActivity extends BaseActivity {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void uncheckAllMenuItems() {
+        final Menu menu = drawer.getMenu();
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem item = menu.getItem(i);
+            if (item.hasSubMenu()) {
+                SubMenu subMenu = item.getSubMenu();
+                for (int j = 0; j < subMenu.size(); j++) {
+                    MenuItem subMenuItem = subMenu.getItem(j);
+                    subMenuItem.setChecked(false);
+                }
+            } else {
+                item.setChecked(false);
+            }
+        }
     }
 
 }

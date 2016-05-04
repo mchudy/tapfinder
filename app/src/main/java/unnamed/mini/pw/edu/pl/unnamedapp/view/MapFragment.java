@@ -45,6 +45,7 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
     private GoogleApiClient googleApiClient;
     private Location userLocation;
     private static LocationRequest locationRequest;
+    private SupportMapFragment mapFragment;
 
     @Inject
     GoogleMapsApiService googleApiService;
@@ -64,7 +65,7 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         FragmentManager fragmentManager = getChildFragmentManager();
-        SupportMapFragment mapFragment = (SupportMapFragment) fragmentManager.findFragmentById(R.id.map);
+        mapFragment = (SupportMapFragment) fragmentManager.findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getString(R.string.nearby));
@@ -95,7 +96,7 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
             Bundle bundle = new Bundle();
             bundle.putString(PlaceDetailsFragment.PLACE_ID_KEY, placeId);
             detailsFragment.setArguments(bundle);
-            ((BaseActivity)MapFragment.this.getActivity()).changeFragmentAndAddToStack(detailsFragment);
+            ((BaseActivity)getActivity()).changeFragmentAndAddToStack(detailsFragment);
         });
     }
 
@@ -164,5 +165,16 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
     @Override
     public void onLocationChanged(Location location) {
         userLocation = location;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if(mapFragment != null && !getActivity().isFinishing()){
+            getFragmentManager()
+                    .beginTransaction()
+                    .remove(mapFragment)
+                    .commit();
+        }
     }
 }
