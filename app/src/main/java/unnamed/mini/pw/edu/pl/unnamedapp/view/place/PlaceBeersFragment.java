@@ -1,16 +1,18 @@
 package unnamed.mini.pw.edu.pl.unnamedapp.view.place;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import butterknife.ButterKnife;
 import unnamed.mini.pw.edu.pl.unnamedapp.R;
 import unnamed.mini.pw.edu.pl.unnamedapp.view.BaseActivity;
 
-public class PlaceBeersFragment extends Fragment {
+public class PlaceBeersFragment extends Fragment implements FabFragmentHandler{
 
 
     public static PlaceBeersFragment newInstance(String placeId){
@@ -38,5 +40,10 @@ public class PlaceBeersFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void handleFab(FloatingActionButton fab) {
+        fab.setOnClickListener(v -> Toast.makeText(getActivity(), "Adding beer",Toast.LENGTH_SHORT).show());
     }
 }

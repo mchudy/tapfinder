@@ -13,8 +13,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.net.URISyntaxException;
-
 import javax.inject.Inject;
 
 import butterknife.Bind;
@@ -95,8 +93,9 @@ public class PlaceGeneralFragment extends Fragment {
         }
         phoneNumber.setText(place.getFormattedPhoneNumber());
         address.setText(place.getFormattedAddress());
-        website.setText(place.getWebsite().toString());
-
+        if(place.getWebsite() != null) {
+            website.setText(place.getWebsite().toString());
+        }
         phoneImage.setOnClickListener(v -> {
             Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + place.getFormattedPhoneNumber()));
             dialIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

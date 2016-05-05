@@ -5,10 +5,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 public class PlacePagerAdapter extends FragmentStatePagerAdapter {
-    private static final int TABS_COUNT = 3;
-    private static final int GENERAL_TAB = 0;
-    private static final int BEERS_TAB = 1;
-    private static final int SPECIAL_OFFERS_TAB = 2;
+    public static final int TABS_COUNT = 3;
+    public static final int GENERAL_TAB = 0;
+    public static final int BEERS_TAB = 1;
+    public static final int SPECIAL_OFFERS_TAB = 2;
 
     private String placeId;
 

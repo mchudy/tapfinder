@@ -3,7 +3,9 @@ package unnamed.mini.pw.edu.pl.unnamedapp.view.place;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,6 +23,9 @@ public class PlaceFragment extends BaseFragment {
 
     public static final String PLACE_ID_KEY = "placeId";
     public static final String PLACE_NAME_KEY = "placeName";
+
+    @Bind(R.id.fab)
+    FloatingActionButton fab;
 
     @Bind(R.id.tabs)
     TabLayout tabLayout;
@@ -62,6 +67,32 @@ public class PlaceFragment extends BaseFragment {
         ButterKnife.bind(this, view);
         PlacePagerAdapter pagerAdapter = new PlacePagerAdapter(getFragmentManager(), placeId);
         viewPager.setAdapter(pagerAdapter);
+        fab.hide();
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Fragment pageFragment = (Fragment) viewPager.getAdapter().instantiateItem(viewPager, viewPager.getCurrentItem());
+                switch (position) {
+                    case PlacePagerAdapter.GENERAL_TAB:
+                        fab.hide();
+                        break;
+                    default:
+                        fab.show();
+                        ((FabFragmentHandler)pageFragment).handleFab(fab);
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         tabLayout.setupWithViewPager(viewPager);
         collapsingToolbarLayout.setTitle(placeName);
         return view;
