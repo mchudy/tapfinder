@@ -53,7 +53,6 @@ public class PlaceFragment extends BaseFragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         this.setHasOptionsMenu(true);
         placeId = getArguments().getString(PLACE_ID_KEY);
@@ -65,13 +64,18 @@ public class PlaceFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_place, container, false);
         ButterKnife.bind(this, view);
+        setupTabs();
+        collapsingToolbarLayout.setTitle(placeName);
+        return view;
+    }
+
+    private void setupTabs() {
         PlacePagerAdapter pagerAdapter = new PlacePagerAdapter(getFragmentManager(), placeId);
         viewPager.setAdapter(pagerAdapter);
         fab.hide();
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
@@ -90,20 +94,22 @@ public class PlaceFragment extends BaseFragment {
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
         tabLayout.setupWithViewPager(viewPager);
-        collapsingToolbarLayout.setTitle(placeName);
-        return view;
     }
 
-    @SuppressWarnings("ConstantConditions")
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Bundle bundle = getArguments();
         placeId = bundle.getString(PLACE_ID_KEY);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.action_search);
+        item.setVisible(false);
     }
 
     @Override
