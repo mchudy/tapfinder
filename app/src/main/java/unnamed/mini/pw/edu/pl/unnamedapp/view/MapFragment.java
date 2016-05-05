@@ -23,9 +23,11 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
+import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
@@ -136,15 +138,26 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
     }
 
     private void loadPubs(Location location) {
+        markerPlacesIds.clear();
         String locationString = location.getLatitude() + "," + location.getLongitude();
         googleApiService.getNearbyPubs(locationString, getString(R.string.google_places_key))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(this::showMarkers);
+                .subscribe(r -> {showMarkers(r); loadNextPage(r, 2);});
+    }
+
+    private void loadNextPage(PlacesResult r, int pageNumber) {
+        if(pageNumber > 3) return;
+        Observable.just(1)
+                .delay(3, TimeUnit.SECONDS)
+                .flatMap(a -> googleApiService.getNearbyPubsNextPage(r.getNextPageToken(), getString(R.string.google_places_key)))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(r2 -> {showMarkers(r2); loadNextPage(r2, pageNumber + 1);});
     }
 
     private void showMarkers(PlacesResult result) {
-        markerPlacesIds.clear();
+        Timber.d("Loaded " + String.valueOf(result.size()) + "places");
         for(Place place : result) {
             Place.Location location = place.getGeometry().getLocation();
             Marker marker = map.addMarker(new MarkerOptions()
