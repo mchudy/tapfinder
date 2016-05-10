@@ -121,6 +121,9 @@ public class LoginActivity extends BaseActivity {
         facebookLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+                progress = new ProgressDialog(LoginActivity.this);
+                progress.setMessage(getString(R.string.please_wait));
+                progress.show();
                 GraphRequest request = GraphRequest.newMeRequest(
                         loginResult.getAccessToken(),
                         (object, response) -> {
@@ -135,6 +138,7 @@ public class LoginActivity extends BaseActivity {
                                 tryLoginExternal(dto);
                             } catch (JSONException e) {
                                 Timber.wtf(e.getMessage());
+                                progress.dismiss();
                             }
                         });
                 Bundle parameters = new Bundle();
@@ -162,13 +166,17 @@ public class LoginActivity extends BaseActivity {
                 .subscribeOn(Schedulers.io())
                 .subscribe(result -> {
                    if(result.code() == 200){
+                       progress.dismiss();
                        addToken(result.body());
                        startMainActivity();
                    }
                    if(result.code() == 400) {
                        registerExternal(dto);
                    }
-                }, e -> Timber.wtf(e.getMessage()));
+                }, e -> {
+                    Timber.wtf(e.getMessage());
+                    progress.dismiss();
+                });
     }
 
     private void registerExternal(UserRegisterExternalDto dto) {
@@ -176,6 +184,7 @@ public class LoginActivity extends BaseActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(result -> {
+                    progress.dismiss();
                     if (result.code() == 200) {
                         Toast.makeText(LoginActivity.this, "Successfully registered with Facebook", Toast.LENGTH_SHORT).show();
                         addToken(result.body());
@@ -183,7 +192,10 @@ public class LoginActivity extends BaseActivity {
                     } else if(result.code() == 400) {
                         Timber.wtf(result.body().toString());
                     }
-                }, e -> Timber.wtf("Could not register via Facebook"));
+                }, e -> {
+                    Timber.wtf("Could not register via Facebook");
+                    progress.dismiss();
+                });
     }
 
     @Override
