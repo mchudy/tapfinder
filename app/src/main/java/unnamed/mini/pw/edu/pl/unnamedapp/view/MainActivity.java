@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.f2prateek.rx.preferences.Preference;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;
@@ -160,6 +161,7 @@ public class MainActivity extends BaseActivity {
     private void logout() {
         usernamePreference.delete();
         accessTokenPreference.delete();
+        LoginManager.getInstance().logOut();
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();

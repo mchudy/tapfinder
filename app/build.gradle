@@ -53,7 +53,9 @@ def compile_libs = [
         'com.squareup.retrofit2:converter-gson:2.0.0-beta4',
         'com.squareup.okhttp3:logging-interceptor:3.2.0',
 
-        'org.parceler:parceler-api:1.0.4'
+        'org.parceler:parceler-api:1.0.4',
+
+        'com.facebook.android:facebook-android-sdk:[4,5)'
 ]
 
 def provided_libs = [

@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class AccessTokenModel {
 
+    private String userName;
+
     @SerializedName("access_token")
     private String accessToken;
 
@@ -22,5 +24,9 @@ public class AccessTokenModel {
                             .toUpperCase() + tokenType.substring(1);
         }
         return tokenType;
+    }
+
+    public String getUserName() {
+        return userName;
     }
 }

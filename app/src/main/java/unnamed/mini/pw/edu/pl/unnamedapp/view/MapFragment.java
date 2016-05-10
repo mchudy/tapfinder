@@ -153,7 +153,8 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
                 .flatMap(a -> googleApiService.getNearbyPubsNextPage(r.getNextPageToken(), getString(R.string.google_places_key)))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(r2 -> {showMarkers(r2); loadNextPage(r2, pageNumber + 1);});
+                .subscribe(r2 -> {showMarkers(r2); loadNextPage(r2, pageNumber + 1);},
+                        e -> Timber.wtf(e.getMessage()));
     }
 
     private void showMarkers(PlacesResult result) {
