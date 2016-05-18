@@ -43,6 +43,7 @@ def compile_libs = [
         'de.hdodenhof:circleimageview:2.0.0',
         'com.android.support:cardview-v7:23.3.0',
         'com.google.dagger:dagger:2.0.2',
+        'com.squareup.picasso:picasso:2.5.2',
 
         'io.reactivex:rxandroid:1.1.0',
         'io.reactivex:rxjava:1.1.0',

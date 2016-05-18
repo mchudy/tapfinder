@@ -93,7 +93,7 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
         map.setMyLocationEnabled(true);
         map.setOnInfoWindowClickListener(marker -> {
             Place place = markerPlacesIds.get(marker.getId());
-            PlaceFragment detailsFragment = PlaceFragment.newInstance(place.getPlaceId(), place.getName());
+            PlaceFragment detailsFragment = PlaceFragment.newInstance(place);
             ((BaseActivity)getActivity()).changeFragmentAndAddToStack(detailsFragment);
         });
     }

@@ -19,7 +19,6 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.AutocompleteFilter;
-import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 
 import javax.inject.Inject;
@@ -29,7 +28,6 @@ import timber.log.Timber;
 import unnamed.mini.pw.edu.pl.unnamedapp.R;
 import unnamed.mini.pw.edu.pl.unnamedapp.di.qualifier.AccessTokenPreference;
 import unnamed.mini.pw.edu.pl.unnamedapp.di.qualifier.UsernamePreference;
-import unnamed.mini.pw.edu.pl.unnamedapp.view.place.PlaceFragment;
 
 public class MainActivity extends BaseActivity {
 
@@ -137,9 +135,10 @@ public class MainActivity extends BaseActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-                Place place = PlaceAutocomplete.getPlace(this, data);
-                PlaceFragment detailsFragment = PlaceFragment.newInstance(place.getId(), place.getName().toString());
-                changeFragmentAndAddToStack(detailsFragment);
+                //TODO: custom search
+                //Place place = PlaceAutocomplete.getPlace(this, data);
+                //PlaceFragment detailsFragment = PlaceFragment.newInstance(p);
+                //changeFragmentAndAddToStack(detailsFragment);
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 Status status = PlaceAutocomplete.getStatus(this, data);
                 Timber.e(status.getStatusMessage());

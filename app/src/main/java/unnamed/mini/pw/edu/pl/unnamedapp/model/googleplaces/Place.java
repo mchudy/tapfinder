@@ -2,40 +2,47 @@ package unnamed.mini.pw.edu.pl.unnamedapp.model.googleplaces;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 import lombok.Data;
-import lombok.Value;
 
 @Data
+@Parcel
 public class Place {
 
-    @Value
+    @Data
+    @Parcel
     public static class Geometry {
-        private Location location;
+        Location location;
     }
 
-    @Value
+    @Data
+    @Parcel
     public static class Location {
-        private float lat;
-        private float lng;
+        float lat;
+        float lng;
     }
 
     @SerializedName("formatted_address")
-    private String formattedAddress;
+    String formattedAddress;
 
-    private Geometry geometry;
-    private String icon;
-    private String id;
-    private String name;
+    Geometry geometry;
+    String icon;
+    String id;
+    String name;
 
     @SerializedName("place_id")
-    private String placeId;
+    String placeId;
 
-    private Float rating;
-    private String reference;
-    private Set<String> types = Collections.emptySet( );
-    private String url;
-    private String vicinity;
+    Float rating;
+    String reference;
+    Set<String> types = Collections.emptySet( );
+    String url;
+    String vicinity;
+
+    List<Photo> photos;
 }

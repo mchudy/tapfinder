@@ -10,11 +10,11 @@ import lombok.Data;
 public class PlaceDetails extends Place {
 
     @SerializedName("formatted_phone_number")
-    private String formattedPhoneNumber;
+    String formattedPhoneNumber;
 
     @SerializedName("opening_hours")
-    private OpeningHours openingHours;
+    OpeningHours openingHours;
 
-    private Integer priceLevel;
-    private URL website;
+    Integer priceLevel;
+    URL website;
 }

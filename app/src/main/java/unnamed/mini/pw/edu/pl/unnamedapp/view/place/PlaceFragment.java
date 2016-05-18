@@ -13,16 +13,22 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
+
+import org.parceler.Parcels;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import unnamed.mini.pw.edu.pl.unnamedapp.R;
+import unnamed.mini.pw.edu.pl.unnamedapp.model.googleplaces.Photo;
+import unnamed.mini.pw.edu.pl.unnamedapp.model.googleplaces.Place;
 import unnamed.mini.pw.edu.pl.unnamedapp.view.BaseFragment;
 
 public class PlaceFragment extends BaseFragment {
 
-    public static final String PLACE_ID_KEY = "placeId";
-    public static final String PLACE_NAME_KEY = "placeName";
+    public static final String PLACE_KEY = "place";
 
     @Bind(R.id.fab)
     FloatingActionButton fab;
@@ -36,17 +42,18 @@ public class PlaceFragment extends BaseFragment {
     @Bind(R.id.viewpager)
     ViewPager viewPager;
 
-    private String placeId;
-    private String placeName;
+    @Bind(R.id.background)
+    ImageView background;
+
+    private Place place;
 
     public PlaceFragment() {
     }
 
-    public static PlaceFragment newInstance(String placeId, String placeName){
+    public static PlaceFragment newInstance(Place place){
         PlaceFragment fragment = new PlaceFragment();
         Bundle args = new Bundle();
-        args.putString(PLACE_ID_KEY, placeId);
-        args.putString(PLACE_NAME_KEY, placeName);
+        args.putParcelable(PLACE_KEY, Parcels.wrap(place));
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,8 +62,7 @@ public class PlaceFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setHasOptionsMenu(true);
-        placeId = getArguments().getString(PLACE_ID_KEY);
-        placeName = getArguments().getString(PLACE_NAME_KEY);
+        place = Parcels.unwrap(getArguments().getParcelable(PLACE_KEY));
     }
 
     @Override
@@ -65,12 +71,22 @@ public class PlaceFragment extends BaseFragment {
         View view =  inflater.inflate(R.layout.fragment_place, container, false);
         ButterKnife.bind(this, view);
         setupTabs();
-        collapsingToolbarLayout.setTitle(placeName);
+        collapsingToolbarLayout.setTitle(place.getName());
+        loadPhoto();
         return view;
     }
 
+    private void loadPhoto() {
+        if(place.getPhotos() != null && place.getPhotos().size() > 0) {
+            Photo photo = place.getPhotos().get(0);
+            Picasso.with(getActivity())
+                    .load(photo.getUrl(getString(R.string.google_places_key), 500))
+                    .into(background);
+        }
+    }
+
     private void setupTabs() {
-        PlacePagerAdapter pagerAdapter = new PlacePagerAdapter(getFragmentManager(), placeId);
+        PlacePagerAdapter pagerAdapter = new PlacePagerAdapter(getFragmentManager(), place.getPlaceId());
         viewPager.setAdapter(pagerAdapter);
         fab.hide();
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -97,13 +113,6 @@ public class PlaceFragment extends BaseFragment {
             }
         });
         tabLayout.setupWithViewPager(viewPager);
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        Bundle bundle = getArguments();
-        placeId = bundle.getString(PLACE_ID_KEY);
     }
 
     @Override

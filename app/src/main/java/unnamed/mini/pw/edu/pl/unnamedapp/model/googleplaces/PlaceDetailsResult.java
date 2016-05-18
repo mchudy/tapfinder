@@ -10,7 +10,7 @@ import lombok.Value;
 public class PlaceDetailsResult {
 
     @SerializedName("html_attributions")
-    private List<String> htmlAttributions;
+    List<String> htmlAttributions;
 
-    private PlaceDetails result;
+    PlaceDetails result;
 }

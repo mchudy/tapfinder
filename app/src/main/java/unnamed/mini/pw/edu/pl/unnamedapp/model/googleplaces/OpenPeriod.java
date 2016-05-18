@@ -1,9 +1,9 @@
 package unnamed.mini.pw.edu.pl.unnamedapp.model.googleplaces;
 
-import lombok.Value;
+import lombok.Data;
 
-@Value
+@Data
 public class OpenPeriod {
-    private OpenTime open;
-    private OpenTime close;
+    OpenTime open;
+    OpenTime close;
 }

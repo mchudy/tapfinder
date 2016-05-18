@@ -5,13 +5,13 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Collections;
 import java.util.List;
 
-import lombok.Value;
+import lombok.Data;
 
-@Value
+@Data
 public class OpeningHours {
 
     @SerializedName("open_now")
-    private boolean openNow;
+    boolean openNow;
 
-    private List<OpenPeriod> periods = Collections.emptyList( );
+    List<OpenPeriod> periods = Collections.emptyList( );
 }
