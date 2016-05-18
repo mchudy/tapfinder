@@ -76,7 +76,17 @@ public class MainActivity extends BaseActivity {
             changeFragment(new MyProfileFragment());
             drawerLayout.closeDrawer(GravityCompat.START);
         });
+
+        getSupportFragmentManager().addOnBackStackChangedListener(() -> {
+            if(getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                getSupportActionBar().setHomeAsUpIndicator(android.support.v7.appcompat.R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+            }
+        });
         changeFragment(new MapFragment());
+    }
+
+    public void openDrawer() {
+        drawerLayout.openDrawer(GravityCompat.START);
     }
 
     @Override
@@ -100,7 +110,7 @@ public class MainActivity extends BaseActivity {
             if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 drawerLayout.closeDrawer(GravityCompat.START);
             } else {
-                drawerLayout.openDrawer(GravityCompat.START);
+                openDrawer();
             }
         } else if (item.getItemId() == R.id.action_search) {
             showSearch();

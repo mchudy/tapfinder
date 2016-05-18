@@ -41,6 +41,13 @@ public abstract class BaseFragment extends Fragment {
     private void initToolbar() {
         final AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(v -> {
+            if(getFragmentManager().getBackStackEntryCount() > 0) {
+                getActivity().onBackPressed();
+            } else {
+                ((MainActivity) getActivity()).openDrawer();
+            }
+        });
         final ActionBar actionBar = activity.getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(getString(getTitleResId()));
