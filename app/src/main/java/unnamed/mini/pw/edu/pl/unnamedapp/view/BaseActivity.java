@@ -32,20 +32,16 @@ public class BaseActivity extends AppCompatActivity{
         super.onDestroy();
         if(isFinishing()) {
             ButterKnife.unbind(this);
+            activityComponent = null;
         }
     }
 
-    //TODO: weird hack, look into it, shows a black page otherwise
     public void changeFragment(Fragment fragment) {
         Timber.d("Changing fragment %s", fragment.toString());
         cleanBackStack();
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment, new Fragment())
-                .commit();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.fragment, fragment)
+                .replace(R.id.fragment, fragment)
                 .commit();
     }
 

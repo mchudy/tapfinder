@@ -2,6 +2,7 @@ package unnamed.mini.pw.edu.pl.unnamedapp.view;
 
 import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -43,18 +44,18 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
+    private static final int PLACES_SEARCH_MAX_RESULTS = 20;
+
     private HashMap<String, Place> markerPlacesIds = new HashMap<>();
     private GoogleMap map;
     private GoogleApiClient googleApiClient;
     private Location userLocation;
     private static LocationRequest locationRequest;
-    private SupportMapFragment mapFragment;
 
     @Inject
     GoogleMapsApiService googleApiService;
 
-    public MapFragment() {
-    }
+    public MapFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,8 +68,15 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        FragmentManager fragmentManager = getChildFragmentManager();
-        mapFragment = (SupportMapFragment) fragmentManager.findFragmentById(R.id.map);
+
+        FragmentManager fm = getChildFragmentManager();
+        SupportMapFragment mapFragment = (SupportMapFragment) fm.findFragmentByTag("mapFragment");
+        if (mapFragment == null) {
+            mapFragment = new SupportMapFragment();
+            fm.beginTransaction()
+                .add(R.id.map, mapFragment, "mapFragment")
+                .commit();
+        }
         mapFragment.getMapAsync(this);
 
         if (googleApiClient == null) {
@@ -82,9 +90,7 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
         }
 
         locationRequest = LocationRequest.create()
-                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(20 * 1000)
-                .setFastestInterval(10 * 1000);
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
 
     @Override
@@ -113,7 +119,6 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
 
     @Override
     public void onConnectionSuspended(int i) {
-
     }
 
     @Override
@@ -139,11 +144,17 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
 
     private void loadPubs(Location location) {
         markerPlacesIds.clear();
+        map.clear();
         String locationString = location.getLatitude() + "," + location.getLongitude();
         googleApiService.getNearbyPubs(locationString, getString(R.string.google_places_key))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(r -> {showMarkers(r); loadNextPage(r, 2);});
+                .subscribe(r -> {
+                    showMarkers(r);
+                    if(r.size() == PLACES_SEARCH_MAX_RESULTS) {
+                        loadNextPage(r, 2);
+                    }
+                });
     }
 
     private void loadNextPage(PlacesResult r, int pageNumber) {
@@ -153,12 +164,17 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
                 .flatMap(a -> googleApiService.getNearbyPubsNextPage(r.getNextPageToken(), getString(R.string.google_places_key)))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(r2 -> {showMarkers(r2); loadNextPage(r2, pageNumber + 1);},
+                .subscribe(r2 -> {
+                            showMarkers(r2);
+                            if(r2.size() == PLACES_SEARCH_MAX_RESULTS) {
+                                loadNextPage(r2, pageNumber + 1);
+                            }
+                        },
                         e -> Timber.wtf(e.getMessage()));
     }
 
     private void showMarkers(PlacesResult result) {
-        Timber.d("Loaded " + String.valueOf(result.size()) + "places");
+        Timber.d("Loaded %d places" , result.size());
         for(Place place : result) {
             Place.Location location = place.getGeometry().getLocation();
             Marker marker = map.addMarker(new MarkerOptions()
@@ -170,8 +186,7 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
     }
 
     @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
     }
 
     @Override
@@ -182,12 +197,6 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if(mapFragment != null && !getActivity().isFinishing()){
-            getFragmentManager()
-                    .beginTransaction()
-                    .remove(mapFragment)
-                    .commit();
-        }
     }
 
     @Override
