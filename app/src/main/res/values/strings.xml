@@ -38,4 +38,5 @@
     <string name="place_details">Place details</string>
     <string name="add_beer_on_tap">Add beer on tap</string>
     <string name="add_special_offer">Add special offer</string>
+    <string name="find_a_beer">Find a beer</string>
 </resources>
