@@ -49,6 +49,8 @@ public class BaseActivity extends AppCompatActivity{
         Timber.d("Changing fragment %s and adding to backstack", fragment.toString());
         getSupportFragmentManager()
                 .beginTransaction()
+                .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left,
+                        R.anim.slide_in_right, R.anim.slide_out_right)
                 .replace(R.id.fragment, fragment)
                 .addToBackStack(null)
                 .commit();
