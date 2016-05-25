@@ -45,7 +45,7 @@ public class BaseActivity extends AppCompatActivity{
                 .commit();
     }
 
-    public void changeFragmentAndAddToStack(Fragment fragment) {
+    public void changeFragmentWithBackStack(Fragment fragment) {
         Timber.d("Changing fragment %s and adding to backstack", fragment.toString());
         getSupportFragmentManager()
                 .beginTransaction()

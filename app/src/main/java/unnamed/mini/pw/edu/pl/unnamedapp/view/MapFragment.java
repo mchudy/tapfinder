@@ -100,7 +100,7 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
         map.setOnInfoWindowClickListener(marker -> {
             Place place = markerPlacesIds.get(marker.getId());
             PlaceFragment detailsFragment = PlaceFragment.newInstance(place);
-            ((BaseActivity)getActivity()).changeFragmentAndAddToStack(detailsFragment);
+            ((BaseActivity)getActivity()).changeFragmentWithBackStack(detailsFragment);
         });
     }
 
@@ -161,7 +161,7 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
         if(pageNumber > 3) return;
         Observable.just(1)
                 .delay(3, TimeUnit.SECONDS)
-                .flatMap(a -> googleApiService.getNearbyPubsNextPage(r.getNextPageToken(), getString(R.string.google_places_key)))
+                .flatMap(a -> googleApiService.getNextPage(r.getNextPageToken(), getString(R.string.google_places_key)))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(r2 -> {

@@ -138,7 +138,7 @@ public class MainActivity extends BaseActivity {
                 //TODO: custom search
                 //Place place = PlaceAutocomplete.getPlace(this, data);
                 //PlaceFragment detailsFragment = PlaceFragment.newInstance(p);
-                //changeFragmentAndAddToStack(detailsFragment);
+                //changeFragmentWithBackStack(detailsFragment);
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 Status status = PlaceAutocomplete.getStatus(this, data);
                 Timber.e(status.getStatusMessage());

@@ -28,7 +28,7 @@
     <string name="email">Email</string>
     <string name="create_account">Create Account</string>
     <string name="register_header">Join the beer community</string>
-    <string name="please_wait">Please wait...</string>
+    <string name="please_wait">Please wait…</string>
     <string name="error_too_short_password">Password must be at least 6 characters long</string>
     <string name="error_invalid_email">Enter a valid email address</string>
     <string name="error_occurred">An error occurred</string>
@@ -36,5 +36,6 @@
     <string name="error_email_in_use">The email is already in use</string>
     <string name="favourites">Favourites</string>
     <string name="place_details">Place details</string>
-
+    <string name="add_beer_on_tap">Add beer on tap</string>
+    <string name="add_special_offer">Add special offer</string>
 </resources>

@@ -25,6 +25,7 @@ import unnamed.mini.pw.edu.pl.unnamedapp.R;
 import unnamed.mini.pw.edu.pl.unnamedapp.model.googleplaces.Photo;
 import unnamed.mini.pw.edu.pl.unnamedapp.model.googleplaces.Place;
 import unnamed.mini.pw.edu.pl.unnamedapp.view.BaseFragment;
+import unnamed.mini.pw.edu.pl.unnamedapp.view.FabFragmentHandler;
 
 public class PlaceFragment extends BaseFragment {
 
@@ -86,7 +87,7 @@ public class PlaceFragment extends BaseFragment {
     }
 
     private void setupTabs() {
-        PlacePagerAdapter pagerAdapter = new PlacePagerAdapter(getFragmentManager(), place.getPlaceId());
+        PlacePagerAdapter pagerAdapter = new PlacePagerAdapter(getChildFragmentManager(), place.getPlaceId());
         viewPager.setAdapter(pagerAdapter);
         fab.hide();
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

@@ -1,18 +1,21 @@
 package unnamed.mini.pw.edu.pl.unnamedapp.view.place;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import butterknife.ButterKnife;
 import unnamed.mini.pw.edu.pl.unnamedapp.R;
 import unnamed.mini.pw.edu.pl.unnamedapp.view.BaseActivity;
+import unnamed.mini.pw.edu.pl.unnamedapp.view.FabFragmentHandler;
 
-public class PlaceSpecialOffersFragment extends Fragment implements FabFragmentHandler{
+public class PlaceSpecialOffersFragment extends Fragment implements FabFragmentHandler {
+
+    private String placeId;
 
     public static PlaceSpecialOffersFragment newInstance(String placeId){
         PlaceSpecialOffersFragment fragment = new PlaceSpecialOffersFragment();
@@ -20,6 +23,13 @@ public class PlaceSpecialOffersFragment extends Fragment implements FabFragmentH
         args.putString("placeId", placeId);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle args = getArguments();
+        placeId = args.getString("placeId");
     }
 
     @Override
@@ -43,6 +53,8 @@ public class PlaceSpecialOffersFragment extends Fragment implements FabFragmentH
 
     @Override
     public void handleFab(FloatingActionButton fab) {
-        fab.setOnClickListener(v -> Toast.makeText(getActivity(), "Adding special offer",Toast.LENGTH_SHORT).show());
+        fab.setOnClickListener(v -> (
+                (BaseActivity)getActivity()).changeFragmentWithBackStack(AddSpecialOfferFragment.newInstance(placeId))
+        );
     }
 }

@@ -129,6 +129,7 @@ public class LoginActivity extends BaseActivity {
                         (object, response) -> {
                             JSONObject jsonObject = response.getJSONObject();
                             try {
+                                //TODO: get username from user?
                                 String username = jsonObject.getString("name").replaceAll("\\s*", "");
                                 UserRegisterExternalDto dto = new UserRegisterExternalDto(
                                         username,

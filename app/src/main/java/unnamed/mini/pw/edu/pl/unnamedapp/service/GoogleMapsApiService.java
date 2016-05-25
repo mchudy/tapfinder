@@ -13,8 +13,8 @@ public interface GoogleMapsApiService {
                                            @Query("key") String apiKey);
 
     @GET("place/nearbysearch/json")
-    Observable<PlacesResult> getNearbyPubsNextPage(@Query("pagetoken") String pageToken,
-                                                   @Query("key") String apiKey);
+    Observable<PlacesResult> getNextPage(@Query("pagetoken") String pageToken,
+                                         @Query("key") String apiKey);
 
     @GET("place/details/json")
     Observable<PlaceDetailsResult> getPlaceDetails(@Query("placeid")String placeId,
