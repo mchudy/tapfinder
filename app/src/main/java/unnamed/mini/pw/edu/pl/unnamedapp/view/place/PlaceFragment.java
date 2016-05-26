@@ -71,6 +71,7 @@ public class PlaceFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_place, container, false);
         ButterKnife.bind(this, view);
+        viewPager.setOffscreenPageLimit(5);
         setupTabs();
         collapsingToolbarLayout.setTitle(place.getName());
         loadPhoto();
