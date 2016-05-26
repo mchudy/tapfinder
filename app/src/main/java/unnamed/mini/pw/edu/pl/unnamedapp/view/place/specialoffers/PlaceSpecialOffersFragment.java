@@ -1,4 +1,4 @@
-package unnamed.mini.pw.edu.pl.unnamedapp.view.place;
+package unnamed.mini.pw.edu.pl.unnamedapp.view.place.specialoffers;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,12 +13,12 @@ import unnamed.mini.pw.edu.pl.unnamedapp.R;
 import unnamed.mini.pw.edu.pl.unnamedapp.view.BaseActivity;
 import unnamed.mini.pw.edu.pl.unnamedapp.view.FabFragmentHandler;
 
-public class PlaceBeersFragment extends Fragment implements FabFragmentHandler {
+public class PlaceSpecialOffersFragment extends Fragment implements FabFragmentHandler {
 
     private String placeId;
 
-    public static PlaceBeersFragment newInstance(String placeId){
-        PlaceBeersFragment fragment = new PlaceBeersFragment();
+    public static PlaceSpecialOffersFragment newInstance(String placeId){
+        PlaceSpecialOffersFragment fragment = new PlaceSpecialOffersFragment();
         Bundle args = new Bundle();
         args.putString("placeId", placeId);
         fragment.setArguments(args);
@@ -35,7 +35,7 @@ public class PlaceBeersFragment extends Fragment implements FabFragmentHandler {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_place_beers, container, false);
+        return inflater.inflate(R.layout.fragment_place_special_offers, container, false);
     }
 
     @Override
@@ -53,6 +53,8 @@ public class PlaceBeersFragment extends Fragment implements FabFragmentHandler {
 
     @Override
     public void handleFab(FloatingActionButton fab) {
-        fab.setOnClickListener(v -> ((BaseActivity)getActivity()).changeFragmentWithBackStack(AddBeerOnTapFragment.newInstance(placeId)));
+        fab.setOnClickListener(v -> (
+                (BaseActivity)getActivity()).changeFragmentWithBackStack(AddSpecialOfferFragment.newInstance(placeId))
+        );
     }
 }

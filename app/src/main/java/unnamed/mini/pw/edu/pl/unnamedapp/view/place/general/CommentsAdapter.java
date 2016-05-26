@@ -1,4 +1,4 @@
-package unnamed.mini.pw.edu.pl.unnamedapp.view.place;
+package unnamed.mini.pw.edu.pl.unnamedapp.view.place.general;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

@@ -1,4 +1,4 @@
-package unnamed.mini.pw.edu.pl.unnamedapp.view;
+package unnamed.mini.pw.edu.pl.unnamedapp.view.login;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -19,6 +19,7 @@ import rx.schedulers.Schedulers;
 import unnamed.mini.pw.edu.pl.unnamedapp.R;
 import unnamed.mini.pw.edu.pl.unnamedapp.model.UserRegisterDto;
 import unnamed.mini.pw.edu.pl.unnamedapp.service.ApiService;
+import unnamed.mini.pw.edu.pl.unnamedapp.view.BaseActivity;
 
 public class RegisterActivity extends BaseActivity {
 

@@ -1,10 +1,10 @@
 package unnamed.mini.pw.edu.pl.unnamedapp.di.component;
 
-import unnamed.mini.pw.edu.pl.unnamedapp.view.FindBeerFragment;
-import unnamed.mini.pw.edu.pl.unnamedapp.view.MapFragment;
-import unnamed.mini.pw.edu.pl.unnamedapp.view.place.PlaceBeersFragment;
-import unnamed.mini.pw.edu.pl.unnamedapp.view.place.PlaceGeneralFragment;
-import unnamed.mini.pw.edu.pl.unnamedapp.view.place.PlaceSpecialOffersFragment;
+import unnamed.mini.pw.edu.pl.unnamedapp.view.findbeer.FindBeerFragment;
+import unnamed.mini.pw.edu.pl.unnamedapp.view.map.MapFragment;
+import unnamed.mini.pw.edu.pl.unnamedapp.view.place.beers.PlaceBeersFragment;
+import unnamed.mini.pw.edu.pl.unnamedapp.view.place.general.PlaceGeneralFragment;
+import unnamed.mini.pw.edu.pl.unnamedapp.view.place.specialoffers.PlaceSpecialOffersFragment;
 
 public interface FragmentInjector {
     void inject(MapFragment mapFragment);

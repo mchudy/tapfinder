@@ -1,4 +1,4 @@
-package unnamed.mini.pw.edu.pl.unnamedapp.view.place;
+package unnamed.mini.pw.edu.pl.unnamedapp.view.place.specialoffers;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

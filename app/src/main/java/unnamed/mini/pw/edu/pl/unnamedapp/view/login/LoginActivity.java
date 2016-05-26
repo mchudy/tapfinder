@@ -1,4 +1,4 @@
-package unnamed.mini.pw.edu.pl.unnamedapp.view;
+package unnamed.mini.pw.edu.pl.unnamedapp.view.login;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -36,6 +36,8 @@ import unnamed.mini.pw.edu.pl.unnamedapp.di.qualifier.UsernamePreference;
 import unnamed.mini.pw.edu.pl.unnamedapp.model.AccessTokenModel;
 import unnamed.mini.pw.edu.pl.unnamedapp.model.UserRegisterExternalDto;
 import unnamed.mini.pw.edu.pl.unnamedapp.service.ApiService;
+import unnamed.mini.pw.edu.pl.unnamedapp.view.BaseActivity;
+import unnamed.mini.pw.edu.pl.unnamedapp.view.MainActivity;
 
 public class LoginActivity extends BaseActivity {
 

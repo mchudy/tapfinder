@@ -4,6 +4,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import unnamed.mini.pw.edu.pl.unnamedapp.view.place.beers.PlaceBeersFragment;
+import unnamed.mini.pw.edu.pl.unnamedapp.view.place.general.PlaceGeneralFragment;
+import unnamed.mini.pw.edu.pl.unnamedapp.view.place.specialoffers.PlaceSpecialOffersFragment;
+
 public class PlacePagerAdapter extends FragmentStatePagerAdapter {
     public static final int TABS_COUNT = 3;
     public static final int GENERAL_TAB = 0;

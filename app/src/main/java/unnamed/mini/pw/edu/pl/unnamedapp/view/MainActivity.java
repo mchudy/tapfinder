@@ -28,6 +28,10 @@ import timber.log.Timber;
 import unnamed.mini.pw.edu.pl.unnamedapp.R;
 import unnamed.mini.pw.edu.pl.unnamedapp.di.qualifier.AccessTokenPreference;
 import unnamed.mini.pw.edu.pl.unnamedapp.di.qualifier.UsernamePreference;
+import unnamed.mini.pw.edu.pl.unnamedapp.view.findbeer.FindBeerFragment;
+import unnamed.mini.pw.edu.pl.unnamedapp.view.login.LoginActivity;
+import unnamed.mini.pw.edu.pl.unnamedapp.view.map.MapFragment;
+import unnamed.mini.pw.edu.pl.unnamedapp.view.profile.MyProfileFragment;
 
 public class MainActivity extends BaseActivity {
 

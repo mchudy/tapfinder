@@ -1,4 +1,4 @@
-package unnamed.mini.pw.edu.pl.unnamedapp.view;
+package unnamed.mini.pw.edu.pl.unnamedapp.view.findbeer;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +10,8 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import unnamed.mini.pw.edu.pl.unnamedapp.R;
 import unnamed.mini.pw.edu.pl.unnamedapp.service.ApiService;
+import unnamed.mini.pw.edu.pl.unnamedapp.view.BaseActivity;
+import unnamed.mini.pw.edu.pl.unnamedapp.view.BaseFragment;
 
 public class FindBeerFragment extends BaseFragment {
 

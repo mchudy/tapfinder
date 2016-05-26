@@ -1,4 +1,4 @@
-package unnamed.mini.pw.edu.pl.unnamedapp.view;
+package unnamed.mini.pw.edu.pl.unnamedapp.view.profile;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import unnamed.mini.pw.edu.pl.unnamedapp.R;
+import unnamed.mini.pw.edu.pl.unnamedapp.view.BaseFragment;
 
 public class MyProfileFragment extends BaseFragment {
 

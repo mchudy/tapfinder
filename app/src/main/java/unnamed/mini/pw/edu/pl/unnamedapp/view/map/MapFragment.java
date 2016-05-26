@@ -1,4 +1,4 @@
-package unnamed.mini.pw.edu.pl.unnamedapp.view;
+package unnamed.mini.pw.edu.pl.unnamedapp.view.map;
 
 import android.location.Location;
 import android.os.Bundle;
@@ -36,6 +36,8 @@ import unnamed.mini.pw.edu.pl.unnamedapp.R;
 import unnamed.mini.pw.edu.pl.unnamedapp.model.googleplaces.Place;
 import unnamed.mini.pw.edu.pl.unnamedapp.model.googleplaces.PlacesResult;
 import unnamed.mini.pw.edu.pl.unnamedapp.service.GoogleMapsApiService;
+import unnamed.mini.pw.edu.pl.unnamedapp.view.BaseActivity;
+import unnamed.mini.pw.edu.pl.unnamedapp.view.BaseFragment;
 import unnamed.mini.pw.edu.pl.unnamedapp.view.place.PlaceFragment;
 
 @SuppressWarnings("ResourceType")
