@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="I'd like to drink some"
+            android:text="@string/beer_style_description"
             android:layout_marginBottom="5dp"
             />
 
@@ -31,14 +31,14 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Wouldn't like to pay more than"
+            android:text="@string/max_price_description"
             android:layout_marginBottom="5dp"
             />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Max price"
+            android:hint="@string/max_price"
             android:inputType="numberDecimal"
             android:layout_marginBottom="30dp"/>
 

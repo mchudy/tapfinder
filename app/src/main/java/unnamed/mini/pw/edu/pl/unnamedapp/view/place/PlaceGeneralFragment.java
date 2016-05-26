@@ -1,5 +1,6 @@
 package unnamed.mini.pw.edu.pl.unnamedapp.view.place;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,28 +8,39 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.Arrays;
+import java.util.Date;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 import unnamed.mini.pw.edu.pl.unnamedapp.R;
+import unnamed.mini.pw.edu.pl.unnamedapp.model.CommentDto;
 import unnamed.mini.pw.edu.pl.unnamedapp.model.googleplaces.PlaceDetails;
 import unnamed.mini.pw.edu.pl.unnamedapp.model.googleplaces.PlaceDetailsResult;
 import unnamed.mini.pw.edu.pl.unnamedapp.service.GoogleMapsApiService;
+import unnamed.mini.pw.edu.pl.unnamedapp.util.DividerItemDecoration;
 import unnamed.mini.pw.edu.pl.unnamedapp.view.BaseActivity;
 
 public class PlaceGeneralFragment extends Fragment {
 
     private String placeId;
+    private CommentsAdapter commentsAdapter;
 
     @Bind(R.id.address)
     TextView address;
@@ -44,6 +56,12 @@ public class PlaceGeneralFragment extends Fragment {
 
     @Bind(R.id.website_image)
     ImageView websiteImage;
+
+    @Bind(R.id.comments)
+    RecyclerView comments;
+
+    @Bind(R.id.new_comment_text)
+    EditText newCommentText;
 
     @Inject
     GoogleMapsApiService googleApiService;
@@ -74,8 +92,32 @@ public class PlaceGeneralFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ((BaseActivity) getActivity()).activityComponent().inject(this);
         ButterKnife.bind(this, view);
-
         loadData();
+        setupComments();
+    }
+
+    @OnClick(R.id.post_comment)
+    public void postComment() {
+        CommentDto d = new CommentDto();
+        d.setText(newCommentText.getText().toString());
+        d.setDate(new Date());
+        d.setUserName("username");
+        commentsAdapter.setComments(Arrays.asList(d,d,d,d,d,d,d,d,d));
+        commentsAdapter.notifyDataSetChanged();
+        newCommentText.setText("");
+        hideSoftKeyboard(getActivity());
+    }
+
+    private static void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+    }
+
+    private void setupComments() {
+        commentsAdapter = new CommentsAdapter(getContext());
+        comments.setLayoutManager(new LinearLayoutManager(getActivity()));
+        comments.setAdapter(commentsAdapter);
+        comments.addItemDecoration(new DividerItemDecoration(getContext()));
     }
 
     private void loadData() {

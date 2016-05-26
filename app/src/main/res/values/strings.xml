@@ -39,4 +39,8 @@
     <string name="add_beer_on_tap">Add beer on tap</string>
     <string name="add_special_offer">Add special offer</string>
     <string name="find_a_beer">Find a beer</string>
+    <string name="max_price_description">Wouldn\'t like to pay more than</string>
+    <string name="beer_style_description">I\'d like to drink some</string>
+    <string name="max_price">Max price</string>
+    <string name="leave_comment">Leave a comment</string>
 </resources>
