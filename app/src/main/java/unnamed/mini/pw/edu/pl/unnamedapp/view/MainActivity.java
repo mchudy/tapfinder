@@ -155,6 +155,9 @@ public class MainActivity extends BaseActivity {
 
     private void selectDrawerItem(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.find_beer_item:
+                changeFragment(new FindBeerFragment());
+                break;
             case R.id.map_item:
                 changeFragment(new MapFragment());
                 break;
