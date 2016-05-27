@@ -45,4 +45,8 @@
     <string name="leave_comment">Leave a comment</string>
     <string name="search_results">Search results</string>
     <string name="nearby_pubs_serving">Nearby pubs serving %1$s</string>
+    <string name="price">Price</string>
+    <string name="beer">Beer</string>
+    <string name="extra_info">Extra information</string>
+    <string name="description">Description</string>
 </resources>
