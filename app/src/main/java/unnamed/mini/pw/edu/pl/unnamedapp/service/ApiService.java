@@ -1,6 +1,8 @@
 package unnamed.mini.pw.edu.pl.unnamedapp.service;
 
 
+import java.util.List;
+
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import retrofit2.http.Body;
@@ -12,6 +14,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
 import unnamed.mini.pw.edu.pl.unnamedapp.model.AccessTokenModel;
+import unnamed.mini.pw.edu.pl.unnamedapp.model.BeerStyleDto;
 import unnamed.mini.pw.edu.pl.unnamedapp.model.UserRegisterDto;
 import unnamed.mini.pw.edu.pl.unnamedapp.model.UserRegisterExternalDto;
 
@@ -38,4 +41,7 @@ public interface ApiService {
 
     @POST("users/external")
     Observable<Response<AccessTokenModel>> registerExternal(@Body UserRegisterExternalDto dto);
+
+    @GET("beers/styles")
+    Observable<List<BeerStyleDto>> getBeerStyles();
 }
