@@ -43,4 +43,6 @@
     <string name="beer_style_description">I\'d like to drink some</string>
     <string name="max_price">Max price</string>
     <string name="leave_comment">Leave a comment</string>
+    <string name="search_results">Search results</string>
+    <string name="nearby_pubs_serving">Nearby pubs serving %1$s</string>
 </resources>

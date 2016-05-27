@@ -1,10 +1,13 @@
 package unnamed.mini.pw.edu.pl.unnamedapp.view.findbeer;
 
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import java.util.List;
@@ -31,6 +34,12 @@ public class FindBeerFragment extends BaseFragment {
     @Bind(R.id.beer_styles)
     Spinner stylesSpinner;
 
+    @Bind(R.id.max_price)
+    EditText maxPrice;
+
+    @Bind(R.id.max_price_layout)
+    TextInputLayout maxPriceLayout;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,6 +57,13 @@ public class FindBeerFragment extends BaseFragment {
     @OnClick(R.id.find_beer_button)
     public void findBeer() {
         BeerStyleDto style = (BeerStyleDto) stylesSpinner.getSelectedItem();
+        maxPriceLayout.setError(null);
+        if(TextUtils.isEmpty(maxPrice.getText())) {
+            maxPriceLayout.setError(getString(R.string.error_field_required));
+            return;
+        }
+        ((BaseActivity)getActivity()).changeFragmentWithBackStack(
+                FindBeerResultsFragment.newInstance(style, Double.parseDouble(maxPrice.getText().toString())));
     }
 
     private void loadStyles() {
