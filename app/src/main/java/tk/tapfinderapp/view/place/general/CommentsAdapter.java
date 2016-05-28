@@ -17,7 +17,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import tk.tapfinderapp.R;
 import tk.tapfinderapp.model.CommentDto;
-import tk.tapfinderapp.service.ApiService;
+import tk.tapfinderapp.service.TapFinderApiService;
 
 public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.CommentViewHolder> {
 
@@ -25,7 +25,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
     private Context context;
 
     @Inject
-    ApiService service;
+    TapFinderApiService service;
 
     public CommentsAdapter(Context context) {
         this.context = context;

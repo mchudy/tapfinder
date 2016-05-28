@@ -14,7 +14,7 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import tk.tapfinderapp.R;
 import tk.tapfinderapp.model.BeerStyleDto;
-import tk.tapfinderapp.service.ApiService;
+import tk.tapfinderapp.service.TapFinderApiService;
 import tk.tapfinderapp.view.BaseActivity;
 import tk.tapfinderapp.view.BaseFragment;
 
@@ -27,7 +27,7 @@ public class FindBeerResultsFragment extends BaseFragment {
     private double maxPrice;
 
     @Inject
-    ApiService service;
+    TapFinderApiService service;
 
     public static FindBeerResultsFragment newInstance(BeerStyleDto beerStyle, double maxPrice) {
         FindBeerResultsFragment fragment = new FindBeerResultsFragment();

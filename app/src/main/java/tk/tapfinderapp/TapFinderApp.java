@@ -9,7 +9,7 @@ import com.facebook.appevents.AppEventsLogger;
 import timber.log.Timber;
 import tk.tapfinderapp.di.component.ApplicationComponent;
 
-public class App extends Application {
+public class TapFinderApp extends Application {
 
     ApplicationComponent component;
 
@@ -28,6 +28,6 @@ public class App extends Application {
     }
 
     public static ApplicationComponent component(Context context) {
-        return ((App)context.getApplicationContext()).component;
+        return ((TapFinderApp)context.getApplicationContext()).component;
     }
 }

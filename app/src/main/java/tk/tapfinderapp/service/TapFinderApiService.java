@@ -18,7 +18,7 @@ import tk.tapfinderapp.model.BeerStyleDto;
 import tk.tapfinderapp.model.UserRegisterDto;
 import tk.tapfinderapp.model.UserRegisterExternalDto;
 
-public interface ApiService {
+public interface TapFinderApiService {
 
     @HEAD("users")
     Observable<Response<Void>> isUsernameAvailable(@Query("username") String username);

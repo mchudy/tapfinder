@@ -35,7 +35,7 @@ import tk.tapfinderapp.di.qualifier.AccessTokenPreference;
 import tk.tapfinderapp.di.qualifier.UsernamePreference;
 import tk.tapfinderapp.model.AccessTokenModel;
 import tk.tapfinderapp.model.UserRegisterExternalDto;
-import tk.tapfinderapp.service.ApiService;
+import tk.tapfinderapp.service.TapFinderApiService;
 import tk.tapfinderapp.view.BaseActivity;
 import tk.tapfinderapp.view.MainActivity;
 
@@ -69,7 +69,7 @@ public class LoginActivity extends BaseActivity {
     Preference<String> accessTokenPreference;
 
     @Inject
-    ApiService apiService;
+    TapFinderApiService apiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

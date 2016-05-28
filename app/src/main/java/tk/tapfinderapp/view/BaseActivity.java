@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import butterknife.ButterKnife;
 import timber.log.Timber;
-import tk.tapfinderapp.App;
+import tk.tapfinderapp.TapFinderApp;
 import tk.tapfinderapp.R;
 import tk.tapfinderapp.di.component.ActivityComponent;
 
@@ -58,7 +58,7 @@ public class BaseActivity extends AppCompatActivity{
 
     public ActivityComponent activityComponent() {
         if (activityComponent == null) {
-            activityComponent = ActivityComponent.Initializer.init(App.component(this));
+            activityComponent = ActivityComponent.Initializer.init(TapFinderApp.component(this));
         }
         return activityComponent;
     }

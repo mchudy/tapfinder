@@ -24,7 +24,7 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import tk.tapfinderapp.Constants;
 import tk.tapfinderapp.di.qualifier.AccessTokenPreference;
-import tk.tapfinderapp.service.ApiService;
+import tk.tapfinderapp.service.TapFinderApiService;
 import tk.tapfinderapp.service.GoogleMapsApiService;
 import tk.tapfinderapp.util.NullStringToEmptyAdapterFactory;
 
@@ -107,8 +107,8 @@ public class ApiServiceModule {
 
     @Provides
     @Singleton
-    ApiService provideApiService(@Named("pubAppApi") Retrofit retrofit) {
-        return retrofit.create(ApiService.class);
+    TapFinderApiService provideApiService(@Named("pubAppApi") Retrofit retrofit) {
+        return retrofit.create(TapFinderApiService.class);
     }
 
     @Provides

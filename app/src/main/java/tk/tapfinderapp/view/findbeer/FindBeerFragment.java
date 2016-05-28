@@ -22,14 +22,14 @@ import rx.schedulers.Schedulers;
 import timber.log.Timber;
 import tk.tapfinderapp.R;
 import tk.tapfinderapp.model.BeerStyleDto;
-import tk.tapfinderapp.service.ApiService;
+import tk.tapfinderapp.service.TapFinderApiService;
 import tk.tapfinderapp.view.BaseActivity;
 import tk.tapfinderapp.view.BaseFragment;
 
 public class FindBeerFragment extends BaseFragment {
 
     @Inject
-    ApiService service;
+    TapFinderApiService service;
 
     @Bind(R.id.beer_styles)
     Spinner stylesSpinner;

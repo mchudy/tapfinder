@@ -18,7 +18,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import tk.tapfinderapp.R;
 import tk.tapfinderapp.model.UserRegisterDto;
-import tk.tapfinderapp.service.ApiService;
+import tk.tapfinderapp.service.TapFinderApiService;
 import tk.tapfinderapp.view.BaseActivity;
 
 public class RegisterActivity extends BaseActivity {
@@ -44,7 +44,7 @@ public class RegisterActivity extends BaseActivity {
     TextInputLayout passwordLayout;
 
     @Inject
-    ApiService apiService;
+    TapFinderApiService apiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -4,7 +4,7 @@ package tk.tapfinderapp.di.component;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import tk.tapfinderapp.App;
+import tk.tapfinderapp.TapFinderApp;
 import tk.tapfinderapp.di.module.ApiServiceModule;
 import tk.tapfinderapp.di.module.PreferencesModule;
 
@@ -13,7 +13,7 @@ import tk.tapfinderapp.di.module.PreferencesModule;
 public interface ApplicationComponent {
 
     class Initializer {
-        public static ApplicationComponent initialize(App app) {
+        public static ApplicationComponent initialize(TapFinderApp app) {
             return DaggerApplicationComponent
                     .builder()
                     .preferencesModule(new PreferencesModule(app.getApplicationContext()))
@@ -22,6 +22,6 @@ public interface ApplicationComponent {
         }
     }
 
-    void inject(App app);
+    void inject(TapFinderApp app);
     ActivityComponent activityComponent();
 }
