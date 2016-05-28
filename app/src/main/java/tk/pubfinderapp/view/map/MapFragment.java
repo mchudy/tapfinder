@@ -1,13 +1,19 @@
 package tk.pubfinderapp.view.map;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -32,13 +38,13 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
-import unnamed.mini.pw.edu.pl.unnamedapp.R;
 import tk.pubfinderapp.model.googleplaces.Place;
 import tk.pubfinderapp.model.googleplaces.PlacesResult;
 import tk.pubfinderapp.service.GoogleMapsApiService;
 import tk.pubfinderapp.view.BaseActivity;
 import tk.pubfinderapp.view.BaseFragment;
 import tk.pubfinderapp.view.place.PlaceFragment;
+import unnamed.mini.pw.edu.pl.unnamedapp.R;
 
 @SuppressWarnings("ResourceType")
 public class MapFragment extends BaseFragment implements OnMapReadyCallback,
@@ -47,17 +53,20 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
         LocationListener {
 
     private static final int PLACES_SEARCH_MAX_RESULTS = 20;
+    private static final int LOCATION_PERMISSION_REQUEST = 1;
 
     private HashMap<String, Place> markerPlacesIds = new HashMap<>();
     private GoogleMap map;
     private GoogleApiClient googleApiClient;
     private Location userLocation;
     private static LocationRequest locationRequest;
+    private SupportMapFragment mapFragment;
 
     @Inject
     GoogleMapsApiService googleApiService;
 
-    public MapFragment() {}
+    public MapFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,17 +79,68 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         FragmentManager fm = getChildFragmentManager();
-        SupportMapFragment mapFragment = (SupportMapFragment) fm.findFragmentByTag("mapFragment");
+        mapFragment = (SupportMapFragment) fm.findFragmentByTag("mapFragment");
         if (mapFragment == null) {
             mapFragment = new SupportMapFragment();
             fm.beginTransaction()
-                .add(R.id.map, mapFragment, "mapFragment")
-                .commit();
+                    .add(R.id.map, mapFragment, "mapFragment")
+                    .commit();
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            checkPermissions();
         }
         mapFragment.getMapAsync(this);
+    }
 
+    private boolean checkPermissions() {
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    LOCATION_PERMISSION_REQUEST);
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case LOCATION_PERMISSION_REQUEST: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) ==
+                        PackageManager.PERMISSION_GRANTED) {
+                        if(googleApiClient == null) {
+                            buildGoogleApiClient();
+                        }
+                        map.setMyLocationEnabled(true);
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "Location permission denied", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        map = googleMap;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) ==
+                    PackageManager.PERMISSION_GRANTED) {
+                buildGoogleApiClient();
+                map.setMyLocationEnabled(true);
+            }
+        }
+        map.setOnInfoWindowClickListener(marker -> {
+            Place place = markerPlacesIds.get(marker.getId());
+            PlaceFragment detailsFragment = PlaceFragment.newInstance(place);
+            ((BaseActivity) getActivity()).changeFragmentWithBackStack(detailsFragment);
+        });
+    }
+
+    private void buildGoogleApiClient() {
         if (googleApiClient == null) {
             googleApiClient = new GoogleApiClient.Builder(getContext())
                     .addConnectionCallbacks(this)
@@ -89,44 +149,27 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
                     .addApi(Places.PLACE_DETECTION_API)
                     .addApi(Places.GEO_DATA_API)
                     .build();
+            googleApiClient.connect();
         }
-
-        locationRequest = LocationRequest.create()
-                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        map = googleMap;
-        map.setMyLocationEnabled(true);
-        map.setOnInfoWindowClickListener(marker -> {
-            Place place = markerPlacesIds.get(marker.getId());
-            PlaceFragment detailsFragment = PlaceFragment.newInstance(place);
-            ((BaseActivity)getActivity()).changeFragmentWithBackStack(detailsFragment);
-        });
     }
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        userLocation = LocationServices.FusedLocationApi.getLastLocation(
-                googleApiClient);
-        if (userLocation == null) {
+        locationRequest = LocationRequest.create()
+                .setInterval(10000)
+                .setFastestInterval(5000)
+                .setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) ==
+                PackageManager.PERMISSION_GRANTED) {
             LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
-        } else {
-            if(isAdded()) {
-                handleNewLocation(userLocation);
-            }
         }
-    }
 
-    @Override
-    public void onConnectionSuspended(int i) {
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (googleApiClient.isConnected()) {
+        if (googleApiClient != null && googleApiClient.isConnected()) {
             LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
             googleApiClient.disconnect();
         }
@@ -134,11 +177,15 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
 
     @Override
     public void onResume() {
-        googleApiClient.connect();
+        if (googleApiClient != null) {
+            googleApiClient.connect();
+        }
         super.onResume();
     }
 
-    private void handleNewLocation(Location location) {
+    @Override
+    public void onLocationChanged(Location location) {
+        userLocation = location;
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(
                 new LatLng(location.getLatitude(), location.getLongitude()), 15));
         loadPubs(location);
@@ -153,14 +200,14 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
                 .subscribeOn(Schedulers.io())
                 .subscribe(r -> {
                     showMarkers(r);
-                    if(r.size() == PLACES_SEARCH_MAX_RESULTS) {
+                    if (r.size() == PLACES_SEARCH_MAX_RESULTS) {
                         loadNextPage(r, 2);
                     }
                 });
     }
 
     private void loadNextPage(PlacesResult r, int pageNumber) {
-        if(pageNumber > 3) return;
+        if (pageNumber > 3) return;
         Observable.just(1)
                 .delay(3, TimeUnit.SECONDS)
                 .flatMap(a -> googleApiService.getNextPage(r.getNextPageToken(), getString(R.string.google_places_key)))
@@ -168,7 +215,7 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
                 .subscribeOn(Schedulers.io())
                 .subscribe(r2 -> {
                             showMarkers(r2);
-                            if(r2.size() == PLACES_SEARCH_MAX_RESULTS) {
+                            if (r2.size() == PLACES_SEARCH_MAX_RESULTS) {
                                 loadNextPage(r2, pageNumber + 1);
                             }
                         },
@@ -176,8 +223,8 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
     }
 
     private void showMarkers(PlacesResult result) {
-        Timber.d("Loaded %d places" , result.size());
-        for(Place place : result) {
+        Timber.d("Loaded %d places", result.size());
+        for (Place place : result) {
             Place.Location location = place.getGeometry().getLocation();
             Marker marker = map.addMarker(new MarkerOptions()
                     .position(new LatLng(location.getLat(), location.getLng()))
@@ -188,12 +235,11 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
     }
 
     @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+    public void onConnectionSuspended(int i) {
     }
 
     @Override
-    public void onLocationChanged(Location location) {
-        userLocation = location;
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
     }
 
     @Override
