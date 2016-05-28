@@ -1,7 +1,7 @@
 package tk.tapfinderapp;
 
 public final class Constants {
-    public static final String API_BASE_URI = "http://tapfinderapp.tk/";
+    public static final String API_BASE_URI = "https://tapfinderapp.tk/";
     public static final String GOOGLE_MAPS_API_URL = "https://maps.googleapis.com/maps/api/";
 
     public static final String SHARED_PREFERENCES = "preferences";
