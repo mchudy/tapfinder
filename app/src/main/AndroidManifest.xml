@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="unnamed.mini.pw.edu.pl.unnamedapp">
+          package="tk.tapfinderapp">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
-        android:name=".App"
+        android:name=".TapFinderApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -25,12 +25,12 @@
             android:value="@string/facebook_app_id"/>
 
         <activity
-            android:name=".view.MainActivity"
+            android:name="tk.tapfinderapp.view.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".view.login.LoginActivity"
+            android:name="tk.tapfinderapp.view.login.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.Transparent"
             android:launchMode="singleTop">
@@ -41,10 +41,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.login.RegisterActivity"
+            android:name="tk.tapfinderapp.view.login.RegisterActivity"
             android:label="@string/sign_up"
             android:screenOrientation="portrait"
-            android:parentActivityName=".view.login.LoginActivity"/>
+            android:parentActivityName="tk.tapfinderapp.view.login.LoginActivity"/>
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
