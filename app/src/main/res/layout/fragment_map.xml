@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="tk.pubfinderapp.view.map.MapFragment">
+    tools:context="tk.tapfinderapp.view.map.MapFragment">
 
     <include
         layout="@layout/toolbar" />

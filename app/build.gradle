@@ -7,7 +7,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "unnamed.mini.pw.edu.pl.unnamedapp"
+        applicationId "tk.tapfinderapp"
         minSdkVersion 19
         targetSdkVersion 23
         versionCode 1
