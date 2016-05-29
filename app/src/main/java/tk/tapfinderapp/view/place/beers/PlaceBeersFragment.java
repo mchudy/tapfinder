@@ -4,18 +4,35 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import javax.inject.Inject;
+
+import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import timber.log.Timber;
 import tk.tapfinderapp.R;
+import tk.tapfinderapp.service.TapFinderApiService;
+import tk.tapfinderapp.util.DividerItemDecoration;
 import tk.tapfinderapp.view.BaseActivity;
 import tk.tapfinderapp.view.FabFragmentHandler;
 
 public class PlaceBeersFragment extends Fragment implements FabFragmentHandler {
 
     private String placeId;
+    private PlaceBeersAdapter beersAdapter;
+
+    @Bind(R.id.beers)
+    RecyclerView beers;
+
+    @Inject
+    TapFinderApiService apiService;
 
     public static PlaceBeersFragment newInstance(String placeId){
         PlaceBeersFragment fragment = new PlaceBeersFragment();
@@ -43,6 +60,25 @@ public class PlaceBeersFragment extends Fragment implements FabFragmentHandler {
         super.onViewCreated(view, savedInstanceState);
         ((BaseActivity) getActivity()).activityComponent().inject(this);
         ButterKnife.bind(this, view);
+        initAdapter();
+        loadBeers();
+    }
+
+    private void initAdapter() {
+        beersAdapter = new PlaceBeersAdapter(getContext());
+        beers.setLayoutManager(new LinearLayoutManager(getActivity()));
+        beers.setAdapter(beersAdapter);
+        beers.addItemDecoration(new DividerItemDecoration(getContext()));
+    }
+
+    private void loadBeers() {
+        apiService.getBeersAtPlace(placeId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(b -> {
+                    beersAdapter.setBeers(b);
+                    beersAdapter.notifyDataSetChanged();
+                }, t -> Timber.wtf(t.getMessage()));
     }
 
     @Override

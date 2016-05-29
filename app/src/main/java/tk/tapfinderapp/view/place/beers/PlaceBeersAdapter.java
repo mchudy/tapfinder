@@ -44,7 +44,7 @@ public class PlaceBeersAdapter extends RecyclerView.Adapter<PlaceBeersAdapter.Be
         holder.beerName.setText(placeBeer.getBeer().getName());
         holder.brewery.setText(placeBeer.getBeer().getBrewery().getName());
         holder.description.setText(placeBeer.getDescription());
-        holder.rating.setText(placeBeer.getRating());
+        holder.rating.setText(String.valueOf(placeBeer.getRating()));
     }
 
     @Override
