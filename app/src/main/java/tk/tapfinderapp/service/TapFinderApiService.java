@@ -11,10 +11,12 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.HEAD;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 import tk.tapfinderapp.model.AccessTokenModel;
 import tk.tapfinderapp.model.BeerStyleDto;
+import tk.tapfinderapp.model.CommentDto;
 import tk.tapfinderapp.model.UserRegisterDto;
 import tk.tapfinderapp.model.UserRegisterExternalDto;
 
@@ -44,4 +46,10 @@ public interface TapFinderApiService {
 
     @GET("beers/styles")
     Observable<List<BeerStyleDto>> getBeerStyles();
+
+    @GET("places/{placeId}/comments")
+    Observable<List<CommentDto>> getComments(@Path("placeId") String placeId);
+
+    @POST("places/comments")
+    Observable<ResponseBody> postComment(@Body CommentDto dto);
 }

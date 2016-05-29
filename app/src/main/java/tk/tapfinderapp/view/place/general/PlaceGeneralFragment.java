@@ -18,9 +18,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.Arrays;
-import java.util.Date;
-
 import javax.inject.Inject;
 
 import butterknife.Bind;
@@ -34,6 +31,7 @@ import tk.tapfinderapp.model.CommentDto;
 import tk.tapfinderapp.model.googleplaces.PlaceDetails;
 import tk.tapfinderapp.model.googleplaces.PlaceDetailsResult;
 import tk.tapfinderapp.service.GoogleMapsApiService;
+import tk.tapfinderapp.service.TapFinderApiService;
 import tk.tapfinderapp.util.DividerItemDecoration;
 import tk.tapfinderapp.view.BaseActivity;
 
@@ -65,6 +63,9 @@ public class PlaceGeneralFragment extends Fragment {
 
     @Inject
     GoogleMapsApiService googleApiService;
+
+    @Inject
+    TapFinderApiService tapFinderService;
 
     public static PlaceGeneralFragment newInstance(String placeId) {
         PlaceGeneralFragment fragment = new PlaceGeneralFragment();
@@ -98,12 +99,13 @@ public class PlaceGeneralFragment extends Fragment {
 
     @OnClick(R.id.post_comment)
     public void postComment() {
-        CommentDto d = new CommentDto();
-        d.setText(newCommentText.getText().toString());
-        d.setDate(new Date());
-        d.setUserName("username");
-        commentsAdapter.setComments(Arrays.asList(d,d,d,d,d,d,d,d,d));
-        commentsAdapter.notifyDataSetChanged();
+        CommentDto dto = new CommentDto();
+        dto.setText(newCommentText.getText().toString());
+        dto.setPlaceId(placeId);
+        tapFinderService.postComment(dto)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(b -> loadComments(), e -> Timber.wtf(e.getMessage()));
         newCommentText.setText("");
         hideSoftKeyboard(getActivity());
     }
@@ -118,6 +120,18 @@ public class PlaceGeneralFragment extends Fragment {
         comments.setLayoutManager(new LinearLayoutManager(getActivity()));
         comments.setAdapter(commentsAdapter);
         comments.addItemDecoration(new DividerItemDecoration(getContext()));
+        loadComments();
+    }
+
+    private void loadComments() {
+        tapFinderService.getComments(placeId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(comments -> {
+                    commentsAdapter.setComments(comments);
+                    commentsAdapter.notifyDataSetChanged();
+                },
+                e -> Timber.wtf(e.getMessage()));
     }
 
     private void loadData() {

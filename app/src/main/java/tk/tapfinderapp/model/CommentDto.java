@@ -9,4 +9,5 @@ public class CommentDto {
     String text;
     String userName;
     Date date;
+    String placeId;
 }
