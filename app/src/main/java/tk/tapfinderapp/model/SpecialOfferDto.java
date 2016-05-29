@@ -5,10 +5,11 @@ import java.util.Date;
 import lombok.Data;
 
 @Data
-public class CommentDto {
+public class SpecialOfferDto {
     int id;
-    String text;
-    String userName;
-    Date date;
     String placeId;
+    String description;
+    Date startDate;
+    Date endDate;
+    String userName;
 }
