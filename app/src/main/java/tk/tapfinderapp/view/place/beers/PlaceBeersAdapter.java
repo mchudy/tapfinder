@@ -7,8 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.NumberFormat;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -45,6 +47,8 @@ public class PlaceBeersAdapter extends RecyclerView.Adapter<PlaceBeersAdapter.Be
         holder.brewery.setText(placeBeer.getBeer().getBrewery().getName());
         holder.description.setText(placeBeer.getDescription());
         holder.rating.setText(String.valueOf(placeBeer.getRating()));
+        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());
+        holder.price.setText(format.format(placeBeer.getPrice()));
     }
 
     @Override
@@ -68,6 +72,9 @@ public class PlaceBeersAdapter extends RecyclerView.Adapter<PlaceBeersAdapter.Be
 
         @Bind(R.id.rating)
         TextView rating;
+
+        @Bind(R.id.price)
+        TextView price;
 
         public BeerOnTapViewHolder(View view) {
             super(view);
