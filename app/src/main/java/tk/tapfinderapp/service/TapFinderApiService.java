@@ -17,6 +17,8 @@ import rx.Observable;
 import tk.tapfinderapp.model.AccessTokenModel;
 import tk.tapfinderapp.model.BeerStyleDto;
 import tk.tapfinderapp.model.CommentDto;
+import tk.tapfinderapp.model.PlaceBeerDto;
+import tk.tapfinderapp.model.SpecialOfferDto;
 import tk.tapfinderapp.model.UserRegisterDto;
 import tk.tapfinderapp.model.UserRegisterExternalDto;
 
@@ -52,4 +54,10 @@ public interface TapFinderApiService {
 
     @POST("places/comments")
     Observable<ResponseBody> postComment(@Body CommentDto dto);
+
+    @GET("places/{id}/specialoffers")
+    Observable<List<SpecialOfferDto>> getSpecialOffers(@Path("id") String placeId);
+
+    @GET("places/{id}/beers")
+    Observable<List<PlaceBeerDto>> getBeersAtPlace(@Path("id") String placeId);
 }

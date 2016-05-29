@@ -11,21 +11,15 @@ import android.widget.TextView;
 import java.util.Collections;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import tk.tapfinderapp.R;
 import tk.tapfinderapp.model.CommentDto;
-import tk.tapfinderapp.service.TapFinderApiService;
 
 public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.CommentViewHolder> {
 
     private List<CommentDto> comments;
     private Context context;
-
-    @Inject
-    TapFinderApiService service;
 
     public CommentsAdapter(Context context) {
         this.context = context;
