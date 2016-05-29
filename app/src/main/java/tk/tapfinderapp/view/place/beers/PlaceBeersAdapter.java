@@ -49,6 +49,7 @@ public class PlaceBeersAdapter extends RecyclerView.Adapter<PlaceBeersAdapter.Be
         holder.rating.setText(String.valueOf(placeBeer.getRating()));
         NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());
         holder.price.setText(format.format(placeBeer.getPrice()));
+        holder.style.setText(placeBeer.getBeer().getStyle());
     }
 
     @Override
@@ -75,6 +76,9 @@ public class PlaceBeersAdapter extends RecyclerView.Adapter<PlaceBeersAdapter.Be
 
         @Bind(R.id.price)
         TextView price;
+
+        @Bind(R.id.style)
+        TextView style;
 
         public BeerOnTapViewHolder(View view) {
             super(view);
