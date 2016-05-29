@@ -15,50 +15,59 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import tk.tapfinderapp.R;
-import tk.tapfinderapp.model.CommentDto;
+import tk.tapfinderapp.model.PlaceBeerDto;
 import tk.tapfinderapp.service.TapFinderApiService;
 
-public class BeersOnTapAdapter extends RecyclerView.Adapter<BeersOnTapAdapter.BeerOnTapViewHolder> {
+public class PlaceBeersAdapter extends RecyclerView.Adapter<PlaceBeersAdapter.BeerOnTapViewHolder> {
 
-    private List<CommentDto> beers;
+    private List<PlaceBeerDto> placesBeers;
     private Context context;
 
     @Inject
     TapFinderApiService service;
 
-    public BeersOnTapAdapter(Context context) {
+    public PlaceBeersAdapter(Context context) {
         this.context = context;
-        beers = Collections.emptyList();
+        placesBeers = Collections.emptyList();
     }
 
     @Override
     public BeerOnTapViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.beer_on_tap_item,
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.place_beer_item,
                 parent, false);
         return new BeerOnTapViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(BeerOnTapViewHolder holder, int position) {
-
+        PlaceBeerDto placeBeer = placesBeers.get(position);
+        holder.beerName.setText(placeBeer.getBeer().getName());
+        holder.brewery.setText(placeBeer.getBeer().getBrewery().getName());
+        holder.description.setText(placeBeer.getDescription());
+        holder.rating.setText(placeBeer.getRating());
     }
 
     @Override
     public int getItemCount() {
-        return beers.size();
+        return placesBeers.size();
     }
 
-    public void setComments(List<CommentDto> beers) {
-        this.beers = beers;
+    public void setBeers(List<PlaceBeerDto> beers) {
+        this.placesBeers = beers;
     }
 
     public static class BeerOnTapViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.username)
-        TextView username;
-        @Bind(R.id.comment_date)
-        TextView date;
-        @Bind(R.id.comment_text)
-        TextView text;
+        @Bind(R.id.beer_name)
+        TextView beerName;
+
+        @Bind(R.id.brewery)
+        TextView brewery;
+
+        @Bind(R.id.description)
+        TextView description;
+
+        @Bind(R.id.rating)
+        TextView rating;
 
         public BeerOnTapViewHolder(View view) {
             super(view);
