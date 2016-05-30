@@ -49,4 +49,6 @@
     <string name="beer">Beer</string>
     <string name="extra_info">Extra information</string>
     <string name="description">Description</string>
+    <string name="error_changing_profile_image">Could not change the profile image</string>
+    <string name="profile_image_changed">Profile image has been changed</string>
 </resources>

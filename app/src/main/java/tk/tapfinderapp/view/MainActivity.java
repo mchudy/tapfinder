@@ -20,24 +20,38 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.squareup.picasso.Picasso;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import de.hdodenhof.circleimageview.CircleImageView;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import timber.log.Timber;
+import tk.tapfinderapp.Constants;
 import tk.tapfinderapp.R;
 import tk.tapfinderapp.di.qualifier.AccessTokenPreference;
+import tk.tapfinderapp.di.qualifier.UserImagePreference;
 import tk.tapfinderapp.di.qualifier.UsernamePreference;
+import tk.tapfinderapp.event.UserImageChangedEvent;
+import tk.tapfinderapp.service.TapFinderApiService;
 import tk.tapfinderapp.view.findbeer.FindBeerFragment;
 import tk.tapfinderapp.view.login.LoginActivity;
 import tk.tapfinderapp.view.map.MapFragment;
 import tk.tapfinderapp.view.profile.MyProfileFragment;
+
+import static butterknife.ButterKnife.findById;
 
 public class MainActivity extends BaseActivity {
 
     private static final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
 
     private TextView currentUsername;
+    private CircleImageView userImage;
 
     @Bind(R.id.drawer_layout)
     DrawerLayout drawerLayout;
@@ -46,12 +60,19 @@ public class MainActivity extends BaseActivity {
     NavigationView drawer;
 
     @Inject
+    TapFinderApiService apiService;
+
+    @Inject
     @UsernamePreference
     Preference<String> usernamePreference;
 
     @Inject
     @AccessTokenPreference
     Preference<String> accessTokenPreference;
+
+    @Inject
+    @UserImagePreference
+    Preference<String> userImagePreference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +91,8 @@ public class MainActivity extends BaseActivity {
         });
         View headerView = drawer.getHeaderView(0);
         LinearLayout drawerHeader = (LinearLayout) headerView.findViewById(R.id.drawer_header);
-        currentUsername = (TextView) drawerHeader.findViewById(R.id.drawer_username);
+        userImage = findById(headerView, R.id.profile_image);
+        currentUsername = findById(headerView, R.id.drawer_username);
         currentUsername.setText(usernamePreference.get());
 
         drawerHeader.setOnClickListener(v -> {
@@ -84,7 +106,30 @@ public class MainActivity extends BaseActivity {
                 getSupportActionBar().setHomeAsUpIndicator(android.support.v7.appcompat.R.drawable.abc_ic_ab_back_mtrl_am_alpha);
             }
         });
+        loadImage();
         changeFragment(new MapFragment());
+        EventBus.getDefault().register(this);
+    }
+
+    @Subscribe
+    public void onEvent(UserImageChangedEvent event){
+        refreshProfileImage();
+    }
+
+    private void refreshProfileImage() {
+        Picasso.with(this)
+                .load(Constants.API_BASE_URI + userImagePreference.get())
+                .into(userImage);
+    }
+
+    private void loadImage() {
+        apiService.getUser(usernamePreference.get())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(user -> {
+                    userImagePreference.set(user.getImagePath());
+                    refreshProfileImage();
+                }, t -> Timber.wtf(t.getMessage()));
     }
 
     public void openDrawer() {
@@ -137,6 +182,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 //TODO: custom search

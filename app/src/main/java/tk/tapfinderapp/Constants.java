@@ -6,5 +6,6 @@ public final class Constants {
 
     public static final String SHARED_PREFERENCES = "preferences";
     public static final String USERNAME_PREFERENCE = "username";
+    public static final String USER_IMAGE_PREFERENCE = "userImage";
     public static final String ACCESS_TOKEN_PREFERENCE = "accessToken";
 }
