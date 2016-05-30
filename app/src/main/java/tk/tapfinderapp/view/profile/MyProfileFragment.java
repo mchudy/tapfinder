@@ -127,6 +127,7 @@ public class MyProfileFragment extends BaseFragment {
     private void loadImage() {
         Picasso.with(getActivity())
                 .load(Constants.API_BASE_URI + userImagePreference.get())
+                .placeholder(R.drawable.ic_person_white_48dp)
                 .into(profileImage);
     }
 

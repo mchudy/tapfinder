@@ -119,6 +119,7 @@ public class MainActivity extends BaseActivity {
     private void refreshProfileImage() {
         Picasso.with(this)
                 .load(Constants.API_BASE_URI + userImagePreference.get())
+                .placeholder(R.drawable.ic_person_white_48dp)
                 .into(userImage);
     }
 
