@@ -43,23 +43,17 @@ import tk.tapfinderapp.model.googleplaces.PlacesResult;
 import tk.tapfinderapp.service.GoogleMapsApiService;
 import tk.tapfinderapp.view.BaseActivity;
 import tk.tapfinderapp.view.BaseFragment;
+import tk.tapfinderapp.view.LocationAwareFragment;
 import tk.tapfinderapp.view.place.PlaceFragment;
 import tk.tapfinderapp.R;
 
 @SuppressWarnings("ResourceType")
-public class MapFragment extends BaseFragment implements OnMapReadyCallback,
-        GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener,
-        LocationListener {
+public class MapFragment extends LocationAwareFragment implements OnMapReadyCallback {
 
     private static final int PLACES_SEARCH_MAX_RESULTS = 20;
-    private static final int LOCATION_PERMISSION_REQUEST = 1;
 
     private HashMap<String, Place> markerPlacesIds = new HashMap<>();
     private GoogleMap map;
-    private GoogleApiClient googleApiClient;
-    private Location userLocation;
-    private static LocationRequest locationRequest;
     private SupportMapFragment mapFragment;
 
     @Inject
@@ -87,40 +81,12 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
                     .add(R.id.map, mapFragment, "mapFragment")
                     .commit();
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            checkPermissions();
-        }
         mapFragment.getMapAsync(this);
     }
 
-    private boolean checkPermissions() {
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) !=
-                PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    LOCATION_PERMISSION_REQUEST);
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case LOCATION_PERMISSION_REQUEST: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) ==
-                        PackageManager.PERMISSION_GRANTED) {
-                        if(googleApiClient == null) {
-                            buildGoogleApiClient();
-                        }
-                        map.setMyLocationEnabled(true);
-                    }
-                } else {
-                    Toast.makeText(getActivity(), "Location permission denied", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
+    protected void onPermissionsGranted() {
+        map.setMyLocationEnabled(true);
     }
 
     @Override
@@ -140,52 +106,9 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
         });
     }
 
-    private void buildGoogleApiClient() {
-        if (googleApiClient == null) {
-            googleApiClient = new GoogleApiClient.Builder(getContext())
-                    .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this)
-                    .addApi(LocationServices.API)
-                    .addApi(Places.PLACE_DETECTION_API)
-                    .addApi(Places.GEO_DATA_API)
-                    .build();
-            googleApiClient.connect();
-        }
-    }
-
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-        locationRequest = LocationRequest.create()
-                .setInterval(10000)
-                .setFastestInterval(5000)
-                .setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) ==
-                PackageManager.PERMISSION_GRANTED) {
-            LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
-        }
-
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (googleApiClient != null && googleApiClient.isConnected()) {
-            LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
-            googleApiClient.disconnect();
-        }
-    }
-
-    @Override
-    public void onResume() {
-        if (googleApiClient != null) {
-            googleApiClient.connect();
-        }
-        super.onResume();
-    }
-
     @Override
     public void onLocationChanged(Location location) {
-        userLocation = location;
+        super.onLocationChanged(location);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(
                 new LatLng(location.getLatitude(), location.getLongitude()), 15));
         loadPubs(location);
@@ -232,19 +155,6 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback,
                     .snippet(place.getFormattedAddress()));
             markerPlacesIds.put(marker.getId(), place);
         }
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
     }
 
     @Override

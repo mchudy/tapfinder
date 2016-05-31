@@ -76,6 +76,10 @@ public interface TapFinderApiService {
     @POST("places/{id}/beers")
     Observable<Response<ResponseBody>> addBeerAtPlace(@Body AddPlaceBeerDto dto);
 
+    @GET("places/search")
+    Observable<List<PlaceBeerDto>> getPlacesWithBeer(@Query("beerStyleId") int beerStyleId,
+                                                     @Query("placesIds") List<String> placesIds);
+
     @PUT("users/image")
     Observable<UserDto> changeImage(@Body UserImageDto dto);
 
