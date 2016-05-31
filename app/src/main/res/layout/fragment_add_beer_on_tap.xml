@@ -9,14 +9,29 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp">
 
-        <AutoCompleteTextView
-            android:id="@+id/beer"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/beer"/>
+            android:layout_height="wrap_content">
+
+            <tk.tapfinderapp.util.DelayAutoCompleteTextView
+                android:id="@+id/beer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/beer"/>
+
+            <ProgressBar
+                android:id="@+id/progress_bar_autocomplete"
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginEnd="5dp"
+                android:visibility="gone"/>
+
+        </FrameLayout>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/max_price_layout"

@@ -10,4 +10,9 @@ public class BeerDto {
     int styleId;
     String style;
     BreweryDto brewery;
+
+    @Override
+    public String toString() {
+        return brewery.getName() + " " + name;
+    }
 }
