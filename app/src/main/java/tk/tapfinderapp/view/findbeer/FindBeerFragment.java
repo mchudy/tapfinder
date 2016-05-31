@@ -49,7 +49,7 @@ public class FindBeerFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ((BaseActivity) getActivity()).activityComponent().inject(this);
+        activityComponent().inject(this);
         ButterKnife.bind(this, view);
         loadStyles();
     }

@@ -60,6 +60,9 @@ public class MainActivity extends BaseActivity {
     NavigationView drawer;
 
     @Inject
+    EventBus eventBus;
+
+    @Inject
     TapFinderApiService apiService;
 
     @Inject
@@ -108,7 +111,7 @@ public class MainActivity extends BaseActivity {
         });
         loadImage();
         changeFragment(new MapFragment());
-        EventBus.getDefault().register(this);
+        eventBus.register(this);
     }
 
     @Subscribe

@@ -1,6 +1,5 @@
 package tk.tapfinderapp.view.place.beers;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,18 +17,13 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import tk.tapfinderapp.R;
 import tk.tapfinderapp.model.PlaceBeerDto;
-import tk.tapfinderapp.service.TapFinderApiService;
 
 public class PlaceBeersAdapter extends RecyclerView.Adapter<PlaceBeersAdapter.BeerOnTapViewHolder> {
 
     private List<PlaceBeerDto> placesBeers;
-    private Context context;
 
     @Inject
-    TapFinderApiService service;
-
-    public PlaceBeersAdapter(Context context) {
-        this.context = context;
+    public PlaceBeersAdapter() {
         placesBeers = Collections.emptyList();
     }
 

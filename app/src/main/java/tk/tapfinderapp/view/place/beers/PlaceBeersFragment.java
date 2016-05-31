@@ -26,13 +26,15 @@ import tk.tapfinderapp.view.FabFragmentHandler;
 public class PlaceBeersFragment extends Fragment implements FabFragmentHandler {
 
     private String placeId;
-    private PlaceBeersAdapter beersAdapter;
 
     @Bind(R.id.beers)
     RecyclerView beers;
 
     @Inject
     TapFinderApiService apiService;
+
+    @Inject
+    PlaceBeersAdapter beersAdapter;
 
     public static PlaceBeersFragment newInstance(String placeId){
         PlaceBeersFragment fragment = new PlaceBeersFragment();
@@ -65,7 +67,6 @@ public class PlaceBeersFragment extends Fragment implements FabFragmentHandler {
     }
 
     private void initAdapter() {
-        beersAdapter = new PlaceBeersAdapter(getContext());
         beers.setLayoutManager(new LinearLayoutManager(getActivity()));
         beers.setAdapter(beersAdapter);
         beers.addItemDecoration(new DividerItemDecoration(getContext()));

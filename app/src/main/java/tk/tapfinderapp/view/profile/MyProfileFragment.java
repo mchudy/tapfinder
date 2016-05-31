@@ -42,7 +42,6 @@ import tk.tapfinderapp.di.qualifier.UsernamePreference;
 import tk.tapfinderapp.event.UserImageChangedEvent;
 import tk.tapfinderapp.model.UserImageDto;
 import tk.tapfinderapp.service.TapFinderApiService;
-import tk.tapfinderapp.view.BaseActivity;
 import tk.tapfinderapp.view.BaseFragment;
 
 public class MyProfileFragment extends BaseFragment {
@@ -73,6 +72,9 @@ public class MyProfileFragment extends BaseFragment {
     @Bind(R.id.profile_image)
     CircleImageView profileImage;
 
+    @Inject
+    EventBus eventBus;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -82,7 +84,7 @@ public class MyProfileFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ((BaseActivity) getActivity()).activityComponent().inject(this);
+        activityComponent().inject(this);
         ButterKnife.bind(this, view);
         username.setText(usernamePreference.get());
         loadImage();
@@ -115,7 +117,7 @@ public class MyProfileFragment extends BaseFragment {
                 .subscribe(userDto -> {
                             userImagePreference.set(userDto.getImagePath());
                             loadImage();
-                            EventBus.getDefault().post(new UserImageChangedEvent());
+                            eventBus.post(new UserImageChangedEvent());
                             Toast.makeText(getActivity(), R.string.profile_image_changed, Toast.LENGTH_SHORT).show();
                         },
                         throwable -> {

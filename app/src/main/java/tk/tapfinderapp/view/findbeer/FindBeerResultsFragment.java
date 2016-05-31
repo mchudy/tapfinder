@@ -55,7 +55,7 @@ public class FindBeerResultsFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ((BaseActivity) getActivity()).activityComponent().inject(this);
+        activityComponent().inject(this);
         ButterKnife.bind(this, view);
         ActionBar actionBar = ((BaseActivity) getActivity()).getSupportActionBar();
         if(actionBar != null) {
