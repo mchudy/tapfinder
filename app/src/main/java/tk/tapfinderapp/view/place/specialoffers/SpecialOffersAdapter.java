@@ -38,7 +38,7 @@ public class SpecialOffersAdapter extends RecyclerView.Adapter<SpecialOffersAdap
         SpecialOfferDto dto = specialOffers.get(position);
         holder.title.setText(dto.getTitle());
         holder.description.setText(dto.getDescription());
-        //holder.rating.setText(dto.getRating());
+        holder.rating.setText(String.valueOf(dto.getRating()));
 
         DateFormat dateFormat =
                 android.text.format.DateFormat.getDateFormat(context);
