@@ -51,4 +51,6 @@
     <string name="description">Description</string>
     <string name="error_changing_profile_image">Could not change the profile image</string>
     <string name="profile_image_changed">Profile image has been changed</string>
+    <string name="error_beer_already_added">The beer is already added</string>
+    <string name="beer_added">Beer has been added</string>
 </resources>

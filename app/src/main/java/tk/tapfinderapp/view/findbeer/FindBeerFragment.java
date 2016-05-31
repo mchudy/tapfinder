@@ -68,8 +68,8 @@ public class FindBeerFragment extends BaseFragment {
 
     private void loadStyles() {
         service.getBeerStyles()
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onStylesLoaded,
                         e -> Timber.wtf(e.getMessage()));
     }

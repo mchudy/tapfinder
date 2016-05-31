@@ -1,6 +1,5 @@
 package tk.tapfinderapp.view.place.general;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,7 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -33,6 +31,7 @@ import tk.tapfinderapp.model.googleplaces.PlaceDetailsResult;
 import tk.tapfinderapp.service.GoogleMapsApiService;
 import tk.tapfinderapp.service.TapFinderApiService;
 import tk.tapfinderapp.util.DividerItemDecoration;
+import tk.tapfinderapp.util.KeyboardUtils;
 import tk.tapfinderapp.view.BaseActivity;
 
 public class PlaceGeneralFragment extends Fragment {
@@ -107,12 +106,7 @@ public class PlaceGeneralFragment extends Fragment {
                 .subscribeOn(Schedulers.io())
                 .subscribe(b -> loadComments(), e -> Timber.wtf(e.getMessage()));
         newCommentText.setText("");
-        hideSoftKeyboard(getActivity());
-    }
-
-    private static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+        KeyboardUtils.hideSoftKeyboard(getActivity());
     }
 
     private void setupComments() {

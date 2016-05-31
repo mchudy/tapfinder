@@ -1,7 +1,9 @@
-package tk.tapfinderapp.view.place.beers.addbeer;
+package tk.tapfinderapp.view.place.addbeer;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -10,14 +12,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import timber.log.Timber;
 import tk.tapfinderapp.R;
+import tk.tapfinderapp.model.AddPlaceBeerDto;
+import tk.tapfinderapp.model.BeerDto;
 import tk.tapfinderapp.service.TapFinderApiService;
 import tk.tapfinderapp.util.DelayAutoCompleteTextView;
+import tk.tapfinderapp.util.KeyboardUtils;
 import tk.tapfinderapp.view.BaseFragment;
 
 public class AddBeerOnTapFragment extends BaseFragment {
@@ -26,6 +35,7 @@ public class AddBeerOnTapFragment extends BaseFragment {
 
     //TODO: inject
     private BeersAdapter adapter;
+    private int selectedBeerPosition = -1;
 
     @Bind(R.id.beer)
     DelayAutoCompleteTextView beerAutoComplete;
@@ -35,6 +45,9 @@ public class AddBeerOnTapFragment extends BaseFragment {
 
     @Bind(R.id.description)
     EditText description;
+
+    @Bind(R.id.price_layout)
+    TextInputLayout priceLayout;
 
     @Bind(R.id.progress_bar_autocomplete)
     ProgressBar progressBar;
@@ -77,6 +90,9 @@ public class AddBeerOnTapFragment extends BaseFragment {
         beerAutoComplete.setProgressBar(progressBar);
         adapter = new BeersAdapter(getContext(), R.layout.beer_item, apiService);
         beerAutoComplete.setAdapter(adapter);
+        beerAutoComplete.setOnItemClickListener((parent, view, position, id) -> {
+            selectedBeerPosition = position;
+        });
     }
 
     @Override
@@ -100,10 +116,44 @@ public class AddBeerOnTapFragment extends BaseFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_save:
-                getActivity().getFragmentManager().popBackStack();
+                addBeer();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void addBeer() {
+        if(!validateInput()) return;
+        BeerDto selectedBeer = adapter.getItem(selectedBeerPosition);
+        AddPlaceBeerDto dto = new AddPlaceBeerDto(selectedBeer.getId(), placeId, description.getText().toString(),
+                Double.valueOf(price.getText().toString()));
+        apiService.addBeerAtPlace(dto)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(response -> {
+                    if(response.code() == 201) {
+                        Toast.makeText(getContext(), R.string.beer_added, Toast.LENGTH_SHORT).show();
+                        KeyboardUtils.hideSoftKeyboard(getActivity());
+                        getActivity().getSupportFragmentManager().popBackStackImmediate();
+                    } else if (response.code() == 409) {
+                        Toast.makeText(getContext(), R.string.error_beer_already_added, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), getString(R.string.error_occurred), Toast.LENGTH_SHORT).show();
+                    }
+                }, t -> Timber.wtf(t.getMessage()));
+    }
+
+    private boolean validateInput() {
+        boolean valid = true;
+        priceLayout.setError(null);
+        if(selectedBeerPosition == -1) {
+            valid = false;
+        }
+        if(TextUtils.isEmpty(price.getText())) {
+            priceLayout.setError(getString(R.string.error_field_required));
+            valid = false;
+        }
+        return valid;
     }
 }

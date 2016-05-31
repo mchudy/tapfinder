@@ -22,7 +22,7 @@ import tk.tapfinderapp.service.TapFinderApiService;
 import tk.tapfinderapp.util.DividerItemDecoration;
 import tk.tapfinderapp.view.BaseActivity;
 import tk.tapfinderapp.view.FabFragmentHandler;
-import tk.tapfinderapp.view.place.beers.addbeer.AddBeerOnTapFragment;
+import tk.tapfinderapp.view.place.addbeer.AddBeerOnTapFragment;
 
 public class PlaceBeersFragment extends Fragment implements FabFragmentHandler {
 

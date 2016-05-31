@@ -1,4 +1,4 @@
-package tk.tapfinderapp.view.place.beers.addbeer;
+package tk.tapfinderapp.view.place.addbeer;
 
 import android.content.Context;
 import android.text.TextUtils;

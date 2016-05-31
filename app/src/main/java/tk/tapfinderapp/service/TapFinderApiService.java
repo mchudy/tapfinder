@@ -16,6 +16,7 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 import tk.tapfinderapp.model.AccessTokenModel;
+import tk.tapfinderapp.model.AddPlaceBeerDto;
 import tk.tapfinderapp.model.BeerDto;
 import tk.tapfinderapp.model.BeerStyleDto;
 import tk.tapfinderapp.model.CommentDto;
@@ -67,6 +68,9 @@ public interface TapFinderApiService {
 
     @GET("places/{id}/beers")
     Observable<List<PlaceBeerDto>> getBeersAtPlace(@Path("id") String placeId);
+
+    @POST("places/{id}/beers")
+    Observable<Response<ResponseBody>> addBeerAtPlace(@Body AddPlaceBeerDto dto);
 
     @PUT("users/image")
     Observable<UserDto> changeImage(@Body UserImageDto dto);
