@@ -1,0 +1,38 @@
+<RelativeLayout
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/rating"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/price"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="20dp"
+        android:text="10"
+        android:layout_width="wrap_content"
+        />
+
+    <LinearLayout
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/rating"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content">
+
+        <ImageView
+            android:id="@+id/like"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_thumb_up_grey_800_18dp"/>
+
+        <ImageView
+            android:id="@+id/dislike"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_thumb_down_grey_800_18dp"/>
+    </LinearLayout>
+
+</RelativeLayout>

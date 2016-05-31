@@ -19,7 +19,6 @@ import rx.schedulers.Schedulers;
 import timber.log.Timber;
 import tk.tapfinderapp.R;
 import tk.tapfinderapp.service.TapFinderApiService;
-import tk.tapfinderapp.util.DividerItemDecoration;
 import tk.tapfinderapp.view.BaseActivity;
 import tk.tapfinderapp.view.FabFragmentHandler;
 import tk.tapfinderapp.view.place.addbeer.AddBeerOnTapFragment;
@@ -70,7 +69,6 @@ public class PlaceBeersFragment extends Fragment implements FabFragmentHandler {
     private void initAdapter() {
         beers.setLayoutManager(new LinearLayoutManager(getActivity()));
         beers.setAdapter(beersAdapter);
-        beers.addItemDecoration(new DividerItemDecoration(getContext()));
     }
 
     private void loadBeers() {

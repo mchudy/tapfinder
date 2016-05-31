@@ -4,18 +4,36 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import javax.inject.Inject;
+
+import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import timber.log.Timber;
 import tk.tapfinderapp.R;
+import tk.tapfinderapp.service.TapFinderApiService;
 import tk.tapfinderapp.view.BaseActivity;
 import tk.tapfinderapp.view.FabFragmentHandler;
 
 public class PlaceSpecialOffersFragment extends Fragment implements FabFragmentHandler {
 
     private String placeId;
+
+    @Bind(R.id.special_offers)
+    RecyclerView specialOffers;
+
+    //TODO: inject
+    SpecialOffersAdapter adapter;
+
+    @Inject
+    TapFinderApiService apiService;
 
     public static PlaceSpecialOffersFragment newInstance(String placeId){
         PlaceSpecialOffersFragment fragment = new PlaceSpecialOffersFragment();
@@ -43,6 +61,24 @@ public class PlaceSpecialOffersFragment extends Fragment implements FabFragmentH
         super.onViewCreated(view, savedInstanceState);
         ((BaseActivity) getActivity()).activityComponent().inject(this);
         ButterKnife.bind(this, view);
+        initAdapter();
+        loadSpecialOffers();
+    }
+
+    private void initAdapter() {
+        adapter = new SpecialOffersAdapter(getContext());
+        specialOffers.setLayoutManager(new LinearLayoutManager(getActivity()));
+        specialOffers.setAdapter(adapter);
+    }
+
+    private void loadSpecialOffers() {
+        apiService.getSpecialOffers(placeId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(b -> {
+                    adapter.setSpecialOffers(b);
+                    adapter.notifyDataSetChanged();
+                }, t -> Timber.wtf(t.getMessage()));
     }
 
     @Override

@@ -20,31 +20,24 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/brewery"
+                android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="2dp"
-                android:text="Brewery"
-                android:textColor="@android:color/secondary_text_light"
-                android:textSize="15sp"/>
-
-            <TextView
-                android:id="@+id/beer_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="2dp"
-                android:text="Beer name"
+                android:paddingEnd="70dp"
+                android:text="Title"
                 android:textColor="#000000"
                 android:textSize="20sp"/>
 
             <TextView
-                android:id="@+id/style"
+                android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="2dp"
+                android:text="date"
                 android:paddingEnd="70dp"
-                android:text="Style"/>
-
+                android:textColor="#000000"
+                android:textSize="14sp"/>
             <TextView
                 android:id="@+id/description"
                 android:layout_width="wrap_content"
@@ -54,20 +47,10 @@
                 android:textColor="@android:color/tertiary_text_dark"/>
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginBottom="20dp"
-            android:text="10 zł"
-            android:textSize="30sp"/>
-
         <include
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_below="@id/price"
+            android:layout_marginTop="5dp"
             layout="@layout/rating"/>
 
     </RelativeLayout>
