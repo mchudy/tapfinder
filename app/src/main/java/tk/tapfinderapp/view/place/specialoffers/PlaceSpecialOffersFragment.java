@@ -21,6 +21,7 @@ import tk.tapfinderapp.R;
 import tk.tapfinderapp.service.TapFinderApiService;
 import tk.tapfinderapp.view.BaseActivity;
 import tk.tapfinderapp.view.FabFragmentHandler;
+import tk.tapfinderapp.view.place.addspecialoffer.AddSpecialOfferFragment;
 
 public class PlaceSpecialOffersFragment extends Fragment implements FabFragmentHandler {
 

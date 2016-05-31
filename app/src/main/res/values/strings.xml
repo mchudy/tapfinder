@@ -53,4 +53,9 @@
     <string name="profile_image_changed">Profile image has been changed</string>
     <string name="error_beer_already_added">The beer is already added</string>
     <string name="beer_added">Beer has been added</string>
+    <string name="title">Title</string>
+    <string name="from_date">From</string>
+    <string name="to_date">To</string>
+    <string name="special_offer_added">Special offer has been added</string>
+    <string name="error_end_date_before_start_date">End date cannot be earlier than the start date</string>
 </resources>
