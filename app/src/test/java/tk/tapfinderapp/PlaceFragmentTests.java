@@ -1,6 +1,6 @@
 package tk.tapfinderapp;
 
-import android.support.v7.widget.Toolbar;
+import android.support.design.widget.CollapsingToolbarLayout;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +14,7 @@ import tk.tapfinderapp.view.MainActivity;
 import tk.tapfinderapp.view.place.PlaceFragment;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.robolectric.shadows.support.v4.SupportFragmentTestUtil.startFragment;
+import static org.robolectric.shadows.support.v4.SupportFragmentTestUtil.startVisibleFragment;
 
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 22)
@@ -29,17 +29,18 @@ public class PlaceFragmentTests {
         place.setId("id");
         place.setName("name");
         fragment = PlaceFragment.newInstance(place);
-        startFragment(fragment, MainActivity.class);
+        startVisibleFragment(fragment, MainActivity.class, R.id.fragment);
     }
 
     @Test
-    public void checkActivityNotNull() throws Exception {
+    public void checkFragmentNotNull() throws Exception {
         assertThat(fragment).isNotNull();
+        assertThat(fragment.getView()).isNotNull();
     }
 
     @Test
     public void shouldSetToolbarTitleToPlaceName() throws Exception {
-        Toolbar toolbar = ButterKnife.findById(fragment.getView(), R.id.toolbar);
+        CollapsingToolbarLayout toolbar = ButterKnife.findById(fragment.getView(), R.id.collapsing_toolbar);
         assertThat(toolbar.getTitle()).isEqualTo(place.getName());
     }
 }
