@@ -58,4 +58,5 @@
     <string name="to_date">To</string>
     <string name="special_offer_added">Special offer has been added</string>
     <string name="error_end_date_before_start_date">End date cannot be earlier than the start date</string>
+    <string name="favourite_places">Ulubione miejsca:</string>
 </resources>
