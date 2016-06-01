@@ -15,7 +15,7 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
-import tk.tapfinderapp.model.AccessTokenModel;
+import tk.tapfinderapp.model.AccessTokenDto;
 import tk.tapfinderapp.model.AddPlaceBeerDto;
 import tk.tapfinderapp.model.AddSpecialOfferDto;
 import tk.tapfinderapp.model.BeerDto;
@@ -39,19 +39,19 @@ public interface TapFinderApiService {
 
     @POST("token")
     @FormUrlEncoded
-    Observable<AccessTokenModel> getToken(@Field("username") String username,
-                                          @Field("password") String password,
-                                          @Field("grant_type") String grantType);
+    Observable<AccessTokenDto> getToken(@Field("username") String username,
+                                        @Field("password") String password,
+                                        @Field("grant_type") String grantType);
 
     @GET("users/token")
-    Observable<Response<AccessTokenModel>> getTokenFromExternal(@Query("provider") String provider,
-                                                                       @Query("externalAccessToken") String externalAccessToken);
+    Observable<Response<AccessTokenDto>> getTokenFromExternal(@Query("provider") String provider,
+                                                              @Query("externalAccessToken") String externalAccessToken);
 
     @POST("users")
     Observable<ResponseBody> register(@Body UserRegisterDto dto);
 
     @POST("users/external")
-    Observable<Response<AccessTokenModel>> registerExternal(@Body UserRegisterExternalDto dto);
+    Observable<Response<AccessTokenDto>> registerExternal(@Body UserRegisterExternalDto dto);
 
     @GET("beers/styles")
     Observable<List<BeerStyleDto>> getBeerStyles();

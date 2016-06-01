@@ -22,6 +22,8 @@ import rx.schedulers.Schedulers;
 import timber.log.Timber;
 import tk.tapfinderapp.R;
 import tk.tapfinderapp.model.BeerStyleDto;
+import tk.tapfinderapp.model.FindBeerSearchResultDto;
+import tk.tapfinderapp.model.FindBeerSearchResultItem;
 import tk.tapfinderapp.model.googleplaces.Place;
 import tk.tapfinderapp.model.googleplaces.PlacesResult;
 import tk.tapfinderapp.service.GoogleMapsApiService;
@@ -95,10 +97,22 @@ public class FindBeerResultsFragment extends LocationAwareFragment {
                         Pair::create)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(pair -> {
-                    Timber.d(pair.first.toString());
-                    Timber.d(pair.second.toString());
-                }, t -> Timber.wtf(t.getMessage()));
+                .subscribe(this::showItems, t -> Timber.wtf(t.getMessage()));
+    }
+
+    private void showItems(Pair<List<Place>, List<FindBeerSearchResultDto>> pair) {
+        List<Place> places = pair.first;
+        List<FindBeerSearchResultDto> results = pair.second;
+        List<FindBeerSearchResultItem> items = new ArrayList<>();
+        for(FindBeerSearchResultDto result : results) {
+            Place place = null;
+            for(Place p : places) {
+                if(p.getPlaceId().equals(result.getPlaceId())) {
+                    place = p;
+                }
+            }
+            items.add(new FindBeerSearchResultItem(place, result.getBeers()));
+        }
     }
 
     @Override
