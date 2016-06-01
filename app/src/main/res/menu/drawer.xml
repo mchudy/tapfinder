@@ -11,9 +11,7 @@
             android:icon="@drawable/ic_near_me_grey_800_36dp"
             android:checked="true"
             android:title="@string/nearby" />
-        <item
-            android:id="@+id/favourites"
-            android:title="@string/favourites" />
+
         <item
             android:id="@+id/logout_item"
             android:title="@string/logout"

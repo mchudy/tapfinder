@@ -218,9 +218,6 @@ public class MainActivity extends BaseActivity {
             case R.id.logout_item:
                 logout();
                 break;
-            case R.id.favourites:
-                //changeFragment(new BaseFragment());
-                break;
         }
     }
 
