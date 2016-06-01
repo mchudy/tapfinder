@@ -78,6 +78,7 @@ public interface TapFinderApiService {
 
     @GET("places/search")
     Observable<List<PlaceBeerDto>> getPlacesWithBeer(@Query("beerStyleId") int beerStyleId,
+                                                     @Query("maxPrice") double maxPrice,
                                                      @Query("placesIds") List<String> placesIds);
 
     @PUT("users/image")

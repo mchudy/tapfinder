@@ -57,6 +57,7 @@ public class FindBeerFragment extends BaseFragment {
     @OnClick(R.id.find_beer_button)
     public void findBeer() {
         BeerStyleDto style = (BeerStyleDto) stylesSpinner.getSelectedItem();
+        if(style == null) return;
         maxPriceLayout.setError(null);
         if(TextUtils.isEmpty(maxPrice.getText())) {
             maxPriceLayout.setError(getString(R.string.error_field_required));

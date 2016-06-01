@@ -1,5 +1,6 @@
 package tk.tapfinderapp.view.findbeer;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -9,25 +10,38 @@ import android.view.ViewGroup;
 
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import timber.log.Timber;
 import tk.tapfinderapp.R;
 import tk.tapfinderapp.model.BeerStyleDto;
+import tk.tapfinderapp.model.googleplaces.Place;
+import tk.tapfinderapp.model.googleplaces.PlacesResult;
+import tk.tapfinderapp.service.GoogleMapsApiService;
 import tk.tapfinderapp.service.TapFinderApiService;
 import tk.tapfinderapp.view.BaseActivity;
-import tk.tapfinderapp.view.BaseFragment;
+import tk.tapfinderapp.view.LocationAwareFragment;
 
-public class FindBeerResultsFragment extends BaseFragment {
+public class FindBeerResultsFragment extends LocationAwareFragment {
 
-    private static final String BEER_STYLE_KEY = "beerStyleId";
+    private static final String BEER_STYLE_KEY = "beerStyle";
     private static final String MAX_PRICE_KEY = "maxPriceKey";
 
     private BeerStyleDto beerStyle;
     private double maxPrice;
+    private boolean resultsShown = false;
 
     @Inject
     TapFinderApiService service;
+
+    @Inject
+    GoogleMapsApiService googleMapsService;
 
     public static FindBeerResultsFragment newInstance(BeerStyleDto beerStyle, double maxPrice) {
         FindBeerResultsFragment fragment = new FindBeerResultsFragment();
@@ -64,7 +78,42 @@ public class FindBeerResultsFragment extends BaseFragment {
     }
 
     @Override
+    public void onLocationChanged(Location location) {
+        super.onLocationChanged(location);
+        if(!resultsShown) {
+            resultsShown = true;
+            loadResults();
+        }
+    }
+
+    private void loadResults() {
+        String locationString = userLocation.getLatitude() + "," + userLocation.getLongitude();
+        //TODO: use flatMap
+        googleMapsService.getNearbyPubs(locationString, getString(R.string.google_places_key))
+                .map(PlacesResult::getResults)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(result -> {
+                    List<String> ids = new ArrayList<>();
+                    for(Place p : result) {
+                        ids.add(p.getPlaceId());
+                    }
+                    service.getPlacesWithBeer(beerStyle.getId(), maxPrice, ids)
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribeOn(Schedulers.io())
+                            .subscribe(placeBeerDtos -> {
+                                Timber.wtf(placeBeerDtos.toString());
+                            }, t -> Timber.wtf(t.getMessage()));
+                }, t -> Timber.wtf(t.getMessage()));
+    }
+
+    @Override
     protected int getTitleResId() {
         return R.string.search_results;
+    }
+
+    @Override
+    protected void onPermissionsSuccess() {
+        buildGoogleApiClient();
     }
 }
