@@ -12,6 +12,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -29,6 +30,11 @@ android {
     lintOptions {
         disable 'InvalidPackage'
     }
+
+    packagingOptions {
+        exclude 'META-INF/maven/com.google.guava/guava/pom.properties'
+        exclude 'META-INF/maven/com.google.guava/guava/pom.xml'
+    }
 }
 
 def compile_libs = [
@@ -37,7 +43,6 @@ def compile_libs = [
         'com.android.support:design:23.3.0',
         'com.jakewharton.timber:timber:4.1.2',
         'com.jakewharton:butterknife:7.0.1',
-        'com.android.support:support-v4:23.3.0',
         'com.google.android.gms:play-services-maps:8.4.0',
         'com.google.android.gms:play-services-location:8.4.0',
         'de.hdodenhof:circleimageview:2.0.0',
@@ -45,19 +50,16 @@ def compile_libs = [
         'com.google.dagger:dagger:2.0.2',
         'com.squareup.picasso:picasso:2.5.2',
         'org.greenrobot:eventbus:3.0.0',
-
         'io.reactivex:rxandroid:1.1.0',
         'io.reactivex:rxjava:1.1.0',
         'com.f2prateek.rx.preferences:rx-preferences:1.0.1',
-
         'com.squareup.retrofit2:retrofit:2.0.0-beta4',
         'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4',
         'com.squareup.retrofit2:converter-gson:2.0.0-beta4',
         'com.squareup.okhttp3:logging-interceptor:3.2.0',
-
         'org.parceler:parceler-api:1.0.4',
-
-        'com.facebook.android:facebook-android-sdk:[4,5)'
+        'com.facebook.android:facebook-android-sdk:4.+',
+        'com.android.support:support-v4:23.4.0'
 ]
 
 def provided_libs = [
@@ -69,10 +71,26 @@ def apt_libs = [
         'org.parceler:parceler:1.0.4',
 ]
 
+def test_libs = [
+        'junit:junit:4.12',
+        'org.robolectric:robolectric:3.1-rc1',
+        "org.robolectric:shadows-support-v4:3.1-rc1",
+        'org.assertj:assertj-core:1.7.1'
+]
+
+def android_test_libs = [
+        'junit:junit:4.12',
+        'com.android.support:support-annotations:23.4.0',
+        'com.android.support.test:runner:0.4.1',
+        'com.android.support.test:rules:0.4.1',
+        'com.android.support.test.espresso:espresso-intents:2.2.1',
+        'com.android.support.test.espresso:espresso-web:2.2.1'
+]
+
 dependencies {
     compile compile_libs
     provided provided_libs
     apt apt_libs
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:support-v4:23.3.0'
+    testCompile test_libs
+    androidTestCompile android_test_libs
 }

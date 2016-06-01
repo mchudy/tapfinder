@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 
 import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
 
 import timber.log.Timber;
 import tk.tapfinderapp.di.component.ApplicationComponent;
@@ -20,7 +19,6 @@ public class TapFinderApp extends Application {
         component.inject(this);
 
         FacebookSdk.sdkInitialize(getApplicationContext());
-        AppEventsLogger.activateApp(this);
 
         if(BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
