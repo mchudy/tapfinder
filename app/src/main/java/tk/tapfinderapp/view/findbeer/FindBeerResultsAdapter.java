@@ -1,6 +1,7 @@
 package tk.tapfinderapp.view.findbeer;
 
 import android.content.Context;
+import android.location.Location;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,11 +16,15 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import tk.tapfinderapp.R;
 import tk.tapfinderapp.model.FindBeerSearchResultItem;
+import tk.tapfinderapp.model.googleplaces.Place;
+import tk.tapfinderapp.view.BaseActivity;
+import tk.tapfinderapp.view.place.PlaceFragment;
 
 public class FindBeerResultsAdapter extends RecyclerView.Adapter<FindBeerResultsAdapter.FindBeerResultViewHolder>{
 
     private List<FindBeerSearchResultItem> items = Collections.emptyList();
     private Context context;
+    private Location userLocation;
 
     public FindBeerResultsAdapter(Context context) {
         this.context = context;
@@ -36,12 +41,15 @@ public class FindBeerResultsAdapter extends RecyclerView.Adapter<FindBeerResults
     public void onBindViewHolder(FindBeerResultViewHolder holder, int position) {
         FindBeerSearchResultItem item = items.get(position);
         holder.placeName.setText(item.getPlace().getName());
-        //holder.distance.setText();
+        holder.distance.setText(getDistanceToPlace(item.getPlace().getGeometry().getLocation()));
         FindBeerResultBeersAdapter beersAdapter = new FindBeerResultBeersAdapter();
         holder.beers.setLayoutManager(new LinearLayoutManager(context));
         holder.beers.setAdapter(beersAdapter);
         beersAdapter.setBeers(item.getBeers());
         beersAdapter.notifyDataSetChanged();
+        holder.placeName.setOnClickListener(v -> {
+            ((BaseActivity) context).changeFragmentWithBackStack(PlaceFragment.newInstance(item.getPlace()));
+        });
     }
 
     @Override
@@ -51,6 +59,16 @@ public class FindBeerResultsAdapter extends RecyclerView.Adapter<FindBeerResults
 
     public void setItems(List<FindBeerSearchResultItem> items) {
         this.items = items;
+    }
+
+    public void setUserLocation(Location location) {this.userLocation = location;}
+
+    private String getDistanceToPlace(Place.Location location) {
+        Location placeLocation = new Location("");
+        placeLocation.setLatitude(location.getLat());
+        placeLocation.setLongitude(location.getLng());
+        float distance = userLocation.distanceTo(placeLocation) / 1000; // in km
+        return String.format("%.2f km", distance);
     }
 
     public static class FindBeerResultViewHolder extends RecyclerView.ViewHolder {

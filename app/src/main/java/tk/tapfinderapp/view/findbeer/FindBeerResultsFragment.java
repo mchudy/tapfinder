@@ -99,6 +99,7 @@ public class FindBeerResultsFragment extends LocationAwareFragment {
         super.onLocationChanged(location);
         if(!resultsShown) {
             resultsShown = true;
+            adapter.setUserLocation(location);
             loadResults();
         }
     }
