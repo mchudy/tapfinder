@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.util.Pair;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -39,6 +42,10 @@ public class FindBeerResultsFragment extends LocationAwareFragment {
     private BeerStyleDto beerStyle;
     private double maxPrice;
     private boolean resultsShown = false;
+    private FindBeerResultsAdapter adapter;
+
+    @Bind(R.id.results)
+    RecyclerView results;
 
     @Inject
     TapFinderApiService service;
@@ -78,6 +85,13 @@ public class FindBeerResultsFragment extends LocationAwareFragment {
         if(actionBar != null) {
             actionBar.setTitle(getString(R.string.nearby_pubs_serving, beerStyle.getName()));
         }
+        setAdapter();
+    }
+
+    private void setAdapter() {
+        results.setLayoutManager(new LinearLayoutManager(getActivity()));
+        adapter = new FindBeerResultsAdapter(getActivity());
+        results.setAdapter(adapter);
     }
 
     @Override
@@ -101,6 +115,12 @@ public class FindBeerResultsFragment extends LocationAwareFragment {
     }
 
     private void showItems(Pair<List<Place>, List<FindBeerSearchResultDto>> pair) {
+        List<FindBeerSearchResultItem> items = transformResults(pair);
+        adapter.setItems(items);
+        adapter.notifyDataSetChanged();
+    }
+
+    private List<FindBeerSearchResultItem> transformResults(Pair<List<Place>, List<FindBeerSearchResultDto>> pair) {
         List<Place> places = pair.first;
         List<FindBeerSearchResultDto> results = pair.second;
         List<FindBeerSearchResultItem> items = new ArrayList<>();
@@ -111,8 +131,10 @@ public class FindBeerResultsFragment extends LocationAwareFragment {
                     place = p;
                 }
             }
+            Timber.d("%d",result.getBeers().size());
             items.add(new FindBeerSearchResultItem(place, result.getBeers()));
         }
+        return items;
     }
 
     @Override
