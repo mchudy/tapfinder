@@ -2,7 +2,7 @@ package tk.tapfinderapp.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class AccessTokenModel {
+public class AccessTokenDto {
 
     private String userName;
 

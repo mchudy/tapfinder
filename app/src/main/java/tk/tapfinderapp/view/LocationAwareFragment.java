@@ -37,8 +37,12 @@ public abstract class LocationAwareFragment extends BaseFragment implements
         activityComponent().inject(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkPermissions();
+            onPermissionsSuccess();
         }
     }
+
+    //TODO: integrate with MapFragment
+    protected void onPermissionsSuccess() {}
 
     private boolean checkPermissions() {
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) !=
@@ -70,7 +74,7 @@ public abstract class LocationAwareFragment extends BaseFragment implements
         }
     }
 
-    protected abstract void onPermissionsGranted();
+    protected void onPermissionsGranted() {}
 
     protected void buildGoogleApiClient() {
         if (googleApiClient == null) {

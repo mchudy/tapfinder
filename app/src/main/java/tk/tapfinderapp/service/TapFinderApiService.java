@@ -15,18 +15,19 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
-import tk.tapfinderapp.model.AccessTokenModel;
+import tk.tapfinderapp.model.AccessTokenDto;
 import tk.tapfinderapp.model.AddPlaceBeerDto;
 import tk.tapfinderapp.model.AddSpecialOfferDto;
 import tk.tapfinderapp.model.BeerDto;
 import tk.tapfinderapp.model.BeerStyleDto;
 import tk.tapfinderapp.model.CommentDto;
+import tk.tapfinderapp.model.FindBeerSearchResultDto;
 import tk.tapfinderapp.model.PlaceBeerDto;
 import tk.tapfinderapp.model.SpecialOfferDto;
-import tk.tapfinderapp.model.UserDto;
-import tk.tapfinderapp.model.UserImageDto;
-import tk.tapfinderapp.model.UserRegisterDto;
-import tk.tapfinderapp.model.UserRegisterExternalDto;
+import tk.tapfinderapp.model.user.UserDto;
+import tk.tapfinderapp.model.user.UserImageDto;
+import tk.tapfinderapp.model.user.UserRegisterDto;
+import tk.tapfinderapp.model.user.UserRegisterExternalDto;
 
 public interface TapFinderApiService {
 
@@ -38,19 +39,19 @@ public interface TapFinderApiService {
 
     @POST("token")
     @FormUrlEncoded
-    Observable<AccessTokenModel> getToken(@Field("username") String username,
-                                          @Field("password") String password,
-                                          @Field("grant_type") String grantType);
+    Observable<AccessTokenDto> getToken(@Field("username") String username,
+                                        @Field("password") String password,
+                                        @Field("grant_type") String grantType);
 
     @GET("users/token")
-    Observable<Response<AccessTokenModel>> getTokenFromExternal(@Query("provider") String provider,
-                                                                       @Query("externalAccessToken") String externalAccessToken);
+    Observable<Response<AccessTokenDto>> getTokenFromExternal(@Query("provider") String provider,
+                                                              @Query("externalAccessToken") String externalAccessToken);
 
     @POST("users")
     Observable<ResponseBody> register(@Body UserRegisterDto dto);
 
     @POST("users/external")
-    Observable<Response<AccessTokenModel>> registerExternal(@Body UserRegisterExternalDto dto);
+    Observable<Response<AccessTokenDto>> registerExternal(@Body UserRegisterExternalDto dto);
 
     @GET("beers/styles")
     Observable<List<BeerStyleDto>> getBeerStyles();
@@ -77,8 +78,9 @@ public interface TapFinderApiService {
     Observable<Response<ResponseBody>> addBeerAtPlace(@Body AddPlaceBeerDto dto);
 
     @GET("places/search")
-    Observable<List<PlaceBeerDto>> getPlacesWithBeer(@Query("beerStyleId") int beerStyleId,
-                                                     @Query("placesIds") List<String> placesIds);
+    Observable<List<FindBeerSearchResultDto>> getPlacesWithBeer(@Query("beerStyleId") int beerStyleId,
+                                                                @Query("maxPrice") double maxPrice,
+                                                                @Query("placesIds") List<String> placesIds);
 
     @PUT("users/image")
     Observable<UserDto> changeImage(@Body UserImageDto dto);

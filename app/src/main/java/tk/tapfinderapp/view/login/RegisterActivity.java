@@ -17,7 +17,7 @@ import butterknife.OnFocusChange;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import tk.tapfinderapp.R;
-import tk.tapfinderapp.model.UserRegisterDto;
+import tk.tapfinderapp.model.user.UserRegisterDto;
 import tk.tapfinderapp.service.TapFinderApiService;
 import tk.tapfinderapp.view.BaseActivity;
 

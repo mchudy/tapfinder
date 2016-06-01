@@ -33,8 +33,8 @@ import timber.log.Timber;
 import tk.tapfinderapp.R;
 import tk.tapfinderapp.di.qualifier.AccessTokenPreference;
 import tk.tapfinderapp.di.qualifier.UsernamePreference;
-import tk.tapfinderapp.model.AccessTokenModel;
-import tk.tapfinderapp.model.UserRegisterExternalDto;
+import tk.tapfinderapp.model.AccessTokenDto;
+import tk.tapfinderapp.model.user.UserRegisterExternalDto;
 import tk.tapfinderapp.service.TapFinderApiService;
 import tk.tapfinderapp.view.BaseActivity;
 import tk.tapfinderapp.view.MainActivity;
@@ -107,7 +107,7 @@ public class LoginActivity extends BaseActivity {
         progress.dismiss();
     }
 
-    private void addToken(AccessTokenModel model) {
+    private void addToken(AccessTokenDto model) {
         String token = model.getAccessToken();
         if (!TextUtils.isEmpty(token)) {
             accessTokenPreference.set(token);

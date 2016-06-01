@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical"
               android:weightSum="1">
 
@@ -59,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Poziom: 3"
+            tools:text="Poziom: 3"
             android:textAppearance="?android:attr/textAppearanceLarge"/>
 
         <TextView
@@ -67,7 +68,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Ulubione miejsca:"
+            android:text="@string/favourite_places"
             android:textAppearance="?android:attr/textAppearanceMedium"/>
 
         <ListView
