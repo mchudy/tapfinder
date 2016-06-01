@@ -34,7 +34,7 @@ import tk.tapfinderapp.R;
 import tk.tapfinderapp.di.qualifier.AccessTokenPreference;
 import tk.tapfinderapp.di.qualifier.UsernamePreference;
 import tk.tapfinderapp.model.AccessTokenModel;
-import tk.tapfinderapp.model.UserRegisterExternalDto;
+import tk.tapfinderapp.model.user.UserRegisterExternalDto;
 import tk.tapfinderapp.service.TapFinderApiService;
 import tk.tapfinderapp.view.BaseActivity;
 import tk.tapfinderapp.view.MainActivity;

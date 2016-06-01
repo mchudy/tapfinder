@@ -1,4 +1,4 @@
-package tk.tapfinderapp.model;
+package tk.tapfinderapp.model.user;
 
 import lombok.Value;
 

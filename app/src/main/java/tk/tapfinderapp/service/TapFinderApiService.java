@@ -21,12 +21,13 @@ import tk.tapfinderapp.model.AddSpecialOfferDto;
 import tk.tapfinderapp.model.BeerDto;
 import tk.tapfinderapp.model.BeerStyleDto;
 import tk.tapfinderapp.model.CommentDto;
+import tk.tapfinderapp.model.FindBeerSearchResultDto;
 import tk.tapfinderapp.model.PlaceBeerDto;
 import tk.tapfinderapp.model.SpecialOfferDto;
-import tk.tapfinderapp.model.UserDto;
-import tk.tapfinderapp.model.UserImageDto;
-import tk.tapfinderapp.model.UserRegisterDto;
-import tk.tapfinderapp.model.UserRegisterExternalDto;
+import tk.tapfinderapp.model.user.UserDto;
+import tk.tapfinderapp.model.user.UserImageDto;
+import tk.tapfinderapp.model.user.UserRegisterDto;
+import tk.tapfinderapp.model.user.UserRegisterExternalDto;
 
 public interface TapFinderApiService {
 
@@ -77,9 +78,9 @@ public interface TapFinderApiService {
     Observable<Response<ResponseBody>> addBeerAtPlace(@Body AddPlaceBeerDto dto);
 
     @GET("places/search")
-    Observable<List<PlaceBeerDto>> getPlacesWithBeer(@Query("beerStyleId") int beerStyleId,
-                                                     @Query("maxPrice") double maxPrice,
-                                                     @Query("placesIds") List<String> placesIds);
+    Observable<List<FindBeerSearchResultDto>> getPlacesWithBeer(@Query("beerStyleId") int beerStyleId,
+                                                                @Query("maxPrice") double maxPrice,
+                                                                @Query("placesIds") List<String> placesIds);
 
     @PUT("users/image")
     Observable<UserDto> changeImage(@Body UserImageDto dto);

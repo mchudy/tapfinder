@@ -40,7 +40,7 @@ import tk.tapfinderapp.R;
 import tk.tapfinderapp.di.qualifier.UserImagePreference;
 import tk.tapfinderapp.di.qualifier.UsernamePreference;
 import tk.tapfinderapp.event.UserImageChangedEvent;
-import tk.tapfinderapp.model.UserImageDto;
+import tk.tapfinderapp.model.user.UserImageDto;
 import tk.tapfinderapp.service.TapFinderApiService;
 import tk.tapfinderapp.view.BaseFragment;
 

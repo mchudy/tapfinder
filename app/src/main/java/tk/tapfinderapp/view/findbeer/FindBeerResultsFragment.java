@@ -3,6 +3,7 @@ package tk.tapfinderapp.view.findbeer;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.util.Pair;
 import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -88,22 +89,15 @@ public class FindBeerResultsFragment extends LocationAwareFragment {
 
     private void loadResults() {
         String locationString = userLocation.getLatitude() + "," + userLocation.getLongitude();
-        //TODO: use flatMap
         googleMapsService.getNearbyPubs(locationString, getString(R.string.google_places_key))
                 .map(PlacesResult::getResults)
+                .flatMap(places -> service.getPlacesWithBeer(beerStyle.getId(), maxPrice, getIds(places)),
+                        Pair::create)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(result -> {
-                    List<String> ids = new ArrayList<>();
-                    for(Place p : result) {
-                        ids.add(p.getPlaceId());
-                    }
-                    service.getPlacesWithBeer(beerStyle.getId(), maxPrice, ids)
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribeOn(Schedulers.io())
-                            .subscribe(placeBeerDtos -> {
-                                Timber.wtf(placeBeerDtos.toString());
-                            }, t -> Timber.wtf(t.getMessage()));
+                .subscribe(pair -> {
+                    Timber.d(pair.first.toString());
+                    Timber.d(pair.second.toString());
                 }, t -> Timber.wtf(t.getMessage()));
     }
 
@@ -115,5 +109,13 @@ public class FindBeerResultsFragment extends LocationAwareFragment {
     @Override
     protected void onPermissionsSuccess() {
         buildGoogleApiClient();
+    }
+
+    private List<String> getIds(List<Place> places) {
+        List<String> ids = new ArrayList<>();
+        for(Place p : places) {
+            ids.add(p.getPlaceId());
+        }
+        return ids;
     }
 }
