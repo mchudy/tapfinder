@@ -23,6 +23,7 @@ import timber.log.Timber;
 import tk.tapfinderapp.R;
 import tk.tapfinderapp.model.BeerStyleDto;
 import tk.tapfinderapp.service.TapFinderApiService;
+import tk.tapfinderapp.util.KeyboardUtils;
 import tk.tapfinderapp.view.BaseActivity;
 import tk.tapfinderapp.view.BaseFragment;
 
@@ -63,6 +64,7 @@ public class FindBeerFragment extends BaseFragment {
             maxPriceLayout.setError(getString(R.string.error_field_required));
             return;
         }
+        KeyboardUtils.hideSoftKeyboard(getActivity());
         ((BaseActivity)getActivity()).changeFragmentWithBackStack(
                 FindBeerResultsFragment.newInstance(style, Double.parseDouble(maxPrice.getText().toString())));
     }

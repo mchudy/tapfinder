@@ -142,7 +142,6 @@ public class FindBeerResultsFragment extends LocationAwareFragment {
                     place = p;
                 }
             }
-            Timber.d("%d",result.getBeers().size());
             items.add(new FindBeerSearchResultItem(place, result.getBeers()));
         }
         return items;
