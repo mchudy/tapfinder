@@ -104,6 +104,16 @@ public class FindBeerResultsFragment extends LocationAwareFragment {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        resultsShown = false;
+        if(userLocation != null) {
+            adapter.setUserLocation(userLocation);
+            loadResults();
+        }
+    }
+
     private void loadResults() {
         String locationString = userLocation.getLatitude() + "," + userLocation.getLongitude();
         googleMapsService.getNearbyPubs(locationString, getString(R.string.google_places_key))
