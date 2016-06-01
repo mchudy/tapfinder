@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.NumberFormat;
@@ -15,15 +16,22 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import timber.log.Timber;
 import tk.tapfinderapp.R;
+import tk.tapfinderapp.model.LikeDto;
 import tk.tapfinderapp.model.PlaceBeerDto;
+import tk.tapfinderapp.service.TapFinderApiService;
 
 public class PlaceBeersAdapter extends RecyclerView.Adapter<PlaceBeersAdapter.BeerOnTapViewHolder> {
 
     private List<PlaceBeerDto> placesBeers;
+    private TapFinderApiService apiService;
 
     @Inject
-    public PlaceBeersAdapter() {
+    public PlaceBeersAdapter(TapFinderApiService apiService) {
+        this.apiService = apiService;
         placesBeers = Collections.emptyList();
     }
 
@@ -44,6 +52,26 @@ public class PlaceBeersAdapter extends RecyclerView.Adapter<PlaceBeersAdapter.Be
         NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());
         holder.price.setText(format.format(placeBeer.getPrice()));
         holder.style.setText(placeBeer.getBeer().getStyle());
+
+        holder.like.setOnClickListener(v -> updateLike(placeBeer.getId(), true, holder.rating));
+        holder.dislike.setOnClickListener(v -> updateLike(placeBeer.getId(), false, holder.rating));
+    }
+
+    private void updateLike(int id, boolean liked, TextView rating) {
+        LikeDto dto = new LikeDto(id, liked);
+        apiService.updateLike(dto)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(response -> refreshRating(rating, id),
+                    t -> Timber.wtf(t.getMessage()));
+    }
+
+    private void refreshRating(TextView rating, int id) {
+        apiService.getRating(id)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(result -> rating.setText(String.valueOf(result.getRating())),
+                        t -> Timber.wtf(t.getMessage()));
     }
 
     @Override
@@ -73,6 +101,12 @@ public class PlaceBeersAdapter extends RecyclerView.Adapter<PlaceBeersAdapter.Be
 
         @Bind(R.id.style)
         TextView style;
+
+        @Bind(R.id.like)
+        ImageView like;
+
+        @Bind(R.id.dislike)
+        ImageView dislike;
 
         public BeerOnTapViewHolder(View view) {
             super(view);

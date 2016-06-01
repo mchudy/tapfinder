@@ -22,7 +22,9 @@ import tk.tapfinderapp.model.BeerDto;
 import tk.tapfinderapp.model.BeerStyleDto;
 import tk.tapfinderapp.model.CommentDto;
 import tk.tapfinderapp.model.FindBeerSearchResultDto;
+import tk.tapfinderapp.model.LikeDto;
 import tk.tapfinderapp.model.PlaceBeerDto;
+import tk.tapfinderapp.model.RatingDto;
 import tk.tapfinderapp.model.SpecialOfferDto;
 import tk.tapfinderapp.model.user.UserDto;
 import tk.tapfinderapp.model.user.UserImageDto;
@@ -87,4 +89,10 @@ public interface TapFinderApiService {
 
     @GET("users/{username}")
     Observable<UserDto> getUser(@Path("username") String username);
+
+    @PUT("likes")
+    Observable<ResponseBody> updateLike(@Body LikeDto dto);
+
+    @GET("rating")
+    Observable<RatingDto> getRating(@Query("itemId") int id);
 }

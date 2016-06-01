@@ -67,7 +67,7 @@ public class PlaceSpecialOffersFragment extends Fragment implements FabFragmentH
     }
 
     private void initAdapter() {
-        adapter = new SpecialOffersAdapter(getContext());
+        adapter = new SpecialOffersAdapter(getContext(), apiService);
         specialOffers.setLayoutManager(new LinearLayoutManager(getActivity()));
         specialOffers.setAdapter(adapter);
     }
