@@ -71,13 +71,13 @@ public interface TapFinderApiService {
     Observable<List<SpecialOfferDto>> getSpecialOffers(@Path("id") String placeId);
 
     @POST("places/{id}/specialoffers")
-    Observable<Response<ResponseBody>> addSpecialOffer(@Body AddSpecialOfferDto dto);
+    Observable<Response<ResponseBody>> addSpecialOffer(@Body AddSpecialOfferDto dto, @Path("id") String placeId);
 
     @GET("places/{id}/beers")
     Observable<List<PlaceBeerDto>> getBeersAtPlace(@Path("id") String placeId);
 
     @POST("places/{id}/beers")
-    Observable<Response<ResponseBody>> addBeerAtPlace(@Body AddPlaceBeerDto dto);
+    Observable<Response<ResponseBody>> addBeerAtPlace(@Body AddPlaceBeerDto dto, @Path("id") String placeId);
 
     @GET("places/search")
     Observable<List<FindBeerSearchResultDto>> getPlacesWithBeer(@Query("beerStyleId") int beerStyleId,

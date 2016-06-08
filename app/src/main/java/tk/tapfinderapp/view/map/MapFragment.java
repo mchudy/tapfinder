@@ -97,9 +97,11 @@ public class MapFragment extends LocationAwareFragment implements OnMapReadyCall
 
     @Override
     public void onLocationChanged(Location location) {
+        if(userLocation == null) {
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                    new LatLng(location.getLatitude(), location.getLongitude()), 15));
+        }
         super.onLocationChanged(location);
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                new LatLng(location.getLatitude(), location.getLongitude()), 15));
         loadPubs(location);
     }
 

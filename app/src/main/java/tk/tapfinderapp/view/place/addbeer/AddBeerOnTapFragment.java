@@ -128,7 +128,7 @@ public class AddBeerOnTapFragment extends BaseFragment {
         BeerDto selectedBeer = adapter.getItem(selectedBeerPosition);
         AddPlaceBeerDto dto = new AddPlaceBeerDto(selectedBeer.getId(), placeId, description.getText().toString(),
                 Double.valueOf(price.getText().toString()));
-        apiService.addBeerAtPlace(dto)
+        apiService.addBeerAtPlace(dto, placeId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {

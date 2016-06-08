@@ -130,7 +130,7 @@ public class AddSpecialOfferFragment extends BaseFragment {
         if(!validateInput()) return;
         AddSpecialOfferDto dto = new AddSpecialOfferDto(placeId, title.getText().toString(),
                 description.getText().toString(), startDate, endDate);
-        apiService.addSpecialOffer(dto)
+        apiService.addSpecialOffer(dto, placeId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {

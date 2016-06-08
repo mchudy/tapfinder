@@ -92,8 +92,8 @@ public abstract class LocationAwareFragment extends BaseFragment implements
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         locationRequest = LocationRequest.create()
-                .setInterval(10000)
-                .setFastestInterval(5000)
+                .setInterval(20000)
+                .setFastestInterval(10000)
                 .setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED) {
