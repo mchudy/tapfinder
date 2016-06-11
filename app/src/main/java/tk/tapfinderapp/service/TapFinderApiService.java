@@ -18,6 +18,7 @@ import rx.Observable;
 import tk.tapfinderapp.model.AccessTokenDto;
 import tk.tapfinderapp.model.AddPlaceBeerDto;
 import tk.tapfinderapp.model.AddSpecialOfferDto;
+import tk.tapfinderapp.model.BeerDetailsDto;
 import tk.tapfinderapp.model.BeerDto;
 import tk.tapfinderapp.model.BeerStyleDto;
 import tk.tapfinderapp.model.CommentDto;
@@ -54,6 +55,9 @@ public interface TapFinderApiService {
 
     @POST("users/external")
     Observable<Response<AccessTokenDto>> registerExternal(@Body UserRegisterExternalDto dto);
+
+    @GET("beers/{id}")
+    Observable<BeerDetailsDto> getBeerDetails(@Path("id") int id);
 
     @GET("beers/styles")
     Observable<List<BeerStyleDto>> getBeerStyles();

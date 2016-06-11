@@ -6,7 +6,6 @@ import lombok.Data;
 public class BeerDto {
     int id;
     String name;
-    String description;
     int styleId;
     String style;
     BreweryDto brewery;
