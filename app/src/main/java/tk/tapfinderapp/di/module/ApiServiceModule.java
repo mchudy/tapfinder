@@ -22,10 +22,11 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import timber.log.Timber;
 import tk.tapfinderapp.Constants;
 import tk.tapfinderapp.di.qualifier.AccessTokenPreference;
-import tk.tapfinderapp.service.TapFinderApiService;
 import tk.tapfinderapp.service.GoogleMapsApiService;
+import tk.tapfinderapp.service.TapFinderApiService;
 import tk.tapfinderapp.util.NullStringToEmptyAdapterFactory;
 
 @Module
@@ -64,7 +65,7 @@ public class ApiServiceModule {
     @Provides
     @Singleton
     HttpLoggingInterceptor provideLoggingInterceptor() {
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(message -> Timber.d(message));
         interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
         return interceptor;
     }
