@@ -6,15 +6,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import javax.inject.Inject;
+
 import butterknife.ButterKnife;
 import tk.tapfinderapp.R;
+import tk.tapfinderapp.service.TapFinderApiService;
 import tk.tapfinderapp.view.BaseFragment;
 
 public class BeerDetailsFragment extends BaseFragment{
 
-    public static BeerDetailsFragment newInstance() {
+    private static final String BEER_ID_KEY = "beerId";
+
+    private int beerId;
+
+    @Inject
+    TapFinderApiService apiService;
+
+    public static BeerDetailsFragment newInstance(int beerId) {
         BeerDetailsFragment fragment = new BeerDetailsFragment();
         Bundle args = new Bundle();
+        args.putInt(BEER_ID_KEY, beerId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -22,6 +33,7 @@ public class BeerDetailsFragment extends BaseFragment{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        beerId = getArguments().getInt(BEER_ID_KEY);
     }
 
     @Override
@@ -34,6 +46,12 @@ public class BeerDetailsFragment extends BaseFragment{
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+        activityComponent().inject(this);
+        loadBeerDetails();
+    }
+
+    private void loadBeerDetails() {
+
     }
 
     @Override

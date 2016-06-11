@@ -2,6 +2,7 @@ package tk.tapfinderapp.di.component;
 
 import com.google.android.gms.location.LocationListener;
 
+import tk.tapfinderapp.view.beer.BeerDetailsFragment;
 import tk.tapfinderapp.view.findbeer.FindBeerFragment;
 import tk.tapfinderapp.view.findbeer.FindBeerResultsFragment;
 import tk.tapfinderapp.view.map.MapFragment;
@@ -23,4 +24,5 @@ public interface FragmentInjector {
     void inject(AddBeerOnTapFragment addBeerOnTapFragment);
     void inject(AddSpecialOfferFragment addSpecialOfferFragment);
     void inject(LocationListener locationAwareFragment);
+    void inject(BeerDetailsFragment beerDetailsFragment);
 }

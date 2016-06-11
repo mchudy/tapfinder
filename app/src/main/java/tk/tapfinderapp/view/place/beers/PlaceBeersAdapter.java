@@ -21,6 +21,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 import tk.tapfinderapp.R;
+import tk.tapfinderapp.model.BeerDto;
 import tk.tapfinderapp.model.LikeDto;
 import tk.tapfinderapp.model.PlaceBeerDto;
 import tk.tapfinderapp.service.TapFinderApiService;
@@ -50,18 +51,19 @@ public class PlaceBeersAdapter extends RecyclerView.Adapter<PlaceBeersAdapter.Be
     @Override
     public void onBindViewHolder(BeerOnTapViewHolder holder, int position) {
         PlaceBeerDto placeBeer = placesBeers.get(position);
-        holder.beerName.setText(placeBeer.getBeer().getName());
-        holder.brewery.setText(placeBeer.getBeer().getBrewery().getName());
+        BeerDto beer = placeBeer.getBeer();
+        holder.beerName.setText(beer.getName());
+        holder.brewery.setText(beer.getBrewery().getName());
         holder.description.setText(placeBeer.getDescription());
         holder.rating.setText(String.valueOf(placeBeer.getRating()));
         NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());
         holder.price.setText(format.format(placeBeer.getPrice()));
-        holder.style.setText(placeBeer.getBeer().getStyle());
+        holder.style.setText(beer.getStyle());
 
         holder.like.setOnClickListener(v -> updateLike(placeBeer.getId(), true, holder.rating));
         holder.dislike.setOnClickListener(v -> updateLike(placeBeer.getId(), false, holder.rating));
         holder.beerName.setOnClickListener(v -> ((BaseActivity)context).changeFragmentWithBackStack(
-                BeerDetailsFragment.newInstance()));
+                BeerDetailsFragment.newInstance(beer.getId())));
     }
 
     private void updateLike(int id, boolean liked, TextView rating) {
