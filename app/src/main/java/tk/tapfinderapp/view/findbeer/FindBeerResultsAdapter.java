@@ -14,7 +14,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import tk.tapfinderapp.R;
-import tk.tapfinderapp.model.FindBeerSearchResultItem;
+import tk.tapfinderapp.model.search.FindBeerSearchResultItem;
 import tk.tapfinderapp.model.googleplaces.Place;
 import tk.tapfinderapp.view.FragmentChanger;
 import tk.tapfinderapp.view.place.PlaceFragment;

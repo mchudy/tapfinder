@@ -1,8 +1,9 @@
-package tk.tapfinderapp.model;
+package tk.tapfinderapp.model.beer;
 
 import java.util.List;
 
 import lombok.Value;
+import tk.tapfinderapp.model.place.PlaceWithBeerDto;
 
 @Value
 public class BeerDetailsDto {

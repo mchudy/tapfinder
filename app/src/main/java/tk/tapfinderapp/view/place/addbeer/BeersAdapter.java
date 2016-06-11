@@ -13,7 +13,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import tk.tapfinderapp.R;
-import tk.tapfinderapp.model.BeerDto;
+import tk.tapfinderapp.model.beer.BeerDto;
 import tk.tapfinderapp.service.TapFinderApiService;
 
 public class BeersAdapter extends ArrayAdapter<BeerDto>{

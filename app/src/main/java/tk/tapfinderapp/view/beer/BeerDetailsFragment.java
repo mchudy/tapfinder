@@ -13,7 +13,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 import tk.tapfinderapp.R;
-import tk.tapfinderapp.model.BeerDetailsDto;
+import tk.tapfinderapp.model.beer.BeerDetailsDto;
 import tk.tapfinderapp.service.TapFinderApiService;
 import tk.tapfinderapp.view.BaseFragment;
 

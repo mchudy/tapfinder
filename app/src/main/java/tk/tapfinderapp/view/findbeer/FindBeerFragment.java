@@ -21,7 +21,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 import tk.tapfinderapp.R;
-import tk.tapfinderapp.model.BeerStyleDto;
+import tk.tapfinderapp.model.beer.BeerStyleDto;
 import tk.tapfinderapp.service.TapFinderApiService;
 import tk.tapfinderapp.util.KeyboardUtils;
 import tk.tapfinderapp.view.BaseActivity;

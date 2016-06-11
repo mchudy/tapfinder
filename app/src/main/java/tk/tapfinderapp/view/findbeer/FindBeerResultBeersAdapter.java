@@ -14,7 +14,7 @@ import java.util.Locale;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import tk.tapfinderapp.R;
-import tk.tapfinderapp.model.PlaceBeerDto;
+import tk.tapfinderapp.model.place.PlaceBeerDto;
 
 public class FindBeerResultBeersAdapter extends RecyclerView.Adapter<FindBeerResultBeersAdapter.FindBeerResultBeerViewHolder>{
 

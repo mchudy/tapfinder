@@ -25,7 +25,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 import tk.tapfinderapp.R;
-import tk.tapfinderapp.model.AddSpecialOfferDto;
+import tk.tapfinderapp.model.place.AddSpecialOfferDto;
 import tk.tapfinderapp.service.TapFinderApiService;
 import tk.tapfinderapp.util.EditTextDatePicker;
 import tk.tapfinderapp.util.KeyboardUtils;

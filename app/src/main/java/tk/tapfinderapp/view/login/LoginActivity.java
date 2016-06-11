@@ -33,7 +33,7 @@ import timber.log.Timber;
 import tk.tapfinderapp.R;
 import tk.tapfinderapp.di.qualifier.AccessTokenPreference;
 import tk.tapfinderapp.di.qualifier.UsernamePreference;
-import tk.tapfinderapp.model.AccessTokenDto;
+import tk.tapfinderapp.model.user.AccessTokenDto;
 import tk.tapfinderapp.model.user.UserRegisterExternalDto;
 import tk.tapfinderapp.service.TapFinderApiService;
 import tk.tapfinderapp.view.BaseActivity;

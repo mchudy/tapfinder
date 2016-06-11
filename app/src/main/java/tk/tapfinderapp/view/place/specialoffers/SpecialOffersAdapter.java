@@ -20,7 +20,7 @@ import rx.schedulers.Schedulers;
 import timber.log.Timber;
 import tk.tapfinderapp.R;
 import tk.tapfinderapp.model.LikeDto;
-import tk.tapfinderapp.model.SpecialOfferDto;
+import tk.tapfinderapp.model.place.SpecialOfferDto;
 import tk.tapfinderapp.service.TapFinderApiService;
 
 public class SpecialOffersAdapter extends RecyclerView.Adapter<SpecialOffersAdapter.SpecialOfferViewHolder> {
