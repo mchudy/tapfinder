@@ -26,6 +26,7 @@ import rx.schedulers.Schedulers;
 import timber.log.Timber;
 import tk.tapfinderapp.R;
 import tk.tapfinderapp.model.CommentDto;
+import tk.tapfinderapp.model.googleplaces.Place;
 import tk.tapfinderapp.model.googleplaces.PlaceDetails;
 import tk.tapfinderapp.model.googleplaces.PlaceDetailsResult;
 import tk.tapfinderapp.service.GoogleMapsApiService;
@@ -55,6 +56,9 @@ public class PlaceGeneralFragment extends Fragment {
 
     @Bind(R.id.website_image)
     ImageView websiteImage;
+
+    @Bind(R.id.navigate_image)
+    ImageView navigateImage;
 
     @Bind(R.id.comments)
     RecyclerView comments;
@@ -159,6 +163,14 @@ public class PlaceGeneralFragment extends Fragment {
                 browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(place.getWebsite().toString()));
                 startActivity(browserIntent);
             }
+        });
+
+        navigateImage.setOnClickListener(v -> {
+            Place.Location location = place.getGeometry().getLocation();
+            Uri gmmIntentUri = Uri.parse("google.navigation:q=" + location.getLat() + "," + location.getLng());
+            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+            mapIntent.setPackage("com.google.android.apps.maps");
+            startActivity(mapIntent);
         });
     }
 
