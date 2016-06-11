@@ -79,7 +79,7 @@ public class PlaceBeersFragment extends Fragment implements FabFragmentHandler {
                 .subscribe(b -> {
                     beersAdapter.setBeers(b);
                     beersAdapter.notifyDataSetChanged();
-                }, t -> Timber.wtf(t.getMessage()));
+                }, t -> Timber.wtf(t, "Getting beers at place"));
     }
 
     @Override

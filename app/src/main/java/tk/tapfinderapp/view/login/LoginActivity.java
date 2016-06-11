@@ -140,7 +140,7 @@ public class LoginActivity extends BaseActivity {
                                         jsonObject.getString("email"));
                                 tryLoginExternal(dto);
                             } catch (JSONException e) {
-                                Timber.wtf(e.getMessage());
+                                Timber.wtf(e, "Parsing Facebook Graph API response");
                                 progress.dismiss();
                             }
                         });
@@ -177,7 +177,7 @@ public class LoginActivity extends BaseActivity {
                        registerExternal(dto);
                    }
                 }, e -> {
-                    Timber.wtf(e.getMessage());
+                    Timber.wtf(e, "External login");
                     progress.dismiss();
                 });
     }

@@ -74,7 +74,7 @@ public class FindBeerFragment extends BaseFragment {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onStylesLoaded,
-                        e -> Timber.wtf(e.getMessage()));
+                        t -> Timber.wtf(t, "Loading beer styles"));
     }
 
     private void onStylesLoaded(List<BeerStyleDto> styles) {

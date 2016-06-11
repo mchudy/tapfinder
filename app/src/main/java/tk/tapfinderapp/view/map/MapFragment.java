@@ -133,7 +133,7 @@ public class MapFragment extends LocationAwareFragment implements OnMapReadyCall
                                 loadNextPage(r2, pageNumber + 1);
                             }
                         },
-                        e -> Timber.wtf(e.getMessage()));
+                        e -> Timber.wtf(e, "Loading next page results"));
     }
 
     private void showMarkers(PlacesResult result) {

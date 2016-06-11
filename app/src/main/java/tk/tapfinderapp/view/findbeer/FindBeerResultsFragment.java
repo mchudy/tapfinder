@@ -123,7 +123,7 @@ public class FindBeerResultsFragment extends LocationAwareFragment {
                         Pair::create)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(this::showItems, t -> Timber.wtf(t.getMessage()));
+                .subscribe(this::showItems, t -> Timber.wtf(t, "Loading nearby pubs"));
     }
 
     private void showItems(Pair<List<Place>, List<FindBeerSearchResultDto>> pair) {

@@ -141,7 +141,7 @@ public class AddSpecialOfferFragment extends BaseFragment {
                     } else {
                         Toast.makeText(getContext(), getString(R.string.error_occurred), Toast.LENGTH_SHORT).show();
                     }
-                }, t -> Timber.wtf(t.getMessage()));
+                }, t -> Timber.wtf(t, "Adding special offer"));
     }
 
     private boolean validateInput() {

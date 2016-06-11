@@ -78,7 +78,7 @@ public class PlaceSpecialOffersFragment extends Fragment implements FabFragmentH
                 .subscribe(b -> {
                     adapter.setSpecialOffers(b);
                     adapter.notifyDataSetChanged();
-                }, t -> Timber.wtf(t.getMessage()));
+                }, t -> Timber.wtf(t, "Loading special offers"));
     }
 
     @Override

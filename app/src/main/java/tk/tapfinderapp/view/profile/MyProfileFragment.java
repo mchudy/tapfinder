@@ -122,7 +122,7 @@ public class MyProfileFragment extends BaseFragment {
                         },
                         throwable -> {
                             Toast.makeText(getActivity(), R.string.error_changing_profile_image, Toast.LENGTH_SHORT).show();
-                            Timber.wtf(throwable.getMessage());
+                            Timber.wtf(throwable, "Changing profile image");
                         });
     }
 

@@ -133,7 +133,7 @@ public class MainActivity extends BaseActivity {
                 .subscribe(user -> {
                     userImagePreference.set(user.getImagePath());
                     refreshProfileImage();
-                }, t -> Timber.wtf(t.getMessage()));
+                }, t -> Timber.wtf(t, "Getting user details"));
     }
 
     public void openDrawer() {

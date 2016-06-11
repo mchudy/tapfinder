@@ -71,7 +71,7 @@ public class PlaceBeersAdapter extends RecyclerView.Adapter<PlaceBeersAdapter.Be
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(response -> refreshRating(rating, id),
-                    t -> Timber.wtf(t.getMessage()));
+                    t -> Timber.wtf(t, "Error while sending like"));
     }
 
     private void refreshRating(TextView rating, int id) {
@@ -79,7 +79,7 @@ public class PlaceBeersAdapter extends RecyclerView.Adapter<PlaceBeersAdapter.Be
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(result -> rating.setText(String.valueOf(result.getRating())),
-                        t -> Timber.wtf(t.getMessage()));
+                        t -> Timber.wtf(t, "Getting rating"));
     }
 
     @Override

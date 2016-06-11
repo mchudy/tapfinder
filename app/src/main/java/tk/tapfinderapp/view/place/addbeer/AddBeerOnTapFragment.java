@@ -141,7 +141,7 @@ public class AddBeerOnTapFragment extends BaseFragment {
                     } else {
                         Toast.makeText(getContext(), getString(R.string.error_occurred), Toast.LENGTH_SHORT).show();
                     }
-                }, t -> Timber.wtf(t.getMessage()));
+                }, t -> Timber.wtf(t, "Adding beer"));
     }
 
     private boolean validateInput() {

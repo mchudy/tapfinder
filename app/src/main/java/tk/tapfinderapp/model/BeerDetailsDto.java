@@ -1,5 +1,8 @@
 package tk.tapfinderapp.model;
 
+import lombok.Value;
+
+@Value
 public class BeerDetailsDto {
     int id;
     String name;

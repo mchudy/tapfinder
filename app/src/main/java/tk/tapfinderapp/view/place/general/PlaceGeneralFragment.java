@@ -110,7 +110,7 @@ public class PlaceGeneralFragment extends Fragment {
         tapFinderService.postComment(dto)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(b -> loadComments(), e -> Timber.wtf(e.getMessage()));
+                .subscribe(b -> loadComments(), e -> Timber.wtf(e, "Posting comment"));
         newCommentText.setText("");
         KeyboardUtils.hideSoftKeyboard(getActivity());
     }
@@ -137,7 +137,7 @@ public class PlaceGeneralFragment extends Fragment {
         googleApiService.getPlaceDetails(placeId, getString(R.string.google_places_key))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(this::showPlaceData, t -> Timber.wtf(t.getMessage()));
+                .subscribe(this::showPlaceData, t -> Timber.wtf(t, "Getting place details"));
     }
 
     private void showPlaceData(PlaceDetailsResult result) {

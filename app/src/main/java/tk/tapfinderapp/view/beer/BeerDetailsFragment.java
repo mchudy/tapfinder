@@ -9,7 +9,11 @@ import android.view.ViewGroup;
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import timber.log.Timber;
 import tk.tapfinderapp.R;
+import tk.tapfinderapp.model.BeerDetailsDto;
 import tk.tapfinderapp.service.TapFinderApiService;
 import tk.tapfinderapp.view.BaseFragment;
 
@@ -51,6 +55,18 @@ public class BeerDetailsFragment extends BaseFragment{
     }
 
     private void loadBeerDetails() {
+        apiService.getBeerDetails(beerId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::updateDetails,
+                        t -> Timber.wtf(t, "loading beer details"));
+    }
+
+    private void updateDetails(BeerDetailsDto details) {
+        loadPhoto();
+    }
+
+    private void loadPhoto() {
 
     }
 
