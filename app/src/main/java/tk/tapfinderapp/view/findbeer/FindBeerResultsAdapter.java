@@ -41,7 +41,7 @@ public class FindBeerResultsAdapter extends RecyclerView.Adapter<FindBeerResults
         FindBeerSearchResultItem item = items.get(position);
         holder.placeName.setText(item.getPlace().getName());
         holder.distance.setText(getDistanceToPlace(item.getPlace().getGeometry().getLocation()));
-        FindBeerResultBeersAdapter beersAdapter = new FindBeerResultBeersAdapter();
+        FindBeerResultBeersAdapter beersAdapter = new FindBeerResultBeersAdapter(fragmentChanger);
         holder.beers.setLayoutManager(new LinearLayoutManager(holder.beers.getContext()));
         holder.beers.setAdapter(beersAdapter);
         beersAdapter.setBeers(item.getBeers());

@@ -15,10 +15,17 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import tk.tapfinderapp.R;
 import tk.tapfinderapp.model.place.PlaceBeerDto;
+import tk.tapfinderapp.view.FragmentChanger;
+import tk.tapfinderapp.view.beer.BeerDetailsFragment;
 
 public class FindBeerResultBeersAdapter extends RecyclerView.Adapter<FindBeerResultBeersAdapter.FindBeerResultBeerViewHolder>{
 
     private List<PlaceBeerDto> beers = Collections.emptyList();
+    private FragmentChanger fragmentChanger;
+
+    public FindBeerResultBeersAdapter(FragmentChanger fragmentChanger) {
+        this.fragmentChanger = fragmentChanger;
+    }
 
     @Override
     public FindBeerResultBeerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -34,6 +41,9 @@ public class FindBeerResultBeersAdapter extends RecyclerView.Adapter<FindBeerRes
         holder.brewery.setText(beer.getBeer().getBrewery().getName());
         NumberFormat format = NumberFormat.getCurrencyInstance(Locale.getDefault());
         holder.price.setText(format.format(beer.getPrice()));
+
+        holder.beerName.setOnClickListener(v -> fragmentChanger.changeFragment(
+                BeerDetailsFragment.newInstance(beer.getBeer().getId())));
     }
 
     @Override
