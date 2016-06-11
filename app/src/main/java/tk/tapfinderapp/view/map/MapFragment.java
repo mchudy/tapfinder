@@ -91,7 +91,7 @@ public class MapFragment extends LocationAwareFragment implements OnMapReadyCall
         map.setOnInfoWindowClickListener(marker -> {
             Place place = markerPlacesIds.get(marker.getId());
             PlaceFragment detailsFragment = PlaceFragment.newInstance(place);
-            ((BaseActivity) getActivity()).changeFragmentWithBackStack(detailsFragment);
+            ((BaseActivity) getActivity()).changeFragment(detailsFragment);
         });
     }
 

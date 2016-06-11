@@ -1,6 +1,5 @@
 package tk.tapfinderapp.view.place.specialoffers;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +10,8 @@ import android.widget.TextView;
 import java.text.DateFormat;
 import java.util.Collections;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -25,12 +26,12 @@ import tk.tapfinderapp.service.TapFinderApiService;
 public class SpecialOffersAdapter extends RecyclerView.Adapter<SpecialOffersAdapter.SpecialOfferViewHolder> {
 
     private List<SpecialOfferDto> specialOffers;
-    private Context context;
-    private TapFinderApiService apiService;
 
-    public SpecialOffersAdapter(Context context, TapFinderApiService apiService) {
-        this.context = context;
-        this.apiService = apiService;
+    @Inject
+    TapFinderApiService apiService;
+
+    @Inject
+    public SpecialOffersAdapter() {
         specialOffers = Collections.emptyList();
     }
 
@@ -49,7 +50,7 @@ public class SpecialOffersAdapter extends RecyclerView.Adapter<SpecialOffersAdap
         holder.rating.setText(String.valueOf(dto.getRating()));
 
         DateFormat dateFormat =
-                android.text.format.DateFormat.getDateFormat(context);
+                android.text.format.DateFormat.getDateFormat(holder.date.getContext());
         holder.date.setText(String.format("%s - %s", dateFormat.format(dto.getStartDate()),
                 dateFormat.format(dto.getEndDate())));
 

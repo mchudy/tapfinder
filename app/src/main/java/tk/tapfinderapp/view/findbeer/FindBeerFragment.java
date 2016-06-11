@@ -65,7 +65,7 @@ public class FindBeerFragment extends BaseFragment {
             return;
         }
         KeyboardUtils.hideSoftKeyboard(getActivity());
-        ((BaseActivity)getActivity()).changeFragmentWithBackStack(
+        ((BaseActivity)getActivity()).changeFragment(
                 FindBeerResultsFragment.newInstance(style, Double.parseDouble(maxPrice.getText().toString())));
     }
 

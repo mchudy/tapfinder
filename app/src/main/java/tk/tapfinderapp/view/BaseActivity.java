@@ -12,7 +12,7 @@ import tk.tapfinderapp.TapFinderApp;
 import tk.tapfinderapp.R;
 import tk.tapfinderapp.di.component.ActivityComponent;
 
-public class BaseActivity extends AppCompatActivity{
+public class BaseActivity extends AppCompatActivity implements FragmentChanger {
 
     private ActivityComponent activityComponent;
 
@@ -36,16 +36,8 @@ public class BaseActivity extends AppCompatActivity{
         }
     }
 
+    @Override
     public void changeFragment(Fragment fragment) {
-        Timber.d("Changing fragment %s", fragment.toString());
-        cleanBackStack();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment, fragment)
-                .commit();
-    }
-
-    public void changeFragmentWithBackStack(Fragment fragment) {
         Timber.d("Changing fragment %s and adding to backstack", fragment.toString());
         getSupportFragmentManager()
                 .beginTransaction()
@@ -53,6 +45,15 @@ public class BaseActivity extends AppCompatActivity{
                         R.anim.slide_in_right, R.anim.slide_out_right)
                 .replace(R.id.fragment, fragment)
                 .addToBackStack(null)
+                .commit();
+    }
+
+    public void changeFragmentWithoutBackStack(Fragment fragment) {
+        Timber.d("Changing fragment %s", fragment.toString());
+        cleanBackStack();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment, fragment)
                 .commit();
     }
 

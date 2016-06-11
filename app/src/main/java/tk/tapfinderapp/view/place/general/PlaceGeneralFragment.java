@@ -37,7 +37,9 @@ import tk.tapfinderapp.view.BaseActivity;
 public class PlaceGeneralFragment extends Fragment {
 
     private String placeId;
-    private CommentsAdapter commentsAdapter;
+
+    @Inject
+    CommentsAdapter commentsAdapter;
 
     @Bind(R.id.address)
     TextView address;
@@ -110,7 +112,6 @@ public class PlaceGeneralFragment extends Fragment {
     }
 
     private void setupComments() {
-        commentsAdapter = new CommentsAdapter(getContext());
         comments.setLayoutManager(new LinearLayoutManager(getActivity()));
         comments.setAdapter(commentsAdapter);
         comments.addItemDecoration(new DividerItemDecoration(getContext()));

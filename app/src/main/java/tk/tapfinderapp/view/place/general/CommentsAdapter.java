@@ -1,6 +1,5 @@
 package tk.tapfinderapp.view.place.general;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -11,6 +10,8 @@ import android.widget.TextView;
 import java.util.Collections;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import tk.tapfinderapp.R;
@@ -19,10 +20,9 @@ import tk.tapfinderapp.model.CommentDto;
 public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.CommentViewHolder> {
 
     private List<CommentDto> comments;
-    private Context context;
 
-    public CommentsAdapter(Context context) {
-        this.context = context;
+    @Inject
+    public CommentsAdapter() {
         comments = Collections.emptyList();
     }
 
@@ -37,7 +37,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
     public void onBindViewHolder(CommentViewHolder holder, int position) {
         CommentDto data = comments.get(position);
         String dateString = DateUtils.getRelativeDateTimeString(
-                context,
+                holder.date.getContext(),
                 data.getDate().getTime(),
                 DateUtils.MINUTE_IN_MILLIS,
                 DateUtils.WEEK_IN_MILLIS,

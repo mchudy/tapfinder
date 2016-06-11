@@ -1,6 +1,5 @@
 package tk.tapfinderapp.view.findbeer;
 
-import android.content.Context;
 import android.location.Location;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,17 +16,17 @@ import butterknife.ButterKnife;
 import tk.tapfinderapp.R;
 import tk.tapfinderapp.model.FindBeerSearchResultItem;
 import tk.tapfinderapp.model.googleplaces.Place;
-import tk.tapfinderapp.view.BaseActivity;
+import tk.tapfinderapp.view.FragmentChanger;
 import tk.tapfinderapp.view.place.PlaceFragment;
 
 public class FindBeerResultsAdapter extends RecyclerView.Adapter<FindBeerResultsAdapter.FindBeerResultViewHolder>{
 
     private List<FindBeerSearchResultItem> items = Collections.emptyList();
-    private Context context;
+    private FragmentChanger fragmentChanger;
     private Location userLocation;
 
-    public FindBeerResultsAdapter(Context context) {
-        this.context = context;
+    public FindBeerResultsAdapter(FragmentChanger fragmentChanger) {
+        this.fragmentChanger = fragmentChanger;
     }
 
     @Override
@@ -43,12 +42,12 @@ public class FindBeerResultsAdapter extends RecyclerView.Adapter<FindBeerResults
         holder.placeName.setText(item.getPlace().getName());
         holder.distance.setText(getDistanceToPlace(item.getPlace().getGeometry().getLocation()));
         FindBeerResultBeersAdapter beersAdapter = new FindBeerResultBeersAdapter();
-        holder.beers.setLayoutManager(new LinearLayoutManager(context));
+        holder.beers.setLayoutManager(new LinearLayoutManager(holder.beers.getContext()));
         holder.beers.setAdapter(beersAdapter);
         beersAdapter.setBeers(item.getBeers());
         beersAdapter.notifyDataSetChanged();
         holder.placeName.setOnClickListener(v -> {
-            ((BaseActivity) context).changeFragmentWithBackStack(PlaceFragment.newInstance(item.getPlace()));
+            fragmentChanger.changeFragment(PlaceFragment.newInstance(item.getPlace()));
         });
     }
 

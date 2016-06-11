@@ -30,7 +30,7 @@ public class PlaceSpecialOffersFragment extends Fragment implements FabFragmentH
     @Bind(R.id.special_offers)
     RecyclerView specialOffers;
 
-    //TODO: inject
+    @Inject
     SpecialOffersAdapter adapter;
 
     @Inject
@@ -67,7 +67,6 @@ public class PlaceSpecialOffersFragment extends Fragment implements FabFragmentH
     }
 
     private void initAdapter() {
-        adapter = new SpecialOffersAdapter(getContext(), apiService);
         specialOffers.setLayoutManager(new LinearLayoutManager(getActivity()));
         specialOffers.setAdapter(adapter);
     }
@@ -91,7 +90,7 @@ public class PlaceSpecialOffersFragment extends Fragment implements FabFragmentH
     @Override
     public void handleFab(FloatingActionButton fab) {
         fab.setOnClickListener(v -> (
-                (BaseActivity)getActivity()).changeFragmentWithBackStack(AddSpecialOfferFragment.newInstance(placeId))
+                (BaseActivity)getActivity()).changeFragment(AddSpecialOfferFragment.newInstance(placeId))
         );
     }
 }

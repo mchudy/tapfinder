@@ -32,6 +32,7 @@ import tk.tapfinderapp.model.googleplaces.PlacesResult;
 import tk.tapfinderapp.service.GoogleMapsApiService;
 import tk.tapfinderapp.service.TapFinderApiService;
 import tk.tapfinderapp.view.BaseActivity;
+import tk.tapfinderapp.view.FragmentChanger;
 import tk.tapfinderapp.view.LocationAwareFragment;
 
 public class FindBeerResultsFragment extends LocationAwareFragment {
@@ -90,7 +91,7 @@ public class FindBeerResultsFragment extends LocationAwareFragment {
 
     private void setAdapter() {
         results.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new FindBeerResultsAdapter(getActivity());
+        adapter = new FindBeerResultsAdapter((FragmentChanger)getActivity());
         results.setAdapter(adapter);
     }
 

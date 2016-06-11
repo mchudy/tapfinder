@@ -1,6 +1,5 @@
 package tk.tapfinderapp.view.place.beers;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,19 +24,19 @@ import tk.tapfinderapp.model.BeerDto;
 import tk.tapfinderapp.model.LikeDto;
 import tk.tapfinderapp.model.PlaceBeerDto;
 import tk.tapfinderapp.service.TapFinderApiService;
-import tk.tapfinderapp.view.BaseActivity;
+import tk.tapfinderapp.view.FragmentChanger;
 import tk.tapfinderapp.view.beer.BeerDetailsFragment;
 
 public class PlaceBeersAdapter extends RecyclerView.Adapter<PlaceBeersAdapter.BeerOnTapViewHolder> {
 
     private List<PlaceBeerDto> placesBeers;
     private TapFinderApiService apiService;
-    private Context context;
+    private FragmentChanger fragmentChanger;
 
     @Inject
-    public PlaceBeersAdapter(TapFinderApiService apiService, Context context) {
+    public PlaceBeersAdapter(TapFinderApiService apiService, FragmentChanger fragmentChanger) {
         this.apiService = apiService;
-        this.context = context;
+        this.fragmentChanger = fragmentChanger;
         placesBeers = Collections.emptyList();
     }
 
@@ -62,7 +61,7 @@ public class PlaceBeersAdapter extends RecyclerView.Adapter<PlaceBeersAdapter.Be
 
         holder.like.setOnClickListener(v -> updateLike(placeBeer.getId(), true, holder.rating));
         holder.dislike.setOnClickListener(v -> updateLike(placeBeer.getId(), false, holder.rating));
-        holder.beerName.setOnClickListener(v -> ((BaseActivity)context).changeFragmentWithBackStack(
+        holder.beerName.setOnClickListener(v -> fragmentChanger.changeFragment(
                 BeerDetailsFragment.newInstance(beer.getId())));
     }
 

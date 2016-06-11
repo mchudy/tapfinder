@@ -100,7 +100,7 @@ public class MainActivity extends BaseActivity {
 
         drawerHeader.setOnClickListener(v -> {
             uncheckAllMenuItems();
-            changeFragment(new MyProfileFragment());
+            changeFragmentWithoutBackStack(new MyProfileFragment());
             drawerLayout.closeDrawer(GravityCompat.START);
         });
 
@@ -110,7 +110,7 @@ public class MainActivity extends BaseActivity {
             }
         });
         loadImage();
-        changeFragment(new MapFragment());
+        changeFragmentWithoutBackStack(new MapFragment());
         eventBus.register(this);
     }
 
@@ -192,7 +192,7 @@ public class MainActivity extends BaseActivity {
                 //TODO: custom search
                 //Place place = PlaceAutocomplete.getPlace(this, data);
                 //PlaceFragment detailsFragment = PlaceFragment.newInstance(p);
-                //changeFragmentWithBackStack(detailsFragment);
+                //changeFragment(detailsFragment);
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 Status status = PlaceAutocomplete.getStatus(this, data);
                 Timber.e(status.getStatusMessage());
@@ -210,10 +210,10 @@ public class MainActivity extends BaseActivity {
     private void selectDrawerItem(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.find_beer_item:
-                changeFragment(new FindBeerFragment());
+                changeFragmentWithoutBackStack(new FindBeerFragment());
                 break;
             case R.id.map_item:
-                changeFragment(new MapFragment());
+                changeFragmentWithoutBackStack(new MapFragment());
                 break;
             case R.id.logout_item:
                 logout();

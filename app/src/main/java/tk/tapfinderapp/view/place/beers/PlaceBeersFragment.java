@@ -21,6 +21,7 @@ import tk.tapfinderapp.R;
 import tk.tapfinderapp.service.TapFinderApiService;
 import tk.tapfinderapp.view.BaseActivity;
 import tk.tapfinderapp.view.FabFragmentHandler;
+import tk.tapfinderapp.view.FragmentChanger;
 import tk.tapfinderapp.view.place.addbeer.AddBeerOnTapFragment;
 
 public class PlaceBeersFragment extends Fragment implements FabFragmentHandler {
@@ -67,7 +68,7 @@ public class PlaceBeersFragment extends Fragment implements FabFragmentHandler {
 
     private void initAdapter() {
         beers.setLayoutManager(new LinearLayoutManager(getActivity()));
-        beersAdapter = new PlaceBeersAdapter(apiService, getActivity());
+        beersAdapter = new PlaceBeersAdapter(apiService, (FragmentChanger)getActivity());
         beers.setAdapter(beersAdapter);
     }
 
@@ -89,6 +90,6 @@ public class PlaceBeersFragment extends Fragment implements FabFragmentHandler {
 
     @Override
     public void handleFab(FloatingActionButton fab) {
-        fab.setOnClickListener(v -> ((BaseActivity)getActivity()).changeFragmentWithBackStack(AddBeerOnTapFragment.newInstance(placeId)));
+        fab.setOnClickListener(v -> ((BaseActivity)getActivity()).changeFragment(AddBeerOnTapFragment.newInstance(placeId)));
     }
 }
