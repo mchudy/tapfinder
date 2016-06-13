@@ -6,4 +6,32 @@
 
     <include layout="@layout/toolbar" />
 
+    <TextView
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/beers"
+        android:textAllCaps="true"
+        android:textStyle="bold"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <tk.tapfinderapp.util.EmptyRecyclerView
+            android:id="@+id/beers"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:id="@+id/no_results"
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/no_results"
+            android:gravity="center|top"/>
+    </FrameLayout>
+
 </LinearLayout>

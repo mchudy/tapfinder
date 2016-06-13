@@ -4,31 +4,46 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.SearchView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import javax.inject.Inject;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import timber.log.Timber;
 import tk.tapfinderapp.R;
 import tk.tapfinderapp.service.GoogleMapsApiService;
 import tk.tapfinderapp.service.TapFinderApiService;
+import tk.tapfinderapp.util.EmptyRecyclerView;
 import tk.tapfinderapp.view.BaseActivity;
 import tk.tapfinderapp.view.BaseFragment;
 
 public class SearchFragment extends BaseFragment {
+
+    private BeerResultsAdapter adapter;
 
     @Inject
     TapFinderApiService service;
 
     @Inject
     GoogleMapsApiService googleMapsService;
+
+    @Bind(R.id.beers)
+    EmptyRecyclerView beers;
+
+    @Bind(R.id.no_results)
+    TextView emptyView;
 
     public static SearchFragment newInstance() {
         return new SearchFragment();
@@ -51,10 +66,18 @@ public class SearchFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         ((BaseActivity) getActivity()).activityComponent().inject(this);
         ButterKnife.bind(this, view);
-        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
-        if(actionBar != null) {
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (actionBar != null) {
             actionBar.setDisplayShowTitleEnabled(false);
         }
+        initAdapter();
+    }
+
+    private void initAdapter() {
+        beers.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new BeerResultsAdapter((BaseActivity) getActivity());
+        beers.setAdapter(adapter);
+        beers.setEmptyView(emptyView);
     }
 
     @Override
@@ -64,9 +87,9 @@ public class SearchFragment extends BaseFragment {
     }
 
     @Override
-    public void onCreateOptionsMenu (Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate( R.menu.search_menu, menu);
+        inflater.inflate(R.menu.search_menu, menu);
 
         MenuItem searchItem = menu.findItem(R.id.action_search_view);
         SearchView searchView = (SearchView) searchItem.getActionView();
@@ -77,9 +100,20 @@ public class SearchFragment extends BaseFragment {
             public boolean onQueryTextSubmit(String query) {
                 return false;
             }
+
             @Override
-            public boolean onQueryTextChange(String s) {
-                Timber.d(s);
+            public boolean onQueryTextChange(String query) {
+                if (!TextUtils.isEmpty(query)) {
+                    service.findBeers(query)
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribeOn(Schedulers.io())
+                            .subscribe(beers -> {
+                                adapter.setBeers(beers);
+                                adapter.notifyDataSetChanged();
+                            },
+                                t -> Timber.wtf(t, "Error loading beer search results")
+                            );
+                }
                 return false;
             }
         });
