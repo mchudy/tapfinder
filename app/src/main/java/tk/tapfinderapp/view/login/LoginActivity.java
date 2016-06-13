@@ -4,9 +4,12 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -26,6 +29,7 @@ import java.util.Arrays;
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -131,10 +135,8 @@ public class LoginActivity extends BaseActivity {
                         (object, response) -> {
                             JSONObject jsonObject = response.getJSONObject();
                             try {
-                                //TODO: get username from user?
-                                String username = jsonObject.getString("name").replaceAll("\\s*", "");
                                 UserRegisterExternalDto dto = new UserRegisterExternalDto(
-                                        username,
+                                        null,
                                         "Facebook",
                                         loginResult.getAccessToken().getToken(),
                                         jsonObject.getString("email"));
@@ -174,12 +176,43 @@ public class LoginActivity extends BaseActivity {
                        startMainActivity();
                    }
                    if(result.code() == 400) {
-                       registerExternal(dto);
+                       showChooseUsernameDialog(dto);
                    }
                 }, e -> {
                     Timber.wtf(e, "External login");
                     progress.dismiss();
                 });
+    }
+
+    private void showChooseUsernameDialog(UserRegisterExternalDto dto) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater factory = getLayoutInflater();
+        final View view = factory.inflate(R.layout.dialog_choose_username, null);
+        builder.setTitle("Choose your username")
+                .setView(view);
+        AlertDialog dialog = builder.create();
+
+        Button submit = ButterKnife.findById(view, R.id.submit);
+        EditText username = ButterKnife.findById(view, R.id.username);
+        TextInputLayout usernameLayout = ButterKnife.findById(view, R.id.username_layout);
+        submit.setOnClickListener(v -> {
+            usernameLayout.setError(null);
+            apiService.isUsernameAvailable(username.getText().toString())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(r -> {
+                        if(r.code() == 200) {
+                            usernameLayout.setError(getString(R.string.username_taken));
+                        } else if (r.code() == 404) {
+                            dialog.dismiss();
+                            progress.show();
+                            dto.setUserName(username.getText().toString());
+                            registerExternal(dto);
+                        }
+                    }, t -> Timber.wtf(t, "Error checking username availability"));
+        });
+        progress.dismiss();
+        dialog.show();
     }
 
     private void registerExternal(UserRegisterExternalDto dto) {
@@ -228,13 +261,11 @@ public class LoginActivity extends BaseActivity {
             focusView = passwordView;
             cancel = true;
         }
-
         if (TextUtils.isEmpty(email)) {
             usernameInputLayout.setError(getString(R.string.error_field_required));
             focusView = usernameView;
             cancel = true;
         }
-
         if (cancel) {
             focusView.requestFocus();
         }
