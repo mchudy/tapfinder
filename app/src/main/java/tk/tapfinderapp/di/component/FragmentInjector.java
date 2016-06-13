@@ -12,6 +12,7 @@ import tk.tapfinderapp.view.place.beers.PlaceBeersFragment;
 import tk.tapfinderapp.view.place.general.PlaceGeneralFragment;
 import tk.tapfinderapp.view.place.specialoffers.PlaceSpecialOffersFragment;
 import tk.tapfinderapp.view.profile.MyProfileFragment;
+import tk.tapfinderapp.view.search.SearchFragment;
 
 public interface FragmentInjector {
     void inject(MapFragment mapFragment);
@@ -25,4 +26,5 @@ public interface FragmentInjector {
     void inject(AddSpecialOfferFragment addSpecialOfferFragment);
     void inject(LocationListener locationAwareFragment);
     void inject(BeerDetailsFragment beerDetailsFragment);
+    void inject(SearchFragment searchFragment);
 }

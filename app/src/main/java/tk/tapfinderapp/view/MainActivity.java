@@ -1,6 +1,5 @@
 package tk.tapfinderapp.view;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -15,11 +14,6 @@ import android.widget.TextView;
 
 import com.f2prateek.rx.preferences.Preference;
 import com.facebook.login.LoginManager;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.places.AutocompleteFilter;
-import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
@@ -43,12 +37,11 @@ import tk.tapfinderapp.view.findbeer.FindBeerFragment;
 import tk.tapfinderapp.view.login.LoginActivity;
 import tk.tapfinderapp.view.map.MapFragment;
 import tk.tapfinderapp.view.profile.MyProfileFragment;
+import tk.tapfinderapp.view.search.SearchFragment;
 
 import static butterknife.ButterKnife.findById;
 
 public class MainActivity extends BaseActivity {
-
-    private static final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
 
     private TextView currentUsername;
     private CircleImageView userImage;
@@ -170,36 +163,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void showSearch() {
-        try {
-            AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
-                    .setTypeFilter(AutocompleteFilter.TYPE_FILTER_ESTABLISHMENT)
-                    .build();
-            Intent intent =
-                    new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
-                            .setFilter(typeFilter)
-                            .build(this);
-            startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
-        } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
-            Timber.e(e.getMessage());
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
-            if (resultCode == Activity.RESULT_OK) {
-                //TODO: custom search
-                //Place place = PlaceAutocomplete.getPlace(this, data);
-                //PlaceFragment detailsFragment = PlaceFragment.newInstance(p);
-                //changeFragment(detailsFragment);
-            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
-                Status status = PlaceAutocomplete.getStatus(this, data);
-                Timber.e(status.getStatusMessage());
-            } else if (resultCode == Activity.RESULT_CANCELED) {
-                // The user canceled the operation.
-            }
-        }
+        changeFragment(SearchFragment.newInstance());
     }
 
     @Override

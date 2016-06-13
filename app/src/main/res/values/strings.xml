@@ -64,4 +64,5 @@
     <string name="available_at">Available at</string>
     <string name="no_results">No results</string>
     <string name="ok">OK</string>
+    <string name="empty_string"></string>
 </resources>
