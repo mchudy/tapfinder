@@ -5,10 +5,10 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import javax.inject.Inject;
 
@@ -19,6 +19,7 @@ import rx.schedulers.Schedulers;
 import timber.log.Timber;
 import tk.tapfinderapp.R;
 import tk.tapfinderapp.service.TapFinderApiService;
+import tk.tapfinderapp.util.EmptyRecyclerView;
 import tk.tapfinderapp.view.BaseActivity;
 import tk.tapfinderapp.view.FabFragmentHandler;
 import tk.tapfinderapp.view.place.addspecialoffer.AddSpecialOfferFragment;
@@ -28,7 +29,10 @@ public class PlaceSpecialOffersFragment extends Fragment implements FabFragmentH
     private String placeId;
 
     @Bind(R.id.special_offers)
-    RecyclerView specialOffers;
+    EmptyRecyclerView specialOffers;
+
+    @Bind(R.id.no_results)
+    TextView emptyView;
 
     @Inject
     SpecialOffersAdapter adapter;
@@ -69,6 +73,7 @@ public class PlaceSpecialOffersFragment extends Fragment implements FabFragmentH
     private void initAdapter() {
         specialOffers.setLayoutManager(new LinearLayoutManager(getActivity()));
         specialOffers.setAdapter(adapter);
+        specialOffers.setEmptyView(emptyView);
     }
 
     private void loadSpecialOffers() {

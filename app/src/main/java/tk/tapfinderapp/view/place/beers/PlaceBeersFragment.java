@@ -5,10 +5,10 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import javax.inject.Inject;
 
@@ -19,6 +19,7 @@ import rx.schedulers.Schedulers;
 import timber.log.Timber;
 import tk.tapfinderapp.R;
 import tk.tapfinderapp.service.TapFinderApiService;
+import tk.tapfinderapp.util.EmptyRecyclerView;
 import tk.tapfinderapp.view.BaseActivity;
 import tk.tapfinderapp.view.FabFragmentHandler;
 import tk.tapfinderapp.view.FragmentChanger;
@@ -30,11 +31,13 @@ public class PlaceBeersFragment extends Fragment implements FabFragmentHandler {
     private PlaceBeersAdapter beersAdapter;
 
     @Bind(R.id.beers)
-    RecyclerView beers;
+    EmptyRecyclerView beers;
+
+    @Bind(R.id.no_results)
+    TextView emptyView;
 
     @Inject
     TapFinderApiService apiService;
-
 
     public static PlaceBeersFragment newInstance(String placeId){
         PlaceBeersFragment fragment = new PlaceBeersFragment();
@@ -70,6 +73,7 @@ public class PlaceBeersFragment extends Fragment implements FabFragmentHandler {
         beers.setLayoutManager(new LinearLayoutManager(getActivity()));
         beersAdapter = new PlaceBeersAdapter(apiService, (FragmentChanger)getActivity());
         beers.setAdapter(beersAdapter);
+        beers.setEmptyView(emptyView);
     }
 
     private void loadBeers() {

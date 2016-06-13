@@ -6,10 +6,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.util.Pair;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import org.parceler.Parcels;
 
@@ -25,12 +25,13 @@ import rx.schedulers.Schedulers;
 import timber.log.Timber;
 import tk.tapfinderapp.R;
 import tk.tapfinderapp.model.beer.BeerStyleDto;
-import tk.tapfinderapp.model.search.FindBeerSearchResultDto;
-import tk.tapfinderapp.model.search.FindBeerSearchResultItem;
 import tk.tapfinderapp.model.googleplaces.Place;
 import tk.tapfinderapp.model.googleplaces.PlacesResult;
+import tk.tapfinderapp.model.search.FindBeerSearchResultDto;
+import tk.tapfinderapp.model.search.FindBeerSearchResultItem;
 import tk.tapfinderapp.service.GoogleMapsApiService;
 import tk.tapfinderapp.service.TapFinderApiService;
+import tk.tapfinderapp.util.EmptyRecyclerView;
 import tk.tapfinderapp.view.BaseActivity;
 import tk.tapfinderapp.view.FragmentChanger;
 import tk.tapfinderapp.view.LocationAwareFragment;
@@ -46,7 +47,10 @@ public class FindBeerResultsFragment extends LocationAwareFragment {
     private FindBeerResultsAdapter adapter;
 
     @Bind(R.id.results)
-    RecyclerView results;
+    EmptyRecyclerView results;
+
+    @Bind(R.id.no_results)
+    TextView emptyView;
 
     @Inject
     TapFinderApiService service;
@@ -93,6 +97,7 @@ public class FindBeerResultsFragment extends LocationAwareFragment {
         results.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new FindBeerResultsAdapter((FragmentChanger)getActivity());
         results.setAdapter(adapter);
+        results.setEmptyView(emptyView);
     }
 
     @Override
