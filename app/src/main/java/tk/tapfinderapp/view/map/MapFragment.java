@@ -40,6 +40,7 @@ import tk.tapfinderapp.view.place.PlaceFragment;
 public class MapFragment extends LocationAwareFragment implements OnMapReadyCallback {
 
     private static final int PLACES_SEARCH_MAX_RESULTS = 20;
+    private static final float MIN_RELOAD_DISTANCE = 10f; // in meters
 
     private HashMap<String, Place> markerPlacesIds = new HashMap<>();
     private GoogleMap map;
@@ -100,9 +101,17 @@ public class MapFragment extends LocationAwareFragment implements OnMapReadyCall
         if(userLocation == null) {
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(
                     new LatLng(location.getLatitude(), location.getLongitude()), 15));
+            loadPubs(location);
+            userLocation = location;
+        } else {
+            float[] distance = new float[1];
+            Location.distanceBetween(userLocation.getLatitude(), userLocation.getLongitude(), location.getLatitude(),
+                    location.getLongitude(), distance);
+            if (distance[0] > MIN_RELOAD_DISTANCE) {
+                loadPubs(location);
+                userLocation = location;
+            }
         }
-        super.onLocationChanged(location);
-        loadPubs(location);
     }
 
     private void loadPubs(Location location) {
