@@ -105,14 +105,14 @@ public class SearchFragment extends BaseFragment {
             public boolean onQueryTextChange(String query) {
                 if (!TextUtils.isEmpty(query)) {
                     service.findBeers(query)
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribeOn(Schedulers.io())
-                            .subscribe(beers -> {
-                                adapter.setBeers(beers);
-                                adapter.notifyDataSetChanged();
-                            },
-                                t -> Timber.wtf(t, "Error loading beer search results")
-                            );
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribe(beers -> {
+                            adapter.setBeers(beers);
+                            adapter.notifyDataSetChanged();
+                        },
+                            t -> Timber.wtf(t, "Error loading beer search results")
+                        );
                 }
                 return false;
             }
