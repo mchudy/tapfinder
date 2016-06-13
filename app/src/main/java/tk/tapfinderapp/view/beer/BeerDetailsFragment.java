@@ -30,6 +30,7 @@ import tk.tapfinderapp.model.place.PlaceWithBeerDto;
 import tk.tapfinderapp.service.GoogleMapsApiService;
 import tk.tapfinderapp.service.TapFinderApiService;
 import tk.tapfinderapp.util.DividerItemDecoration;
+import tk.tapfinderapp.view.BaseActivity;
 import tk.tapfinderapp.view.BaseFragment;
 
 public class BeerDetailsFragment extends BaseFragment{
@@ -93,7 +94,7 @@ public class BeerDetailsFragment extends BaseFragment{
     }
 
     private void initAdapter() {
-        adapter = new PlacesWithBeerAdapter();
+        adapter = new PlacesWithBeerAdapter((BaseActivity)getActivity());
         places.setLayoutManager(new LinearLayoutManager(getContext()));
         places.addItemDecoration(new DividerItemDecoration(getContext()));
         places.setAdapter(adapter);
