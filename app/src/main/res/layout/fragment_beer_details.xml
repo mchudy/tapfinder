@@ -1,47 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
-<include layout="@layout/toolbar" />
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/beer_image"/>
+    <include layout="@layout/toolbar"/>
 
-    <TextView
-        android:id="@+id/brewery"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
-        android:text="Brewery"
-        android:textColor="@android:color/secondary_text_light"
-        android:textSize="15sp"/>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/beer_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
-        android:text="Beer name"
-        android:textColor="#000000"
-        android:textSize="20sp"/>
+        <ImageView
+            android:id="@+id/beer_image"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:maxHeight="400dp"
+            android:maxWidth="150dp"
+            android:layout_weight="1"
+            tools:src="@drawable/image_placeholder"/>
 
-    <TextView
-        android:id="@+id/style"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:paddingEnd="70dp"
-        android:text="Style"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="7dp"
+            android:layout_weight="2.5">
 
-    <TextView
-        android:id="@+id/description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingEnd="70dp"
-        android:text="Description"
-        android:textColor="@android:color/tertiary_text_dark"/>
+            <TextView
+                android:id="@+id/brewery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                tools:text="Brewery"
+                android:textColor="@android:color/secondary_text_light"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/beer_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                tools:text="Beer name"
+                android:textColor="#000000"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:id="@+id/style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                tools:text="Style"/>
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Description"
+                android:textColor="@android:color/tertiary_text_dark"/>
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

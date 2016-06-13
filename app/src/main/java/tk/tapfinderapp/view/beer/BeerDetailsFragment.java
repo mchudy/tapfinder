@@ -100,6 +100,7 @@ public class BeerDetailsFragment extends BaseFragment{
     private void loadPhoto(String imagePath) {
         Picasso.with(getContext())
                 .load(Constants.API_BASE_URI + imagePath)
+                .placeholder(R.drawable.image_placeholder)
                 .into(beerImage);
     }
 
