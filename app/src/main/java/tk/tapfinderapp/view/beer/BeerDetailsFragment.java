@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -22,13 +26,17 @@ import timber.log.Timber;
 import tk.tapfinderapp.Constants;
 import tk.tapfinderapp.R;
 import tk.tapfinderapp.model.beer.BeerDetailsDto;
+import tk.tapfinderapp.model.place.PlaceWithBeerDto;
+import tk.tapfinderapp.service.GoogleMapsApiService;
 import tk.tapfinderapp.service.TapFinderApiService;
+import tk.tapfinderapp.util.DividerItemDecoration;
 import tk.tapfinderapp.view.BaseFragment;
 
 public class BeerDetailsFragment extends BaseFragment{
 
     private static final String BEER_ID_KEY = "beerId";
 
+    private PlacesWithBeerAdapter adapter;
     private int beerId;
 
     @Bind(R.id.brewery)
@@ -46,8 +54,14 @@ public class BeerDetailsFragment extends BaseFragment{
     @Bind(R.id.beer_image)
     ImageView beerImage;
 
+    @Bind(R.id.places)
+    RecyclerView places;
+
     @Inject
     TapFinderApiService apiService;
+
+    @Inject
+    GoogleMapsApiService googleMapsService;
 
     public static BeerDetailsFragment newInstance(int beerId) {
         BeerDetailsFragment fragment = new BeerDetailsFragment();
@@ -75,6 +89,14 @@ public class BeerDetailsFragment extends BaseFragment{
         ButterKnife.bind(this, view);
         activityComponent().inject(this);
         loadBeerDetails();
+        initAdapter();
+    }
+
+    private void initAdapter() {
+        adapter = new PlacesWithBeerAdapter();
+        places.setLayoutManager(new LinearLayoutManager(getContext()));
+        places.addItemDecoration(new DividerItemDecoration(getContext()));
+        places.setAdapter(adapter);
     }
 
     private void loadBeerDetails() {
@@ -95,6 +117,17 @@ public class BeerDetailsFragment extends BaseFragment{
             actionBar.setTitle(details.getName());
         }
         loadPhoto(details.getImagePath());
+        loadPlaces(details.getPlaces());
+    }
+
+    private void loadPlaces(List<PlaceWithBeerDto> places) {
+        for(PlaceWithBeerDto p : places) {
+            googleMapsService.getPlaceDetails(p.getPlaceId(), getString(R.string.google_places_key))
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(placeDetails -> adapter.addPlace(placeDetails.getResult(), p.getPrice()),
+                            t -> Timber.wtf(t, "Error while loading place detaila"));
+        }
     }
 
     private void loadPhoto(String imagePath) {

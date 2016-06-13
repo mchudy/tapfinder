@@ -61,4 +61,5 @@
     <string name="favourite_places">Ulubione miejsca:</string>
     <string name="search">Search</string>
     <string name="beer_details">Beer details</string>
+    <string name="available_at">Available at</string>
 </resources>
