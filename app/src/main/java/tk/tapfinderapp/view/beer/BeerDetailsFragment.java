@@ -65,6 +65,9 @@ public class BeerDetailsFragment extends BaseFragment{
     TapFinderApiService apiService;
 
     @Inject
+    BeerDetailsPresenter presenter;
+
+    @Inject
     GoogleMapsApiService googleMapsService;
 
     public static BeerDetailsFragment newInstance(int beerId) {
@@ -92,7 +95,7 @@ public class BeerDetailsFragment extends BaseFragment{
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         activityComponent().inject(this);
-        loadBeerDetails();
+        presenter.loadBeerDetails(beerId, this);
         initAdapter();
     }
 
@@ -104,15 +107,7 @@ public class BeerDetailsFragment extends BaseFragment{
         places.setEmptyView(emptyView);
     }
 
-    private void loadBeerDetails() {
-        apiService.getBeerDetails(beerId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::updateDetails,
-                        t -> Timber.wtf(t, "loading beer details"));
-    }
-
-    private void updateDetails(BeerDetailsDto details) {
+    public void updateDetails(BeerDetailsDto details) {
         brewery.setText(details.getBrewery().getName());
         beerName.setText(details.getName());
         description.setText(details.getDescription());
