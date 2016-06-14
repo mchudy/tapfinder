@@ -4,6 +4,7 @@ import com.google.android.gms.location.LocationListener;
 
 import tk.tapfinderapp.view.badges.BadgesFragment;
 import tk.tapfinderapp.view.beer.BeerDetailsFragment;
+import tk.tapfinderapp.view.favourites.FavouritesFragment;
 import tk.tapfinderapp.view.findbeer.FindBeerFragment;
 import tk.tapfinderapp.view.findbeer.FindBeerResultsFragment;
 import tk.tapfinderapp.view.map.MapFragment;
@@ -29,4 +30,5 @@ public interface FragmentInjector {
     void inject(BeerDetailsFragment beerDetailsFragment);
     void inject(SearchFragment searchFragment);
     void inject(BadgesFragment badgesFragment);
+    void inject(FavouritesFragment favouritesFragment);
 }

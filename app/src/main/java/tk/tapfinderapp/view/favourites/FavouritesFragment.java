@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import javax.inject.Inject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import tk.tapfinderapp.R;
@@ -20,6 +22,9 @@ public class FavouritesFragment extends BaseFragment {
 
     @Bind(R.id.no_results)
     TextView emptyView;
+
+    @Inject
+    FavouritePlacesAdapter adapter;
 
     public static FavouritesFragment newInstance() {
         return new FavouritesFragment();
@@ -35,11 +40,14 @@ public class FavouritesFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+        activityComponent().inject(this);
         initAdapter();
     }
 
     private void initAdapter() {
         favouritePlaces.setLayoutManager(new LinearLayoutManager(getContext()));
+        favouritePlaces.setAdapter(adapter);
+        favouritePlaces.setEmptyView(emptyView);
     }
 
     @Override
