@@ -39,7 +39,7 @@ public class FavouritesFragment extends BaseFragment {
     }
 
     private void initAdapter() {
-        favouritePlaces.setLayoutManager(new LinearLayoutManager());
+        favouritePlaces.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     @Override

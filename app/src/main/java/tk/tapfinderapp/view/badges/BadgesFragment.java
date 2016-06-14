@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import javax.inject.Inject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import tk.tapfinderapp.R;
@@ -21,6 +23,9 @@ public class BadgesFragment extends BaseFragment {
     @Bind(R.id.no_results)
     TextView emptyView;
 
+    @Inject
+    BadgesAdapter adapter;
+
     public static BadgesFragment newInstance() {
         return new BadgesFragment();
     }
@@ -34,11 +39,15 @@ public class BadgesFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        activityComponent().inject(this);
         ButterKnife.bind(this, view);
+        initAdapter();
     }
 
     private void initAdapter() {
-        badges.setLayoutManager(new LinearLayoutManager());
+        badges.setLayoutManager(new LinearLayoutManager(getContext()));
+        badges.setAdapter(adapter);
+        badges.setEmptyView(emptyView);
     }
 
     @Override
