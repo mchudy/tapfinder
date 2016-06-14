@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical"
               android:weightSum="1">
 
@@ -36,48 +36,120 @@
                 style="@style/AppTheme.PopupOverlay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/profile_image"
+                android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
-                android:text="Grzegorz Czarnocki"
-                android:textSize="25dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
+                tools:text="Grzegorz Czarnocki"
                 android:textColor="@android:color/white"
-                android:layout_below="@+id/profile_image"
-                android:layout_centerHorizontal="true"/>
+                android:textSize="25sp"/>
 
         </RelativeLayout>
 
-
-        <RatingBar
-            android:id="@+id/ratingBar"
+        <TextView
+            android:id="@+id/level"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:rating="3"/>
+            android:layout_marginBottom="3dp"
+            android:layout_marginTop="10dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            tools:text="Level: 3"/>
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/level_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            tools:text="Poziom: 3"
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
+            android:layout_marginBottom="3dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="25dp"
+            tools:text="Level name"/>
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/experience"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="@string/favourite_places"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+            android:layout_marginBottom="10dp"
+            tools:text="Doświadczenie: 1000"/>
 
-        <ListView
-            android:id="@+id/listView"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="0.21"
-            android:choiceMode="singleChoice"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:baselineAligned="false">
+
+            <LinearLayout
+                android:id="@+id/achievements_layout"
+                android:layout_width="150dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:background="@drawable/border"
+                android:orientation="vertical"
+                android:padding="5dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="8dp"
+                    android:textAllCaps="true"
+                    android:textSize="15sp"
+                    tools:text="Achievements"/>
+
+                <TextView
+                    android:id="@+id/achievements_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/black"
+                    android:textSize="30sp"
+                    tools:text="15"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/favourites_layout"
+                android:layout_width="150dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/border"
+                android:orientation="vertical"
+                android:padding="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="8dp"
+                    android:textAllCaps="true"
+                    android:textSize="15sp"
+                    tools:text="Favourites"/>
+
+                <TextView
+                    android:id="@+id/favourites_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/black"
+                    android:textSize="30sp"
+                    tools:text="10"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 
