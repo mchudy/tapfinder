@@ -33,6 +33,7 @@ import tk.tapfinderapp.di.qualifier.UserImagePreference;
 import tk.tapfinderapp.di.qualifier.UsernamePreference;
 import tk.tapfinderapp.event.UserImageChangedEvent;
 import tk.tapfinderapp.service.TapFinderApiService;
+import tk.tapfinderapp.view.favourites.FavouritesFragment;
 import tk.tapfinderapp.view.findbeer.FindBeerFragment;
 import tk.tapfinderapp.view.login.LoginActivity;
 import tk.tapfinderapp.view.map.MapFragment;
@@ -181,6 +182,8 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.logout_item:
                 logout();
+            case R.id.favourites_item:
+                changeFragmentWithoutBackStack(FavouritesFragment.newInstance());
                 break;
         }
     }

@@ -13,6 +13,11 @@
             android:title="@string/nearby" />
 
         <item
+            android:id="@+id/favourites_item"
+            android:title="@string/favourites"
+            android:icon="@drawable/ic_favorite_grey_800_18dp"/>
+
+        <item
             android:id="@+id/logout_item"
             android:title="@string/logout"
             android:icon="@drawable/ic_exit_to_app_grey_800_24dp"/>
