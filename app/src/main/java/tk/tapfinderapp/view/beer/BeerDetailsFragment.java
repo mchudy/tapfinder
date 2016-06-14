@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +29,7 @@ import tk.tapfinderapp.model.place.PlaceWithBeerDto;
 import tk.tapfinderapp.service.GoogleMapsApiService;
 import tk.tapfinderapp.service.TapFinderApiService;
 import tk.tapfinderapp.util.DividerItemDecoration;
+import tk.tapfinderapp.util.EmptyRecyclerView;
 import tk.tapfinderapp.view.BaseActivity;
 import tk.tapfinderapp.view.BaseFragment;
 
@@ -56,7 +56,10 @@ public class BeerDetailsFragment extends BaseFragment{
     ImageView beerImage;
 
     @Bind(R.id.places)
-    RecyclerView places;
+    EmptyRecyclerView places;
+
+    @Bind(R.id.no_results)
+    TextView emptyView;
 
     @Inject
     TapFinderApiService apiService;
@@ -98,6 +101,7 @@ public class BeerDetailsFragment extends BaseFragment{
         places.setLayoutManager(new LinearLayoutManager(getContext()));
         places.addItemDecoration(new DividerItemDecoration(getContext()));
         places.setAdapter(adapter);
+        places.setEmptyView(emptyView);
     }
 
     private void loadBeerDetails() {

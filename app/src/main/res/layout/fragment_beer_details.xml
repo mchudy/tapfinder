@@ -76,9 +76,22 @@
         android:textAllCaps="true"
         android:textStyle="bold"/>
 
-    <android.support.v7.widget.RecyclerView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/places" />
+        android:layout_height="match_parent">
+
+        <tk.tapfinderapp.util.EmptyRecyclerView
+            android:id="@+id/places"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:id="@+id/no_results"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/no_results"
+            android:gravity="center_horizontal"/>
+    </FrameLayout>
 
 </LinearLayout>
