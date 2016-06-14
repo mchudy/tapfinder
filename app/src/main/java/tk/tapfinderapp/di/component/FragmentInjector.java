@@ -2,17 +2,17 @@ package tk.tapfinderapp.di.component;
 
 import com.google.android.gms.location.LocationListener;
 
-import tk.tapfinderapp.view.beer.BeerDetailsFragment;
-import tk.tapfinderapp.view.findbeer.FindBeerFragment;
-import tk.tapfinderapp.view.findbeer.FindBeerResultsFragment;
-import tk.tapfinderapp.view.map.MapFragment;
-import tk.tapfinderapp.view.place.addbeer.AddBeerOnTapFragment;
-import tk.tapfinderapp.view.place.addspecialoffer.AddSpecialOfferFragment;
-import tk.tapfinderapp.view.place.beers.PlaceBeersFragment;
-import tk.tapfinderapp.view.place.general.PlaceGeneralFragment;
-import tk.tapfinderapp.view.place.specialoffers.PlaceSpecialOffersFragment;
-import tk.tapfinderapp.view.profile.MyProfileFragment;
-import tk.tapfinderapp.view.search.SearchFragment;
+import tk.tapfinderapp.ui.beer.BeerDetailsFragment;
+import tk.tapfinderapp.ui.findbeer.FindBeerFragment;
+import tk.tapfinderapp.ui.findbeer.FindBeerResultsFragment;
+import tk.tapfinderapp.ui.map.MapFragment;
+import tk.tapfinderapp.ui.place.addbeer.AddBeerOnTapFragment;
+import tk.tapfinderapp.ui.place.addspecialoffer.AddSpecialOfferFragment;
+import tk.tapfinderapp.ui.place.beers.PlaceBeersFragment;
+import tk.tapfinderapp.ui.place.general.PlaceGeneralFragment;
+import tk.tapfinderapp.ui.place.specialoffers.PlaceSpecialOffersFragment;
+import tk.tapfinderapp.ui.profile.MyProfileFragment;
+import tk.tapfinderapp.ui.search.SearchFragment;
 
 public interface FragmentInjector {
     void inject(MapFragment mapFragment);

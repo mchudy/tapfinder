@@ -1,8 +1,8 @@
 package tk.tapfinderapp.di.component;
 
-import tk.tapfinderapp.view.login.LoginActivity;
-import tk.tapfinderapp.view.MainActivity;
-import tk.tapfinderapp.view.login.RegisterActivity;
+import tk.tapfinderapp.ui.login.LoginActivity;
+import tk.tapfinderapp.ui.main.MainActivity;
+import tk.tapfinderapp.ui.login.RegisterActivity;
 
 public interface ActivityInjector {
     void inject(LoginActivity loginActivity);

@@ -12,7 +12,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:fitsSystemWindows="true"
-    tools:context="tk.tapfinderapp.view.login.LoginActivity">
+    tools:context="tk.tapfinderapp.ui.login.LoginActivity">
 
     <LinearLayout
         android:id="@+id/ll1"

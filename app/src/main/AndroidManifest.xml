@@ -27,12 +27,12 @@
             android:value="@string/facebook_app_id"/>
 
         <activity
-            android:name="tk.tapfinderapp.view.MainActivity"
+            android:name=".ui.main.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name="tk.tapfinderapp.view.login.LoginActivity"
+            android:name="tk.tapfinderapp.ui.login.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.Transparent"
             android:launchMode="singleTop">
@@ -43,10 +43,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="tk.tapfinderapp.view.login.RegisterActivity"
+            android:name="tk.tapfinderapp.ui.login.RegisterActivity"
             android:label="@string/sign_up"
             android:screenOrientation="portrait"
-            android:parentActivityName="tk.tapfinderapp.view.login.LoginActivity"/>
+            android:parentActivityName="tk.tapfinderapp.ui.login.LoginActivity"/>
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
