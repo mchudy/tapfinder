@@ -42,7 +42,10 @@ import tk.tapfinderapp.di.qualifier.UsernamePreference;
 import tk.tapfinderapp.event.UserImageChangedEvent;
 import tk.tapfinderapp.model.user.UserImageDto;
 import tk.tapfinderapp.service.TapFinderApiService;
+import tk.tapfinderapp.view.BaseActivity;
 import tk.tapfinderapp.view.BaseFragment;
+import tk.tapfinderapp.view.badges.BadgesFragment;
+import tk.tapfinderapp.view.favourites.FavouritesFragment;
 
 public class MyProfileFragment extends BaseFragment {
 
@@ -105,6 +108,16 @@ public class MyProfileFragment extends BaseFragment {
         Intent intent = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, RESULT_LOAD_IMAGE);
+    }
+
+    @OnClick(R.id.badges_layout)
+    public void onBadgesClick() {
+        ((BaseActivity)getActivity()).changeFragment(BadgesFragment.newInstance());
+    }
+
+    @OnClick(R.id.favourites_layout)
+    public void onFavouritesClicked() {
+        ((BaseActivity)getActivity()).changeFragment(FavouritesFragment.newInstance());
     }
 
     @Override
