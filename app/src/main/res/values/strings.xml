@@ -66,4 +66,5 @@
     <string name="ok">OK</string>
     <string name="empty_string"></string>
     <string name="beers">Beers</string>
+    <string name="badges">Badges</string>
 </resources>

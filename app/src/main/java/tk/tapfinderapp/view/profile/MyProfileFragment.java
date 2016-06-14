@@ -86,8 +86,18 @@ public class MyProfileFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         activityComponent().inject(this);
         ButterKnife.bind(this, view);
+        loadUserData();
         username.setText(usernamePreference.get());
         loadImage();
+    }
+
+    private void loadUserData() {
+//        apiService.getUser(usernamePreference.get())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeOn(Schedulers.io())
+//                .subscribe(user -> {
+//
+//                }, t -> Timber.wtf(t, "Getting user details"));
     }
 
     @OnClick(R.id.profile_image)

@@ -64,7 +64,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="3dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="25dp"
+            android:textSize="25sp"
             tools:text="Level name"/>
 
         <TextView
@@ -82,17 +82,16 @@
             android:baselineAligned="false">
 
             <LinearLayout
-                android:id="@+id/achievements_layout"
+                android:id="@+id/badges_layout"
                 android:layout_width="150dp"
-                android:layout_height="70dp"
+                android:layout_height="80dp"
                 android:layout_weight="1"
                 android:background="@drawable/border"
                 android:orientation="vertical"
                 android:padding="5dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginBottom="10dp">
+                android:layout_marginEnd="5dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -101,32 +100,31 @@
                     android:layout_marginBottom="8dp"
                     android:textAllCaps="true"
                     android:textSize="15sp"
-                    tools:text="Achievements"/>
+                    android:text="@string/badges"/>
 
                 <TextView
-                    android:id="@+id/achievements_count"
+                    android:id="@+id/badges_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:textAllCaps="true"
                     android:textColor="@android:color/black"
                     android:textSize="30sp"
-                    tools:text="15"/>
+                    android:text="0"/>
 
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/favourites_layout"
                 android:layout_width="150dp"
-                android:layout_height="70dp"
+                android:layout_height="80dp"
                 android:layout_marginStart="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/border"
                 android:orientation="vertical"
                 android:padding="5dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="5dp">
+                android:layout_marginEnd="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -135,7 +133,7 @@
                     android:layout_marginBottom="8dp"
                     android:textAllCaps="true"
                     android:textSize="15sp"
-                    tools:text="Favourites"/>
+                    android:text="@string/favourites"/>
 
                 <TextView
                     android:id="@+id/favourites_count"
@@ -145,7 +143,7 @@
                     android:textAllCaps="true"
                     android:textColor="@android:color/black"
                     android:textSize="30sp"
-                    tools:text="10"/>
+                    android:text="0"/>
 
             </LinearLayout>
 
