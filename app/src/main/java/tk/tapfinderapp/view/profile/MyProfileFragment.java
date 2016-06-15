@@ -80,6 +80,9 @@ public class MyProfileFragment extends BaseFragment {
     @Bind(R.id.badges_count)
     TextView badgesCount;
 
+    @Bind(R.id.favourites_count)
+    TextView favouritesCount;
+
     @Bind(R.id.experience)
     TextView experience;
 
@@ -126,6 +129,7 @@ public class MyProfileFragment extends BaseFragment {
         levelName.setText(user.getRank().getTitle());
         levelDescription.setText(user.getRank().getDescription());
         badgesCount.setText(String.valueOf(user.getBadges().size()));
+        favouritesCount.setText(String.valueOf(user.getFavouritePlaces().size()));
     }
 
     @OnClick(R.id.profile_image)
@@ -144,7 +148,7 @@ public class MyProfileFragment extends BaseFragment {
 
     @OnClick(R.id.favourites_layout)
     public void onFavouritesClicked() {
-        ((BaseActivity)getActivity()).changeFragment(FavouritesFragment.newInstance());
+        ((BaseActivity)getActivity()).changeFragment(FavouritesFragment.newInstance(user.getFavouritePlaces()));
     }
 
     @Override

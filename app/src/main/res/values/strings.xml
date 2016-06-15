@@ -69,4 +69,5 @@
     <string name="badges">Badges</string>
     <string name="level">Level %1$d</string>
     <string name="experience">Experience: %1$d</string>
+    <string name="places">Places</string>
 </resources>
