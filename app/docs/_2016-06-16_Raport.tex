@@ -25,7 +25,7 @@ Końcowy raport powinien zawierać informacje dotyczące wykorzystanych narzędz
 
 \section{Wstęp}
 
-TapFinder to aplikacja, która służy do wyszukiwania miejsc, w których można napić się dobrego piwa w okolicy. Pozwala ona na rejestrację użytkownika (standardową, oraz przez Facebooka), wyszukanie piw z danej kategorii, przeglądanie miejsc na mapie oraz ich szczegółów.
+\textit{TapFinder} to aplikacja, która służy do wyszukiwania miejsc, w których można napić się dobrego piwa w okolicy. Pozwala ona na rejestrację użytkownika (standardową, oraz przez Facebooka), wyszukanie piw z danej kategorii, przeglądanie miejsc na mapie oraz ich szczegółów.
 
 \section{Technologie}
 
@@ -35,12 +35,12 @@ Aplikacja mobilna wspiera urządzenia z systemem Android w wersji co najmniej 4.
 \subsubsection{Użyte biblioteki}
 \begin{itemize}
 \item ButterKnife - wstrzykiwanie widoków do aktywności i fragmentów, skutkujące czystszym kodem,
-\item Dagger - kontener Dependency Injection,
-\item EventBus - mechanizm publikowania/subskrybowania zdarzeń, ułatwiający komunikację pomiędzy komponentami,
-\item Retrofit - obsługa zapytań HTTP,
+\item Dagger - kontener Dependency Injection, pozwala na łatwe wstrzykiwanie zależności,
+\item EventBus - mechanizm publikowania / subskrybowania zdarzeń, ułatwiający komunikację pomiędzy komponentami w kod, pozwala na łączenie aktywności, fragmentów w całość,
+\item Retrofit - obsługa zapytań HTTP, służy zamianie HTTP API na interfejs Javy,
 \item RxJava i RxAndroid - obsługa asynchronicznych operacji (głównie zapytań HTTP),
-\item Timber - logowanie,
-\item Lombok - użycie adnotacji do automatycznej generacji kodu,
+\item Timber - logowanie, rozszerzenie zwykłej klasy Log z Androida,
+\item Lombok - użycie adnotacji do automatycznej generacji kodu, konstruktorów, publicznych właściwości itp. 
 \item Retrolambda - dostępność funkcji lambda obecnych w Javie 8,
 \item Picasso - ładowanie i przetwarzanie obrazów,
 \end{itemize}
@@ -50,24 +50,28 @@ Aplikacja serwerowa została napisana w języku C\# oraz technologii ASP.NET Web
 
 \subsubsection{Użyte biblioteki}
 \begin{itemize}
-\item Autofac - kontener Dependency Injection
-\item Entity Framework - ORM
-\item AutoMapper - mapowanie encji na obiekty DTO i odwrotnie
-\item DbUp - migracje SQL
+\item Autofac - kontener Dependency Injection, pozwala na wstrzykiwanie zależności w kod, 
+\item Entity Framework - ORM, mapowanie obiektowo-relacyjne,
+\item AutoMapper - mapowanie encji na obiekty DTO i odwrotnie,
+\item DbUp - migracje SQL, 
 \item NLog - logowanie
 \item FAKE - system budowania projektu
 \end{itemize}
 
 \section{Podział pracy}
 
-Podział pracy w projekcie nie był jednolity. 
+Podział pracy w projekcie nie był jednolity. Marcin Chudy zajął się zarówno aplikacją mobilną, jak i serwerem. Z racji większego doświadczenia w developowaniu tego typu aplikacji, to ze strony Marcina Chudego powstał serwer, uruchomiony za pomocą AWS. W przypadku aplikacji mobilnej, również postarał się o przygotowanie środowiska pod jej rozwijanie.
+
+Grzegorz Czarnocki był odpowiedzialny za stronę back-endu (rozwijanie bazy danych, migracje, kontrolery), oraz po części za stronę mobilną. Z racji posiadania komputera, który nie był dostosowany do komfortowej pracy z narzędziem Android Studio, wkład jest mniejszy, niż w przypadku p. Marcina, jednak przez okres trwania projektu na bieżąco śledzone były wszystkie zmiany, które odbywały się w projekcie.
 
 \section{Motywacja}
 
-Pierwszą zamysł dotyczący aplikacji był związany z pomysłem dotyczącym restauracji. Aplikacja miałaby za zadanie zrzeszać pod jednym szyldem informacje na temat restauracji, w początkowej fazie pomysłu - z obszaru Warszawy. Szybko jednak zmieniono ten pomysł na bardziej ukierukowany, i tym kierunkiem okazały się piwa. 
+Pierwszą zamysł dotyczący aplikacji był związany z pomysłem dotyczącym restauracji. Aplikacja miałaby za zadanie zrzeszać pod jednym szyldem informacje na temat restauracji, w początkowej fazie pomysłu - z obszaru Warszawy. Szybko jednak zmieniono ten pomysł na bardziej ukierukowany, i tym kierunkiem okazały się piwa. Motywacja, która stoi za aplikacją \textit{TapFinder} jest następująca: zapewnić aplikację, która w łatwy sposób dałaby możliwość użytkownikom na to, by znaleźć promocje na trunki w ich ulubionych browarniach i pubach. I to jest osiągalne z użyciem tej aplikacji.
 
 \section{Potencjał komercyjny aplikacji}
 
-Aplikacja TapFinder ma potencjał komercyjny.
+Aplikacja \textit{TapFinder} ma potencjał komercyjny. Związany jest on z ciekawą tematyką, która poruszona jest przez aplikację, czyli po prostu... piwa. Uwagę przykuwa estetyczny, ładny interfejs graficzny, który nie jest rozbudowany, a prosty w obsłudze i intuicyjny. Mapa jako główny element aplikacji jest oparta na technologii Google Maps, znanej niemalże każdemu. Logowanie może odbywać się zarówno przez e-mail, hasło, jak i przez Facebooka. Zdjęcia w tle każdego miejsca pobierane są automatycznie z Google Places API.
+
+W kilku słowach, jest to aplikacja, która przykuwa wzrok. I to, w połączeniu z prostotą interfejsu, jest zaletą aplikacji \textit{TapFinder}.
 
 \end{document}
