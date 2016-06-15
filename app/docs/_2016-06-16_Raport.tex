@@ -1,0 +1,73 @@
+\documentclass[a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{polski}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm]{geometry}
+\usepackage[polish]{babel}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue
+}
+\usepackage{amsmath}
+
+\title{Android: Raport końcowy}
+\author{Marcin Chudy, Grzegorz Czarnocki}
+
+\begin{document}
+\maketitle
+
+\section{Co powinno znaleźć się w tym raporcie}
+
+Końcowy raport powinien zawierać informacje dotyczące wykorzystanych narzędzi (środowisko, biblioteki itp., w szczególności nietypowe rozwiązania), podział pracy (bardzo istotna część raportu), krótki opis aplikacji (bez screenów), motywację oraz potencjał komercyjny aplikacji (max. 5 stron na wszystko, dowolny layout).
+
+\section{Wstęp}
+
+TapFinder to aplikacja, która służy do wyszukiwania miejsc, w których można napić się dobrego piwa w okolicy. Pozwala ona na rejestrację użytkownika (standardową, oraz przez Facebooka), wyszukanie piw z danej kategorii, przeglądanie miejsc na mapie oraz ich szczegółów.
+
+\section{Technologie}
+
+\subsection{Aplikacja mobilna}
+Aplikacja mobilna wspiera urządzenia z systemem Android w wersji co najmniej 4.4 KitKat (API Level 19). Została napisana z wykorzystaniem narzędzia Android Studio.
+
+\subsubsection{Użyte biblioteki}
+\begin{itemize}
+\item ButterKnife - wstrzykiwanie widoków do aktywności i fragmentów, skutkujące czystszym kodem,
+\item Dagger - kontener Dependency Injection,
+\item EventBus - mechanizm publikowania/subskrybowania zdarzeń, ułatwiający komunikację pomiędzy komponentami,
+\item Retrofit - obsługa zapytań HTTP,
+\item RxJava i RxAndroid - obsługa asynchronicznych operacji (głównie zapytań HTTP),
+\item Timber - logowanie,
+\item Lombok - użycie adnotacji do automatycznej generacji kodu,
+\item Retrolambda - dostępność funkcji lambda obecnych w Javie 8,
+\item Picasso - ładowanie i przetwarzanie obrazów,
+\end{itemize}
+
+\subsection{Aplikacja serwerowa}
+Aplikacja serwerowa została napisana w języku C\# oraz technologii ASP.NET Web API 2 z użyciem środowiska Microsoft Visual Studio 2015. Wykorzystana baza danych to Microsoft SQL Server 2014. Serwer został uruchomiony z wykorzystaniem chmury \href{https://aws.amazon.com/?nc2=h_lg}{Amazon Web Services} i jest obecnie dostępny pod adresem \url{https://tapfinderapp.tk}. 
+
+\subsubsection{Użyte biblioteki}
+\begin{itemize}
+\item Autofac - kontener Dependency Injection
+\item Entity Framework - ORM
+\item AutoMapper - mapowanie encji na obiekty DTO i odwrotnie
+\item DbUp - migracje SQL
+\item NLog - logowanie
+\item FAKE - system budowania projektu
+\end{itemize}
+
+\section{Podział pracy}
+
+Podział pracy w projekcie nie był jednolity. 
+
+\section{Motywacja}
+
+Pierwszą zamysł dotyczący aplikacji był związany z pomysłem dotyczącym restauracji. Aplikacja miałaby za zadanie zrzeszać pod jednym szyldem informacje na temat restauracji, w początkowej fazie pomysłu - z obszaru Warszawy. Szybko jednak zmieniono ten pomysł na bardziej ukierukowany, i tym kierunkiem okazały się piwa. 
+
+\section{Potencjał komercyjny aplikacji}
+
+Aplikacja TapFinder ma potencjał komercyjny.
+
+\end{document}
