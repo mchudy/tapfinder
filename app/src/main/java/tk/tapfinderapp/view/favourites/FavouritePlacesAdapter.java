@@ -14,6 +14,7 @@ import butterknife.ButterKnife;
 import tk.tapfinderapp.R;
 import tk.tapfinderapp.model.googleplaces.Place;
 import tk.tapfinderapp.view.FragmentChanger;
+import tk.tapfinderapp.view.place.PlaceFragment;
 
 public class FavouritePlacesAdapter extends RecyclerView.Adapter<FavouritePlacesAdapter.PlaceViewHolder> {
 
@@ -28,7 +29,7 @@ public class FavouritePlacesAdapter extends RecyclerView.Adapter<FavouritePlaces
     public PlaceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.place_item,
                 parent, false);
-        return new PlaceViewHolder(itemView);
+        return new PlaceViewHolder(itemView, this::onItemClicked);
     }
 
     @Override
@@ -47,7 +48,13 @@ public class FavouritePlacesAdapter extends RecyclerView.Adapter<FavouritePlaces
         items.add(item);
     }
 
-    public static class PlaceViewHolder extends RecyclerView.ViewHolder {
+    private void onItemClicked(int position) {
+        fragmentChanger.changeFragment(PlaceFragment.newInstance(items.get(position)));
+    }
+
+    public static class PlaceViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        private ItemClickListener listener;
 
         @Bind(R.id.place_name)
         TextView name;
@@ -55,9 +62,19 @@ public class FavouritePlacesAdapter extends RecyclerView.Adapter<FavouritePlaces
         @Bind(R.id.address)
         TextView address;
 
-        public PlaceViewHolder(View itemView) {
+        public PlaceViewHolder(View itemView, ItemClickListener listener) {
             super(itemView);
+            this.listener = listener;
             ButterKnife.bind(this, itemView);
+        }
+
+        @Override
+        public void onClick(View v) {
+            listener.onItemClicked(getLayoutPosition());
+        }
+
+        public interface ItemClickListener{
+            void onItemClicked(int position);
         }
     }
 }
