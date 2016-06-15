@@ -13,4 +13,5 @@ public class UserDto {
     RankDto rank;
     List<BadgeDto> badges;
     int experience;
+    List<String> favouritePlaces;
 }
