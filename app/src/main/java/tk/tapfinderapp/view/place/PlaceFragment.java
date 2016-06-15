@@ -19,17 +19,29 @@ import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
 
+import java.io.IOException;
+
+import javax.inject.Inject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import timber.log.Timber;
 import tk.tapfinderapp.R;
 import tk.tapfinderapp.model.googleplaces.Photo;
 import tk.tapfinderapp.model.googleplaces.Place;
+import tk.tapfinderapp.service.TapFinderApiService;
 import tk.tapfinderapp.view.BaseFragment;
 import tk.tapfinderapp.view.FabFragmentHandler;
 
 public class PlaceFragment extends BaseFragment {
 
     public static final String PLACE_KEY = "place";
+
+    private Place place;
+    private MenuItem favouriteMenuItem;
+    private boolean isFavourite;
 
     @Bind(R.id.fab)
     FloatingActionButton fab;
@@ -46,10 +58,8 @@ public class PlaceFragment extends BaseFragment {
     @Bind(R.id.background)
     ImageView background;
 
-    private Place place;
-
-    public PlaceFragment() {
-    }
+    @Inject
+    TapFinderApiService apiService;
 
     public static PlaceFragment newInstance(Place place){
         PlaceFragment fragment = new PlaceFragment();
@@ -69,13 +79,40 @@ public class PlaceFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_place, container, false);
+        return inflater.inflate(R.layout.fragment_place, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+        activityComponent().inject(this);
         viewPager.setOffscreenPageLimit(5);
         setupTabs();
         collapsingToolbarLayout.setTitle(place.getName());
         loadPhoto();
-        return view;
+    }
+
+    private void checkIfFavourite() {
+        apiService.checkIfInFavourites(place.getPlaceId())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(response -> {
+                            if(response.code() == 200) {
+                                favouriteMenuItem.setIcon(R.drawable.ic_favorite_white_24dp);
+                                isFavourite = true;
+                            } else if (response.code() == 404) {
+                                favouriteMenuItem.setIcon(R.drawable.ic_favorite_border_white_24dp);
+                                isFavourite = false;
+                            } else {
+                                try {
+                                    Timber.wtf(response.errorBody().string());
+                                } catch (IOException e) {
+                                    Timber.wtf(e, "Error reading error body");
+                                }
+                            }
+                        },
+                        t -> Timber.wtf(t, "Checking if place is in favourites"));
     }
 
     private void loadPhoto() {
@@ -119,23 +156,43 @@ public class PlaceFragment extends BaseFragment {
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
-        MenuItem item = menu.findItem(R.id.action_search);
-        item.setVisible(false);
+        MenuItem searchItem =  menu.findItem(R.id.action_search);
+        searchItem.setVisible(false);
     }
 
     @Override
     public void onCreateOptionsMenu (Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.place_menu, menu);
+        favouriteMenuItem = menu.findItem(R.id.action_favourite);
+        checkIfFavourite();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_favourite:
+                onFavouriteMenuClick();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void onFavouriteMenuClick() {
+        if(favouriteMenuItem == null) return;
+        if(isFavourite) {
+            apiService.deleteFromFavourites(place.getPlaceId())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(response -> checkIfFavourite(),
+                        t -> Timber.wtf(t, "Error adding to favourites"));
+        } else {
+            apiService.addToFavourites(place.getPlaceId())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(response -> checkIfFavourite(),
+                        t -> Timber.wtf(t, "Error adding to favourites"));
         }
     }
 

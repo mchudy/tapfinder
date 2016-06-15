@@ -8,6 +8,7 @@ import tk.tapfinderapp.view.favourites.FavouritesFragment;
 import tk.tapfinderapp.view.findbeer.FindBeerFragment;
 import tk.tapfinderapp.view.findbeer.FindBeerResultsFragment;
 import tk.tapfinderapp.view.map.MapFragment;
+import tk.tapfinderapp.view.place.PlaceFragment;
 import tk.tapfinderapp.view.place.addbeer.AddBeerOnTapFragment;
 import tk.tapfinderapp.view.place.addspecialoffer.AddSpecialOfferFragment;
 import tk.tapfinderapp.view.place.beers.PlaceBeersFragment;
@@ -31,4 +32,5 @@ public interface FragmentInjector {
     void inject(SearchFragment searchFragment);
     void inject(BadgesFragment badgesFragment);
     void inject(FavouritesFragment favouritesFragment);
+    void inject(PlaceFragment placeFragment);
 }

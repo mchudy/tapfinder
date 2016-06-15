@@ -6,6 +6,7 @@ import java.util.List;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -15,18 +16,18 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
-import tk.tapfinderapp.model.user.AccessTokenDto;
-import tk.tapfinderapp.model.place.AddPlaceBeerDto;
-import tk.tapfinderapp.model.place.AddSpecialOfferDto;
+import tk.tapfinderapp.model.CommentDto;
+import tk.tapfinderapp.model.LikeDto;
+import tk.tapfinderapp.model.RatingDto;
 import tk.tapfinderapp.model.beer.BeerDetailsDto;
 import tk.tapfinderapp.model.beer.BeerDto;
 import tk.tapfinderapp.model.beer.BeerStyleDto;
-import tk.tapfinderapp.model.CommentDto;
-import tk.tapfinderapp.model.search.FindBeerSearchResultDto;
-import tk.tapfinderapp.model.LikeDto;
+import tk.tapfinderapp.model.place.AddPlaceBeerDto;
+import tk.tapfinderapp.model.place.AddSpecialOfferDto;
 import tk.tapfinderapp.model.place.PlaceBeerDto;
-import tk.tapfinderapp.model.RatingDto;
 import tk.tapfinderapp.model.place.SpecialOfferDto;
+import tk.tapfinderapp.model.search.FindBeerSearchResultDto;
+import tk.tapfinderapp.model.user.AccessTokenDto;
 import tk.tapfinderapp.model.user.UserDto;
 import tk.tapfinderapp.model.user.UserImageDto;
 import tk.tapfinderapp.model.user.UserRegisterDto;
@@ -99,4 +100,13 @@ public interface TapFinderApiService {
 
     @GET("rating")
     Observable<RatingDto> getRating(@Query("itemId") int id);
+
+    @HEAD("favorites/places")
+    Observable<Response<Void>> checkIfInFavourites(@Query("placeId") String placeId);
+
+    @POST("favorites/places")
+    Observable<ResponseBody> addToFavourites(@Query("placeId") String placeId);
+
+    @DELETE("favorites/places")
+    Observable<ResponseBody> deleteFromFavourites(@Query("placeId") String placeId);
 }
