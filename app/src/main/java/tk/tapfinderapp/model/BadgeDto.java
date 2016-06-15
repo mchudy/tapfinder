@@ -1,8 +1,11 @@
 package tk.tapfinderapp.model;
 
-import lombok.Value;
+import org.parceler.Parcel;
 
-@Value
+import lombok.Data;
+
+@Parcel
+@Data
 public class BadgeDto {
     int id;
     String title;

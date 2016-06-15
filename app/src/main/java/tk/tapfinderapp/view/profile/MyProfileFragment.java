@@ -58,6 +58,7 @@ public class MyProfileFragment extends BaseFragment {
     };
 
     private Uri selectedImage;
+    private UserDto user;
 
     @Inject
     @UsernamePreference
@@ -119,6 +120,7 @@ public class MyProfileFragment extends BaseFragment {
     }
 
     private void showProfileData(UserDto user) {
+        this.user = user;
         level.setText(getString(R.string.level, user.getRank().getId()));
         experience.setText(getString(R.string.experience, user.getExperience()));
         levelName.setText(user.getRank().getTitle());
@@ -135,7 +137,9 @@ public class MyProfileFragment extends BaseFragment {
 
     @OnClick(R.id.badges_layout)
     public void onBadgesClick() {
-        ((BaseActivity)getActivity()).changeFragment(BadgesFragment.newInstance());
+        if(user != null) {
+            ((BaseActivity) getActivity()).changeFragment(BadgesFragment.newInstance(user.getBadges()));
+        }
     }
 
     @OnClick(R.id.favourites_layout)
