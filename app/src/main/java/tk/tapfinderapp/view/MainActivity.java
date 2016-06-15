@@ -108,6 +108,12 @@ public class MainActivity extends BaseActivity {
         eventBus.register(this);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        eventBus.unregister(this);
+    }
+
     @Subscribe
     public void onEvent(UserImageChangedEvent event){
         refreshProfileImage();
