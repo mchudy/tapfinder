@@ -40,6 +40,7 @@ import tk.tapfinderapp.R;
 import tk.tapfinderapp.di.qualifier.UserImagePreference;
 import tk.tapfinderapp.di.qualifier.UsernamePreference;
 import tk.tapfinderapp.event.UserImageChangedEvent;
+import tk.tapfinderapp.model.user.UserDto;
 import tk.tapfinderapp.model.user.UserImageDto;
 import tk.tapfinderapp.service.TapFinderApiService;
 import tk.tapfinderapp.view.BaseActivity;
@@ -75,6 +76,21 @@ public class MyProfileFragment extends BaseFragment {
     @Bind(R.id.profile_image)
     CircleImageView profileImage;
 
+    @Bind(R.id.badges_count)
+    TextView badgesCount;
+
+    @Bind(R.id.experience)
+    TextView experience;
+
+    @Bind(R.id.level)
+    TextView level;
+
+    @Bind(R.id.level_name)
+    TextView levelName;
+
+    @Bind(R.id.level_description)
+    TextView levelDescription;
+
     @Inject
     EventBus eventBus;
 
@@ -95,12 +111,19 @@ public class MyProfileFragment extends BaseFragment {
     }
 
     private void loadUserData() {
-//        apiService.getUser(usernamePreference.get())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeOn(Schedulers.io())
-//                .subscribe(user -> {
-//
-//                }, t -> Timber.wtf(t, "Getting user details"));
+        apiService.getUser(usernamePreference.get())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::showProfileData,
+                        t -> Timber.wtf(t, "Getting user details"));
+    }
+
+    private void showProfileData(UserDto user) {
+        level.setText(getString(R.string.level, user.getRank().getId()));
+        experience.setText(getString(R.string.experience, user.getExperience()));
+        levelName.setText(user.getRank().getTitle());
+        levelDescription.setText(user.getRank().getDescription());
+        badgesCount.setText(String.valueOf(user.getBadges().size()));
     }
 
     @OnClick(R.id.profile_image)
