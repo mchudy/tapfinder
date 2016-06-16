@@ -58,13 +58,13 @@
     <string name="to_date">To</string>
     <string name="special_offer_added">Special offer has been added</string>
     <string name="error_end_date_before_start_date">End date cannot be earlier than the start date</string>
-    <string name="favourite_places">Ulubione miejsca:</string>
+    <string name="favourite_places">Favorite places:</string>
     <string name="search">Search</string>
     <string name="beer_details">Beer details</string>
     <string name="available_at">Available at</string>
     <string name="no_results">No results</string>
-    <string name="ok">OK</string>
-    <string name="empty_string"></string>
+    <string name="ok" translatable="false">OK</string>
+    <string name="empty_string" translatable="false"></string>
     <string name="beers">Beers</string>
     <string name="badges">Badges</string>
     <string name="level">Level %1$d</string>
