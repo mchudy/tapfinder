@@ -19,32 +19,40 @@
 \begin{document}
 \maketitle
 
-\section{Co powinno znaleźć się w tym raporcie}
+%\section{Co powinno znaleźć się w tym raporcie}
 
-Końcowy raport powinien zawierać informacje dotyczące wykorzystanych narzędzi (środowisko, biblioteki itp., w szczególności nietypowe rozwiązania), podział pracy (bardzo istotna część raportu), krótki opis aplikacji (bez screenów), motywację oraz potencjał komercyjny aplikacji (max. 5 stron na wszystko, dowolny layout).
+%Końcowy raport powinien zawierać informacje dotyczące wykorzystanych narzędzi (środowisko, biblioteki %itp., w szczególności nietypowe rozwiązania), podział pracy (bardzo istotna część raportu), krótki %opis aplikacji (bez screenów), motywację oraz potencjał komercyjny aplikacji (max. 5 stron na %wszystko, dowolny layout).
 
 \section{Wstęp}
 
 \textit{TapFinder} to aplikacja, która służy do wyszukiwania miejsc, w których można napić się dobrego piwa w okolicy. Pozwala ona na rejestrację użytkownika (standardową, oraz przez Facebooka), wyszukanie piw z danej kategorii, przeglądanie miejsc na mapie oraz ich szczegółów.
 
-Głównym elementem aplikacji jest mapa, na której znajdują się markery z miejscami, które można odwiedzić w najbliższej okolicy. Po kliknięciu w taki marker ukazuje nam się zdjęcie miejsca, krótki jego opis, informacje kontaktowe oraz kilka zakładek, na których możemy podejrzeć piwa, które obecnie są dostępne w danym miejscu oraz zakładkę z promocjami, które obecnie są wprowadzone w danym miejscu. Użytkownik może dodać do miejsca komentarz, oraz wprowadzić w system informację o promocji.
+Głównym elementem aplikacji jest mapa, na której znajdują się markery z miejscami, które można odwiedzić w najbliższej okolicy. Po kliknięciu w taki marker ukazuje nam się zdjęcie miejsca, krótki jego opis, informacje kontaktowe oraz kilka zakładek, na których możemy podejrzeć piwa, które obecnie są dostępne w danym miejscu oraz zakładkę z promocjami, które obecnie są wprowadzone w danym miejscu. Użytkownik może dodać do miejsca komentarz, oraz wprowadzić w system informację o promocji. Miejsca mogą być także oznaczane jako ulubione.
+
+Ponadto aplikacja umożliwia łatwe wyszukiwanie piw w określonym stylu znajdujących się w okolicznych pubach. Istnieje także możliwość wyszukiwania tylko piw nie przekraczających wyznaczonej ceny.
+
+Użytkownik aplikacji, dodając piwa dostępne na kranach oraz promocje, zbiera punkty doświadczenia dzięki którym może awansować na kolejne poziomy. Ponadto za osiągnięcie określonych celów zostają mu przyznawane odznaczenia. W widoku profilu znajduje się podsumowanie tych informacji.
 
 \section{Technologie}
 
 \subsection{Aplikacja mobilna}
-Aplikacja mobilna wspiera urządzenia z systemem Android w wersji co najmniej 4.4 KitKat (API Level 19). Została napisana z wykorzystaniem narzędzia Android Studio.
+Aplikacja mobilna wspiera urządzenia z systemem Android w wersji co najmniej 4.4 KitKat (API Level 19). Została napisana z wykorzystaniem narzędzia Android Studio. Aplikacja w dużej mierze korzysta z Google Places API do wyszukiwania i wyświetlania miejsc. Informacje o miejscach nie są trzymane w dedykowanej aplikacji bazie danych.
+
+\subsubsection{Interfejs użytkownika}
+Interfejs aplikacji wykorzystuje Material Design i liczne charakterystyczne dla niego elementy takie jak \\ \texttt{FloatingActionButton}, \texttt{NavigationDrawer}. Główne kolory aplikacji utrzymane są w barwach żółto-pomarańczowych, mających kojarzyć się z piwem.
 
 \subsubsection{Użyte biblioteki}
 \begin{itemize}
 \item ButterKnife - wstrzykiwanie widoków do aktywności i fragmentów, skutkujące czystszym kodem,
 \item Dagger - kontener Dependency Injection, pozwala na łatwe wstrzykiwanie zależności,
-\item EventBus - mechanizm publikowania / subskrybowania zdarzeń, ułatwiający komunikację pomiędzy komponentami w kod, pozwala na łączenie aktywności, fragmentów w całość,
+\item EventBus - mechanizm publikowania / subskrybowania zdarzeń, ułatwiający komunikację pomiędzy komponentami,
 \item Retrofit - obsługa zapytań HTTP, służy zamianie HTTP API na interfejs Javy,
 \item RxJava i RxAndroid - obsługa asynchronicznych operacji (głównie zapytań HTTP),
-\item Timber - logowanie, rozszerzenie zwykłej klasy Log z Androida,
+\item Timber - logowanie, rozszerzenie zwykłej klasy \texttt{Log} z Androida,
 \item Lombok - użycie adnotacji do automatycznej generacji kodu, konstruktorów, publicznych właściwości itp. 
 \item Retrolambda - dostępność funkcji lambda obecnych w Javie 8,
 \item Picasso - ładowanie i przetwarzanie obrazów,
+\item Parceler - ułatwione wykorzystanie interfejsu \texttt{Parcelable} za pomocą adnotacji i automatycznej generacji kodu.
 \end{itemize}
 
 \subsection{Aplikacja serwerowa}

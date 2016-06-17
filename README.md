@@ -1,5 +1,19 @@
 # TapFinder
 
+TapFinder is an Android app for discovering nearby pubs. Aimed mostly at craft beer enthusiasts, it allows sharing information about special offers and beers currently available on tap as well as searching for beers in a given style.
+TapFinder also contains some game elements like levels, experience and achievements.
+
+The app supports Android 4.4 KitKat (API level 19) or above.
+
+<img src="https://github.com/mchudy/tapfinder/raw/master/screenshots/login.png" alt="Login screenshot" width="210px">
+<img src="https://github.com/mchudy/tapfinder/raw/master/screenshots/place.png" alt="Place screenshot" width="210px">
+<img src="https://github.com/mchudy/tapfinder/raw/master/screenshots/find_beer.png" alt="Find beer screenshot" width="210px">
+<img src="https://github.com/mchudy/tapfinder/raw/master/screenshots/profile.png" alt="Profile screenshot" width="210px">
+
+## Motivation
+
+TapFinder was developed mainly to improve our Android programming skills and experiment with some popular open source libraries. We tried to create a robust, reusable architecture which could be used (with some modifications) in further projects. We do not plan to release TapFinder on Play Store for now.
+
 ## License
 ```
 Copyright 2016 Marcin Chudy, Grzegorz Czarnocki
