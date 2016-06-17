@@ -66,6 +66,7 @@ public class FavouritePlacesAdapter extends RecyclerView.Adapter<FavouritePlaces
             super(itemView);
             this.listener = listener;
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(this);
         }
 
         @Override
