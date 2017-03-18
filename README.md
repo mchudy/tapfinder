@@ -5,10 +5,7 @@ TapFinder also contains some game elements like levels, experience and achieveme
 
 The app supports Android 4.4 KitKat (API level 19) or above.
 
-<img src="https://github.com/mchudy/tapfinder/raw/master/screenshots/login.png" alt="Login screenshot" width="210px">
-<img src="https://github.com/mchudy/tapfinder/raw/master/screenshots/place.png" alt="Place screenshot" width="210px">
-<img src="https://github.com/mchudy/tapfinder/raw/master/screenshots/find_beer.png" alt="Find beer screenshot" width="210px">
-<img src="https://github.com/mchudy/tapfinder/raw/master/screenshots/profile.png" alt="Profile screenshot" width="210px">
+<img src="https://github.com/mchudy/tapfinder/raw/master/screenshots/login.png" alt="Login screenshot" width="200px"> <img src="https://github.com/mchudy/tapfinder/raw/master/screenshots/place.png" alt="Place screenshot" width="200px"> <img src="https://github.com/mchudy/tapfinder/raw/master/screenshots/find_beer.png" alt="Find beer screenshot" width="200px"> <img src="https://github.com/mchudy/tapfinder/raw/master/screenshots/profile.png" alt="Profile screenshot" width="200px">
 
 ## Motivation
 
